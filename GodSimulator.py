@@ -13,7 +13,7 @@ class GodSimulator:
 
     @staticmethod
     def have_to_reproduct(p: BacteriaParameters):
-        if p.p_for_separate < random.random:
+        if p.p_for_separate > random.random:
             return True
         else:
             return False
