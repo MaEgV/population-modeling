@@ -6,14 +6,14 @@ class GodSimulator:
 
     @staticmethod
     def have_to_die(p: BacteriaParameters):
-        if p.p_for_death < random.random():
+        if p.p_for_death > random():
             return True
         else:
             return False
 
     @staticmethod
     def have_to_reproduct(p: BacteriaParameters):
-        if p.p_for_separate > random.random():
+        if p.p_for_reproduction > random():
             return True
         else:
             return False

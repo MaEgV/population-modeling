@@ -13,14 +13,15 @@ class Bacteria:
         self.parameters = p
 
     def iteration(self):
-        if self.is_alive:
-            children = list()
-            child_parameters = GodSimulator.get_child_parameters(self.parameters)
-            while child_parameters:
-                children.append(create_child(child_parameters))
-                child_parameters = GodSimulator.get_child_parameters(self.parameters)
-            return children
-        else:
+        if not self.is_alive:
             return None
-
-
+        else:
+            if not GodSimulator.have_to_die(self.parameters):
+                children = list()
+                while GodSimulator.have_to_reproduct(self.parameters):
+                    child_parameters = GodSimulator.get_child_parameters(self.parameters)
+                    children.append(create_child(child_parameters))
+                return children
+            else:
+                self.is_alive = False
+                return None
