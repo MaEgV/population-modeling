@@ -21,6 +21,7 @@ class Bacteria:
                 while GodSimulator.have_to_reproduct(self.parameters):
                     child_parameters = GodSimulator.get_child_parameters(self.parameters)
                     children.append(create_child(child_parameters))
+                self.parameters.lived_time += 1
                 return children
             else:
                 self.is_alive = False
