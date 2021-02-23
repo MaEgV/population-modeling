@@ -7,7 +7,7 @@ class GodSimulator:
 
     MAX_PROBABILITY = 1
     VARIATION_PROBABILITY_BORDERS = [-0.1, 0.1]
-    LIVES_BORDERS = [0, 15]
+    LIVES_BORDERS = [1, 15]
 
 
     @staticmethod
