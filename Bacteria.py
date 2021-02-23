@@ -2,19 +2,15 @@ import BacteriaParameters
 from GodSimulator import GodSimulator
 
 
-def create_bacteria(**kwargs) -> Bacteria:
-    return Bacteria(kwargs)
-
-
 class Bacteria:
 
     def __init__(self, p: BacteriaParameters):
         self.is_alive = True
         self.parameters = p
 
-    def iteration(self) -> list[Bacteria]:
+    def iteration(self) -> list:
         if not self.is_alive:
-            return []
+            return None
         else:
             if not GodSimulator.have_to_die(self.parameters):
                 children = list()
@@ -26,3 +22,7 @@ class Bacteria:
             else:
                 self.is_alive = False
                 return []
+            
+            
+def create_bacteria(**kwargs) -> Bacteria:
+    return Bacteria(kwargs)
