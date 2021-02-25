@@ -3,6 +3,12 @@ import igraph
 
 
 def get_new_graph(first_bacteria):
+    '''
+    Create new graph with one node and two labels
+
+    :param first_bacteria: label of the node
+    :return: graph
+    '''
     graph = igraph.Graph(directed=True)
     graph.add_vertex(bacteria=first_bacteria, generation=0)
 
@@ -31,8 +37,9 @@ class Population:
     GENERATION_KEY = 'generation'
 
     def __init__(self, n=None, max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5):
-        self._max_n = n
-        self._current_n = 0
+        self._max_n = n  # max number of iteration. If None - number of iterations is unlimited
+        self._current_n = 0  # counter of iterations
+        # parameter to refreshing between iterations loops
         self._first_bacteria = create_bacteria(self, max_life_time, p_for_death, p_for_reproduction)
         self._graph = get_new_graph(self._first_bacteria)
 
@@ -43,12 +50,16 @@ class Population:
         return self
 
     def __next__(self):
+        '''
+        Iteration of population. Call bacterias method @iteration@ and process children
+        :return: self
+        '''
         if self._end_iter():
             raise StopIteration
 
         new_generation = list()
         for vertex in self._graph.vs:
-            parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the vertex
+            parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
             if parent.is_alive:
                 children = parent.iteration()
@@ -95,6 +106,10 @@ class Population:
         self._graph.add_edges([(parent, child) for child in self._graph.vs[-len(children)::]])
 
     def draw(self):
+        '''
+        Drawing directed graph with reingold layout and show in png format
+        :return: None
+        '''
         layout = self._graph.layout_reingold_tilford(root=[0])
         igraph.plot(
             self._graph,

@@ -1,6 +1,7 @@
 import copy
-from random import random, randint
 import BacteriaParameters
+from scipy.stats import norm, uniform
+from math import fabs
 
 
 class EvolutionSimulator:
@@ -45,11 +46,9 @@ class EvolutionSimulator:
         :return: float
             child's probability parameter
         """
-        probability_variation = random()
-        parameter = parent_parameter + probability_variation
-        if parameter > EvolutionSimulator.max_probability:
-            parameter = EvolutionSimulator.max_probability
-        return parameter
+        probability_variation = norm.rvs(0, 0.01)
+        parameter = fabs(parent_parameter + probability_variation)
+        return parameter if parameter < EvolutionSimulator.max_probability else EvolutionSimulator.max_probability
 
     @staticmethod
     def __choose_child_parameters(parent_parameters: BacteriaParameters) -> BacteriaParameters:
@@ -64,7 +63,7 @@ class EvolutionSimulator:
         child_parameters = copy.deepcopy(parent_parameters)
         child_parameters.genome.p_for_death = EvolutionSimulator.__probability_parameter(parent_parameters.genome.p_for_death)
         child_parameters.genome.p_for_reproduction = EvolutionSimulator.__probability_parameter(parent_parameters.genome.p_for_reproduction)
-        child_parameters.genome.max_n = randint(*EvolutionSimulator.live_borders)
+        child_parameters.genome.max_n = round(uniform.rvs(*EvolutionSimulator.live_borders))
         return child_parameters
 
     @staticmethod
@@ -76,7 +75,8 @@ class EvolutionSimulator:
         :return: bool
             Decision: dead (true) or alive (false)
         """
-        return p.genome.p_for_death > random()
+        prob = uniform.rvs(0, 1)
+        return p.genome.p_for_death > prob
 
     @staticmethod
     def have_to_reproduct(p: BacteriaParameters) -> bool:
@@ -87,7 +87,7 @@ class EvolutionSimulator:
         :return:bool
             Decision: should reproduct (true) or shouldn't (false)
         """
-        return p.genome.p_for_reproduction > random()
+        return p.genome.p_for_reproduction > uniform.rvs(0, 1)
 
     @staticmethod
     def get_child_parameters(p: BacteriaParameters) -> BacteriaParameters:
