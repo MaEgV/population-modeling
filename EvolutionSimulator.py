@@ -1,5 +1,5 @@
 import copy
-from random import uniform, random, randint
+from random import random, randint
 import BacteriaParameters
 
 
@@ -45,7 +45,7 @@ class EvolutionSimulator:
         :return: float
             child's probability parameter
         """
-        probability_variation = uniform(*EvolutionSimulator.variation_probability_borders)
+        probability_variation = random()
         parameter = parent_parameter + probability_variation
         if parameter > EvolutionSimulator.max_probability:
             parameter = EvolutionSimulator.max_probability
@@ -62,8 +62,8 @@ class EvolutionSimulator:
             All child's parameters
         """
         child_parameters = copy.deepcopy(parent_parameters)
-        child_parameters.genome.p_for_death = probability_parameter(parent_parameters.genome.p_for_death)
-        child_parameters.genome.p_for_reproduction = probability_parameter(parent_parameters.genome.p_for_reproduction)
+        child_parameters.genome.p_for_death = EvolutionSimulator.__probability_parameter(parent_parameters.genome.p_for_death)
+        child_parameters.genome.p_for_reproduction = EvolutionSimulator.__probability_parameter(parent_parameters.genome.p_for_reproduction)
         child_parameters.genome.max_n = randint(*EvolutionSimulator.live_borders)
         return child_parameters
 
@@ -76,8 +76,7 @@ class EvolutionSimulator:
         :return: bool
             Decision: dead (true) or alive (false)
         """
-        ratio = (p.genome.max_n - p.lived_time) / p.genome.max_n
-        return p.p_for_death > uniform(0, ratio)
+        return p.genome.p_for_death > random()
 
     @staticmethod
     def have_to_reproduct(p: BacteriaParameters) -> bool:
@@ -99,4 +98,4 @@ class EvolutionSimulator:
         :return: BacteriaParameters
             Child's parameters
         """
-        return choose_child_parameters(p)
+        return EvolutionSimulator.__choose_child_parameters(p)

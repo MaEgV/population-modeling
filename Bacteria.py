@@ -1,22 +1,6 @@
 from BacteriaParameters import BacteriaParameters
 from EvolutionSimulator import EvolutionSimulator
-
-
-def create_bacteria(population, max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:
-    """
-    Create bacteria from different parameters
-    :param population: Population
-        Population in which situated bacteria
-    :param max_life_time: int
-        Maximum iterations for bacteria
-    :param p_for_death: float
-        Probability of death
-    :param p_for_reproduction: float
-        Probability of reproduction
-    :return: Bacteria
-        Bacteria with set parameters
-    """
-    return Bacteria(BacteriaParameters(BacteriaGenome(max_life_time, p_for_death, p_for_reproduction), population))
+from BacteriaGenome import BacteriaGenome
 
 
 class Bacteria:
@@ -41,7 +25,7 @@ class Bacteria:
         self.is_alive = True
         self.parameters = p
 
-    def iteration(self) -> list[Bacteria]:
+    def iteration(self) -> list:
 
         """
         In method EvolutionSimulator decide fate of bactria: should it die or should it reproduct
@@ -62,3 +46,20 @@ class Bacteria:
             else:
                 self.is_alive = False
                 return []
+
+
+def create_bacteria(population, max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:
+    """
+    Create bacteria from different parameters
+    :param population: Population
+        Population in which situated bacteria
+    :param max_life_time: int
+        Maximum iterations for bacteria
+    :param p_for_death: float
+        Probability of death
+    :param p_for_reproduction: float
+        Probability of reproduction
+    :return: Bacteria
+        Bacteria with set parameters
+    """
+    return Bacteria(BacteriaParameters(BacteriaGenome(max_life_time, p_for_death, p_for_reproduction), population))
