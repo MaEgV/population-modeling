@@ -55,6 +55,4 @@ param = Parameters(0, 0)  # создаём начальные параметры
 for i in Population(param, n=15, p_for_death=0.2, p_for_reproduction=0.4, max_life_time=10):  # передаём параметры популяции, максимальное число итераций и параметры первой особи
     i.draw()  # рисуем граф популяции без сохранения
 ```
-
-Ниже последовательный вывод программы:
 ![alt text](https://github.com/MaEgV/population-modeling/blob/population/example_res.gif)
