@@ -1,6 +1,6 @@
-from src.population_modeling.Bacteria.bacteria import create_bacteria
-from src.population_modeling.Population.parameters import Parameters
-from src.population_modeling.Population.iterator import Iterator
+from ..Bacteria.bacteria import create_bacteria
+from ..Population.parameters import Parameters
+from ..Population.iterator import Iterator
 
 
 class Population:
