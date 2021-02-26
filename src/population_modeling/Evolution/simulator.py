@@ -1,7 +1,6 @@
-from src.population_modeling.Bacteria.parameters import Parameters
-from src.population_modeling.Evolution.genome import Genome, MutationalProcesses, NormalMutations
+from src.population_modeling.Evolution.genome import Genome
+from src.population_modeling.Population import parameters
 from scipy.stats import uniform
-
 
 class Simulator:
     """
@@ -29,28 +28,28 @@ class Simulator:
      get_child_parameters(p: BacteriaParameters) -> BacteriaParameters
         Return all child's parameters
     """
-    mutations_mode: MutationalProcesses = NormalMutations()
+#    mutations_mode: MutationalProcesses = NormalMutations()
+
+    # @staticmethod
+    # def __choose_child_parameters(parent_parameters: parameters) -> parameters:
+    #     """
+    #     Create all child's parameters (probability for death, probability for reproduction, max lifetime (max_live_time)
+    #      based on parent's parameters
+    #     :param parent_parameters: BacteriaParameters
+    #         All parent's parameters
+    #     :return:BacteriaParameters
+    #         All child's parameters
+    #     """
+    #     child_genome = Genome(
+    #         Simulator.mutations_mode.child_max_n(parent_parameters.genome),
+    #         Simulator.mutations_mode.child_p_for_death(parent_parameters.genome),
+    #         Simulator.mutations_mode.child_p_for_reproduction(parent_parameters.genome)
+    #     )
+    #
+    #     return Parameters(child_genome, parent_parameters.population)
 
     @staticmethod
-    def __choose_child_parameters(parent_parameters: Parameters) -> Parameters:
-        """
-        Create all child's parameters (probability for death, probability for reproduction, max lifetime (max_live_time)
-         based on parent's parameters
-        :param parent_parameters: BacteriaParameters
-            All parent's parameters
-        :return:BacteriaParameters
-            All child's parameters
-        """
-        child_genome = Genome(
-            Simulator.mutations_mode.child_max_n(parent_parameters.genome),
-            Simulator.mutations_mode.child_p_for_death(parent_parameters.genome),
-            Simulator.mutations_mode.child_p_for_reproduction(parent_parameters.genome)
-        )
-
-        return Parameters(child_genome, parent_parameters.population)
-
-    @staticmethod
-    def have_to_die(p: Parameters) -> bool:
+    def have_to_die(genome: Genome, extend_factors: parameters) -> bool:
         """
         Decide if bacteria should die or not based on lifetime
         :param p: BacteriaParameters
@@ -58,12 +57,10 @@ class Simulator:
         :return: bool
             Decision: dead (true) or alive (false)
         """
-        extend_factors = p.population.p.antagonism
-
-        return extend_factors + p.genome.p_for_death > uniform.rvs(0, 1)
+        return extend_factors.antagonism + genome.p_for_death > uniform.rvs(0, 1)
 
     @staticmethod
-    def have_to_reproduct(p: Parameters) -> bool:
+    def have_to_reproduct(genome: Genome, extend_factors: parameters) -> bool:
         """
         Decide if bacteria should reproduct or not
         :param p: BacteriaParameters
@@ -71,17 +68,15 @@ class Simulator:
         :return:bool
             Decision: should reproduct (true) or shouldn't (false)
         """
-        extend_factors = p.population.p.overpopulation
+        return -extend_factors.overpopulation + genome.p_for_reproduction > uniform.rvs(0, 1)
 
-        return extend_factors + p.genome.p_for_reproduction > uniform.rvs(0, 1)
-
-    @staticmethod
-    def get_child_parameters(p: Parameters) -> Parameters:
-        """
-        Put generated child parameters
-        :param p: BacteriaParameters
-            Bacteria's parameters
-        :return: BacteriaParameters
-            Child's parameters
-        """
-        return Simulator.__choose_child_parameters(p)
+    # @staticmethod
+    # def get_child_parameters(p: Parameters) -> Parameters:
+    #     """
+    #     Put generated child parameters
+    #     :param p: BacteriaParameters
+    #         Bacteria's parameters
+    #     :return: BacteriaParameters
+    #         Child's parameters
+    #     """
+    #     return Simulator.__choose_child_parameters(p)
