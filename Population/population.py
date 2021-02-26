@@ -5,11 +5,26 @@ from Population.iterator import Iterator
 
 class Population:
     """
+    A class containing information about the population. An iterator is implemented using a class Population.Iterator.
+    Bacteria can get information about their population to adjust their behavior
+
     Attributes
     ----------
+    initial_parameters: Parameters
+        started parameters of population
+    n: int
+        max iteration times of population
+    max_life_time: int
+        max life time of first bacteria
+    p_for_death: float
+        probability for death per iteration of first bacteria
+    p_for_reproduction: float
+        probability for reproduce 1 child per iteration of first bacteria (could be many children)
 
     Methods
     -------
+    __iter__(self) -> Iterator:
+        get iterator of Population
     """
 
     def __init__(self,
