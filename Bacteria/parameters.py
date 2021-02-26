@@ -8,7 +8,7 @@ class Parameters:
 
     Attributes
     ----------
-    genome : пenome
+    genome : genome
         Bacteria's genome parameters
     population : population
         Population in which situated bacteria

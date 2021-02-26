@@ -2,6 +2,11 @@ from scipy.stats import norm
 
 
 class Parameters:
+    '''
+    A class of population parameters that allows you to learn about the state of the population.
+    With the help of this class of bacteria are able to control their size and composition.
+    Play the role of external factors of evolution.
+    '''
     def __init__(self, max_population=50, antagonism=0, overpopulation=0):
         self._max_population = max_population
 
