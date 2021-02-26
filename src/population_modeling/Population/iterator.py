@@ -1,4 +1,4 @@
-from Bacteria.bacteria import Bacteria
+from src.population_modeling.Bacteria.bacteria import Bacteria
 import igraph
 
 

@@ -1,5 +1,5 @@
-from Evolution import genome
-from Population import population
+from src.population_modeling.Evolution import genome
+from src.population_modeling.Population import population
 
 
 class Parameters:
