@@ -46,7 +46,7 @@
 **Пример использования**
 ======================
 Рассмотрим простой пример настройки популяции и отрисовки результата симуляции эволюции:
-''' Python
+'''python
 from src.population_modeling.Population.population import Population  # импортируем класс популяции
 from src.population_modeling.Population.parameters import Parameters  # импортируем класс параметров популяции
 
