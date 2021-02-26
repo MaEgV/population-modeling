@@ -1,2 +1,4 @@
 flake8
 pytest
+
+scipy~=1.6.1

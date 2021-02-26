@@ -1,6 +1,7 @@
 from Bacteria.bacteria import Bacteria
 import igraph
 
+
 def create_graph(first_bacteria):
     '''
     Create new graph with one node and two labels
@@ -13,7 +14,26 @@ def create_graph(first_bacteria):
 
     return graph
 
+
 class Iterator:
+    """
+    A class that iterates through a population consisting of a single bacterium.
+    First bacterium provides information about the Population class, witch saved by Iterator.
+    It allows to change the state of the class after each iteration.
+    All individuals are stored as a directed graph. It is possible to draw a population graph.
+
+    Attributes
+    ----------
+    max_iter: int
+        max iterations number
+    first_bacteria: Bacteria
+        first individual in population
+
+    Methods
+    -------
+    __next(self)__ -> Iterator:
+        one iteration. calling @iteration@ for each bacteria in population and adding children to population graph
+    """
     INDIVIDUAL_KEY = 'bacteria'
     GENERATION_KEY = 'generation'
 
