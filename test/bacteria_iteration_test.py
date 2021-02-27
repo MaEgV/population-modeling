@@ -19,9 +19,9 @@ TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, ant
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_iteration_alive.bacteria.iteration(Exte(
+    result = bacteria_iteration_alive.bacteria.iteration(Selector(ExternalFactors(
                                                                     bacteria_iteration_alive.antagonism,
-                                                                    bacteria_iteration_alive.overpopulation))
+                                                                    bacteria_iteration_alive.overpopulation)))
     assert len(result) >= 0
 
 
