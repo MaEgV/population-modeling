@@ -107,5 +107,5 @@ class Population:
             layout=layout,
             vertex_label=[node.index for node in self.graph.vs],
             bbox=(600, 600),
-            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive else 'red' for node in self._graph.vs]
+            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive else 'red' for node in self.graph.vs]
         )

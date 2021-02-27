@@ -1,5 +1,5 @@
 from src.population_modeling.Evolution.simulator import Simulator
-from src.population_modeling.Evolution.genome import Genome
+from src.population_modeling.Bacteria.genome import Genome
 from src.population_modeling.Population.parameters import Parameters
 
 class Bacteria:
@@ -31,19 +31,25 @@ class Bacteria:
         :return: list[Bacteria]
             List of child's if they are, if Bacteria not alive returns None
         """
-
         if not self.is_alive:
             raise BaseException('Addressing for a dead bacteria')
-        else:
-            if not Simulator.have_to_die(self.genome, extend_factors):
-                children = list()
-                while Simulator.have_to_reproduct(self.genome, extend_factors):
-                    child_parameters = self.genome.child_genome()
-                    children.append(Bacteria(child_parameters))
-                return children
-            else:
-                self.is_alive = False
-                return []
+
+        self.genome.spontaneous_mutation()
+
+        if Simulator.have_to_die(self.genome, extend_factors):
+            self.is_alive = False
+            return []
+
+        return self._get_children(extend_factors)
+
+    def _get_children(self, extend_factors: Parameters):
+        children = list()
+
+        while Simulator.have_to_reproduct(self.genome, extend_factors):  # the Bernoulli test
+            child_parameters = self.genome.child_genome()
+            children.append(Bacteria(child_parameters))
+
+        return children
 
 
 def create_bacteria(max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:
