@@ -5,7 +5,9 @@ name: CI to Population modeling
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+    - main
+    - population
   pull_request:
     branches: [ main ]
 
