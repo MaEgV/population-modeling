@@ -1,6 +1,6 @@
 import pytest
 from src.population_modeling.Bacteria.bacteria import create_bacteria
-from src.population_modeling.Population.population import Parameters, Population
+from src.population_modeling.Population.population import ExternalConditions, Population
 
 
 class Case:
@@ -19,9 +19,9 @@ TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, ant
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_iteration_alive.bacteria.iteration(Parameters(bacteria_iteration_alive.population_max,
-                                                                    bacteria_iteration_alive.antagonism,
-                                                                    bacteria_iteration_alive.overpopulation))
+    result = bacteria_iteration_alive.bacteria.iteration(ExternalConditions(bacteria_iteration_alive.population_max,
+                                                                            bacteria_iteration_alive.antagonism,
+                                                                            bacteria_iteration_alive.overpopulation))
     assert len(result) >= 0
 
 
@@ -29,6 +29,6 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
     bacteria_iteration_dead.bacteria.is_alive = False
     with pytest.raises(BaseException):
-        bacteria_iteration_dead.bacteria.iteration(Parameters(bacteria_iteration_dead.population_max,
-                                                              bacteria_iteration_dead.antagonism,
-                                                              bacteria_iteration_dead.overpopulation))
+        bacteria_iteration_dead.bacteria.iteration(ExternalConditions(bacteria_iteration_dead.population_max,
+                                                                      bacteria_iteration_dead.antagonism,
+                                                                      bacteria_iteration_dead.overpopulation))

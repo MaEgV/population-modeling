@@ -1,5 +1,5 @@
 from ..Bacteria.bacteria import create_bacteria
-from ..Population.parameters import Parameters
+from ..Population.properties import ExternalConditions
 import igraph
 
 
@@ -23,7 +23,7 @@ class Population:
 
     Attributes
     ----------
-    initial_parameters: Parameters
+    initial_parameters: ExternalConditions
         started parameters of population
     n: int
         max iteration times of population
@@ -43,7 +43,7 @@ class Population:
     INDIVIDUAL_KEY = 'bacteria'
     GENERATION_KEY = 'generation'
 
-    def __init__(self, initial_parameters: Parameters, max_life_time=5,p_for_death=0.5, p_for_reproduction=0.5):
+    def __init__(self, initial_parameters: ExternalConditions, max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5):
         self.p = initial_parameters
         self.graph = create_graph(create_bacteria(max_life_time, p_for_death, p_for_reproduction))
 

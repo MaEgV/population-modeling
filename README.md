@@ -51,10 +51,11 @@
 
 ```Python
 from src.population_modeling.Population.population import Population  # импортируем класс популяции
-from src.population_modeling.Population.parameters import Parameters  # импортируем класс параметров популяции
+from src.population_modeling.Population.properties import ExternalConditions  # импортируем класс параметров популяции
 
 param = Parameters(0, 0)  # создаём начальные параметры популяции
-for i in Population(param, n=15, p_for_death=0.2, p_for_reproduction=0.4, max_life_time=10):  # передаём параметры популяции, максимальное число итераций и параметры первой особи
+for i in Population(param, n=15, p_for_death=0.2, p_for_reproduction=0.4,
+                    max_life_time=10):  # передаём параметры популяции, максимальное число итераций и параметры первой особи
     i.draw()  # рисуем граф популяции без сохранения
 ```
 ![alt text](https://github.com/MaEgV/population-modeling/blob/population/example_res.gif)

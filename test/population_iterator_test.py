@@ -1,13 +1,13 @@
 import pytest
 from src.population_modeling.Bacteria.bacteria import create_bacteria
-from src.population_modeling.Population.population import Population, Parameters
+from src.population_modeling.Population.population import Population, ExternalConditions
 
 
 class Case:
     def __init__(self, name, population_max, antagonism, overpopulation, max_life_time, p_for_death,
                  p_for_reproduction, result):
         self.name = name
-        self.population = Population(Parameters(population_max, antagonism, overpopulation), max_life_time, p_for_death,
+        self.population = Population(ExternalConditions(population_max, antagonism, overpopulation), max_life_time, p_for_death,
                                      p_for_reproduction)
         self.max_population = population_max
         self.bacteria = create_bacteria(max_life_time, p_for_death, p_for_reproduction)

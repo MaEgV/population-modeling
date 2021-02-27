@@ -1,7 +1,7 @@
 from scipy.stats import norm
 
 
-class Parameters:
+class ExternalConditions:
     '''
     A class of population parameters that allows you to learn about the state of the population.
     With the help of this class of bacteria are able to control their size and composition.

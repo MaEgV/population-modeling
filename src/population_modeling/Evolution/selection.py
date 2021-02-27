@@ -1,9 +1,9 @@
 from src.population_modeling.Bacteria.genome import Genome
-from src.population_modeling.Population import parameters
+from src.population_modeling.Population import properties
 from scipy.stats import uniform
 
 
-class Simulator:
+class Selection:
     """
     Simulate evolution processes. Decide what parameters should have child.
 
@@ -31,7 +31,7 @@ class Simulator:
     """
 
     @staticmethod
-    def have_to_die(genome: Genome, extend_factors: parameters) -> bool:
+    def have_to_die(genome: Genome, extend_factors: properties) -> bool:
         """
         Decide if bacteria should die or not based on lifetime
         :param p: BacteriaParameters
@@ -47,7 +47,7 @@ class Simulator:
         return extend_factors.antagonism + genome.p_for_death > uniform.rvs(0, 1)
 
     @staticmethod
-    def have_to_reproduct(genome: Genome, extend_factors: parameters) -> bool:
+    def have_to_reproduct(genome: Genome, extend_factors: properties) -> bool:
         """
         Decide if bacteria should reproduct or not
         :param p: BacteriaParameters
