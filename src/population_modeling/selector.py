@@ -1,9 +1,27 @@
-from src.population_modeling.Bacteria.genome import Genome
-from src.population_modeling.Population import properties
-from scipy.stats import uniform
+from src.population_modeling.genome import Genome
+from scipy.stats import uniform, norm
 
 
-class Selection:
+class ExternalFactors:
+    '''
+    A class of population parameters that allows you to learn about the state of the population.
+    With the help of this class of bacteria are able to control their size and composition.
+    Play the role of external factors of evolution.
+    '''
+    def __init__(self, antagonism=0, overpopulation=0):
+        self.antagonism = antagonism  # may be negative (collaboration)
+        self.overpopulation = overpopulation
+
+
+def default_have_to_die(ext_factors: ExternalFactors, genome: Genome):
+    return ext_factors.antagonism + genome.p_for_death > uniform.rvs(0, 1)
+
+
+def default_have_to_reproduct(ext_factors: ExternalFactors, genome: Genome):
+    return -ext_factors.overpopulation + genome.p_for_reproduction > uniform.rvs(0, 1)
+
+
+class Selector:
     """
     Simulate evolution processes. Decide what parameters should have child.
 
@@ -30,8 +48,16 @@ class Selection:
         Return all child's parameters
     """
 
-    @staticmethod
-    def have_to_die(genome: Genome, extend_factors: properties) -> bool:
+    def __init__(self,
+                 external_factors: ExternalFactors,
+                 have_to_die_func=default_have_to_die,
+                 have_to_reproduct_func=default_have_to_reproduct
+                 ):
+        self.have_to_die_func = have_to_die_func
+        self.have_to_reproduct_func = have_to_reproduct_func
+        self.external_factors = external_factors
+
+    def have_to_die(self, genome: Genome) -> bool:
         """
         Decide if bacteria should die or not based on lifetime
         :param p: BacteriaParameters
@@ -44,10 +70,9 @@ class Selection:
         extend_factors
         genome
         """
-        return extend_factors.antagonism + genome.p_for_death > uniform.rvs(0, 1)
+        return self.have_to_die_func(self.external_factors, genome)
 
-    @staticmethod
-    def have_to_reproduct(genome: Genome, extend_factors: properties) -> bool:
+    def have_to_reproduct(self, genome: Genome) -> bool:
         """
         Decide if bacteria should reproduct or not
         :param p: BacteriaParameters
@@ -60,4 +85,5 @@ class Selection:
         extend_factors
         genome
         """
-        return -extend_factors.overpopulation + genome.p_for_reproduction > uniform.rvs(0, 1)
+        return self.have_to_reproduct_func(self.external_factors, genome)
+

@@ -1,47 +1,5 @@
-from abc import abstractmethod, ABC
 from scipy.stats import norm, uniform
 from math import fabs
-
-
-# class MutationalProcesses:
-#     @abstractmethod
-#     def child_max_n(self, parent_genome: Genome):
-#         raise NotImplementedError
-#
-#     @abstractmethod
-#     def child_p_for_death(self, parent_genome: Genome):
-#         raise NotImplementedError
-#
-#     @abstractmethod
-#     def child_p_for_reproduction(self, parent_genome: Genome):
-#         raise NotImplementedError
-#
-#     @abstractmethod
-#     def spontaneous_mutation(self, genome: Genome):
-#         raise NotImplementedError
-
-
-# class NormalMutations(MutationalProcesses):
-#     def child_max_n(self, parent_genome: Genome) -> int:
-#         variation = norm.rvs(0, 3)
-#
-#         return round(fabs(parent_genome.max_life_time + variation))
-#
-#     def child_p_for_death(self, parent_genome: Genome) -> float:
-#         variation = norm.rvs(0, 0.01)
-#         parameter = fabs(parent_genome.p_for_death + variation)
-#
-#         return min(parameter, 1)
-#
-#     def child_p_for_reproduction(self, parent_genome: Genome) -> float:
-#         variation = norm.rvs(0, 0.01)
-#         parameter = fabs(parent_genome.p_for_reproduction + variation)
-#
-#         return min(parameter, 1)
-#
-#     def spontaneous_mutation(self, genome: Genome) -> None:
-#         genome.p_for_death = min(genome.p_for_death + norm.rvs(0, 0.001), 1)
-#         genome.p_for_death = min(genome.p_for_reproduction + norm.rvs(0, 0.001), 1)
 
 
 class Genome:
@@ -63,6 +21,12 @@ class Genome:
         self.p_for_reproduction = p_for_reproduction_
 
     def child_genome(self):
+        '''
+        Creates a descendant genome based on the parent genome
+
+        Returns Genome
+            child genome
+        '''
         child_genome = Genome(
             self.child_max_n(),
             self.child_p_for_death(),
@@ -72,6 +36,11 @@ class Genome:
         return child_genome
 
     def spontaneous_mutation(self) -> None:
+        '''
+        Spontaneous mutation of the genome
+
+        Returns None
+        '''
         self.p_for_death = min(self.p_for_death + norm.rvs(0, 0.001), 1)
         self.p_for_reproduction = min(self.p_for_reproduction + norm.rvs(0, 0.001), 1)
 

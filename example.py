@@ -1,9 +1,7 @@
-from src.population_modeling.Population.population import Population
-from src.population_modeling.Population.properties import ExternalConditions
+from src.population_modeling import Population, Selector, ExternalFactors
 
-param = ExternalConditions(100, 0)
-c = 0
-t = Population(param, p_for_death=0.1, p_for_reproduction=0.5, max_life_time=10)
+param = Selector(ExternalFactors())
+population = Population(param, p_for_death=0.1, p_for_reproduction=0.5, max_life_time=10)
 
-for i in range(10):
-    t.iteration().draw()
+for _ in range(10):
+    population.iteration().draw()

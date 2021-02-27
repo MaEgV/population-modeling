@@ -50,8 +50,8 @@
 Рассмотрим простой пример настройки популяции и отрисовки результата симуляции эволюции:
 
 ```Python
-from src.population_modeling.Population.population import Population  # импортируем класс популяции
-from src.population_modeling.Population.properties import ExternalConditions  # импортируем класс параметров популяции
+from src.population_modeling.population import Population  # импортируем класс популяции
+from src.population_modeling.properties import ExternalConditions  # импортируем класс параметров популяции
 
 param = Parameters(0, 0)  # создаём начальные параметры популяции
 for i in Population(param, n=15, p_for_death=0.2, p_for_reproduction=0.4,

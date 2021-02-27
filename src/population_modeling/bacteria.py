@@ -1,6 +1,5 @@
-from src.population_modeling.Evolution.selection import Selection
-from src.population_modeling.Bacteria.genome import Genome
-from src.population_modeling.Population.properties import ExternalConditions
+from src.population_modeling.selector import Selector, Genome
+
 
 class Bacteria:
     """
@@ -13,7 +12,6 @@ class Bacteria:
        parameters :  BacteriaParameters
            Parameters of bacteria
 
-
        Methods
        -------
         iteration(self) -> list[Bacteria]
@@ -24,7 +22,7 @@ class Bacteria:
         self.is_alive = True
         self.genome = p
 
-    def iteration(self, extend_factors: ExternalConditions) -> list:
+    def iteration(self, selector: Selector) -> list:
 
         """
         In method EvolutionSimulator decide fate of bactria: should it die or should it reproduct
@@ -36,16 +34,15 @@ class Bacteria:
 
         self.genome.spontaneous_mutation()
 
-        if Selection.have_to_die(self.genome, extend_factors):
+        if selector.have_to_die(self.genome):
             self.is_alive = False
             return []
 
-        return self._get_children(extend_factors)
+        return self._get_children(selector)
 
-    def _get_children(self, extend_factors: ExternalConditions):
+    def _get_children(self, selector: Selector):
         children = list()
-
-        while Selection.have_to_reproduct(self.genome, extend_factors):  # the Bernoulli test
+        while selector.have_to_reproduct(self.genome):  # the Bernoulli test
             child_parameters = self.genome.child_genome()
             children.append(Bacteria(child_parameters))
 
