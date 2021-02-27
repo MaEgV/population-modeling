@@ -1,6 +1,5 @@
 from ..Bacteria.bacteria import create_bacteria
 from ..Population.parameters import Parameters
-from ..Population.iterator import Iterator
 import igraph
 
 
@@ -41,13 +40,12 @@ class Population:
         get iterator of Population
     """
 
-    def __init__(self,
-                 initial_parameters: Parameters,
-                 max_life_time=5,
-                 p_for_death=0.5,
-                 p_for_reproduction=0.5):
+    INDIVIDUAL_KEY = 'bacteria'
+    GENERATION_KEY = 'generation'
+
+    def __init__(self, initial_parameters: Parameters, max_life_time=5,p_for_death=0.5, p_for_reproduction=0.5):
         self.p = initial_parameters
-        self._graph = create_graph(create_bacteria(max_life_time, p_for_death, p_for_reproduction))
+        self.graph = create_graph(create_bacteria(max_life_time, p_for_death, p_for_reproduction))
 
     def iteration(self):
         '''
@@ -55,8 +53,8 @@ class Population:
         :return: self
         '''
         new_generation = list()
-        for vertex in self._graph.vs:
-            parent = vertex[Iterator.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
+        for vertex in self.graph.vs:
+            parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
             if parent.is_alive:
                 children = parent.iteration(self.p)
@@ -88,26 +86,26 @@ class Population:
         :return: None
         """
         # Add children to graph vertices with new generation labels
-        self._graph.add_vertices(
+        self.graph.add_vertices(
             len(children),
-            {Iterator.INDIVIDUAL_KEY: children,
-             Iterator.GENERATION_KEY: [parent[Iterator.GENERATION_KEY] + 1] * len(children)}
+            {Population.INDIVIDUAL_KEY: children,
+             Population.GENERATION_KEY: [parent[Population.GENERATION_KEY] + 1] * len(children)}
         )
 
         # Add directed edges from parent to children
-        self._graph.add_edges([(parent, child) for child in self._graph.vs[-len(children)::]])
+        self.graph.add_edges([(parent, child) for child in self.graph.vs[-len(children)::]])
 
     def draw(self, filename=None):
         '''
         Drawing directed graph with reingold layout and show in png format
         :return: None
         '''
-        layout = self._graph.layout_reingold_tilford(root=[0])
+        layout = self.graph.layout_reingold_tilford(root=[0])
         igraph.plot(
-            self._graph,
+            self.graph,
             filename,
             layout=layout,
-            vertex_label=[node.index for node in self._graph.vs],
+            vertex_label=[node.index for node in self.graph.vs],
             bbox=(600, 600),
-            vertex_color=['green' if node[Iterator.INDIVIDUAL_KEY].is_alive else 'red' for node in self._graph.vs]
+            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive else 'red' for node in self._graph.vs]
         )
