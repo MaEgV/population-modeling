@@ -1,6 +1,6 @@
 import pytest
-from .src.population_modeling.bacteria import create_bacteria
-from .src.population_modeling.selector import Selector, ExternalFactors
+from src.population_modeling.bacteria import create_bacteria
+from src.population_modeling.selector import Selector, ExternalFactors
 
 
 class Case:
