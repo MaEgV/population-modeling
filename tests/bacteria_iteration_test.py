@@ -28,6 +28,6 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
     bacteria_iteration_dead.bacteria.is_alive = False
     with pytest.raises(BaseException):
-        bacteria_iteration_dead.bacteria.iteration(Selector(ExternalFactors(
-            bacteria_iteration_dead.antagonism,
-            bacteria_iteration_dead.overpopulation)))
+        bacteria_iteration_dead.bacteria.iteration(src.population_modeling.Selector(
+            src.population_modeling.ExternalFactors(bacteria_iteration_dead.antagonism,
+                                                    bacteria_iteration_dead.overpopulation)))
