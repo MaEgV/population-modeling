@@ -1,5 +1,5 @@
 import pytest
-import src.population_modeling
+import population_modeling
 
 
 class Case:
@@ -9,7 +9,7 @@ class Case:
         self.population_max = population_max
         self.antagonism = antagonism
         self.overpopulation = overpopulation
-        self.bacteria = src.population_modeling.bacteria.create_bacteria(max_life_time, p_for_death, p_for_reproduction)
+        self.bacteria = population_modeling.bacteria.create_bacteria(max_life_time, p_for_death, p_for_reproduction)
 
 
 TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, antagonism=0, overpopulation=0,

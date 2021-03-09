@@ -47,11 +47,12 @@ Population является основным классом, а Selector пар�
 Рассмотрим простой пример настройки популяции и отрисовки результата симуляции эволюции:
 
 ```Python
-from src.population_modeling.population import Population  # import of the population class
+from population_modeling import Population, Selector, ExternalFactors
 
-param = Parameters(0, 0)  # creating the initial parameters of the population
-for i in Population(param, n=15, p_for_death=0.2, p_for_reproduction=0.4,
-                    max_life_time=10):  # passing the population parameters, the maximum number of iterations, and the parameters of the first individual
-    i.draw()  # drawing a population graph without saving
+param = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+population = Population(param, p_for_death=0.1, p_for_reproduction=0.5, max_life_time=10) # creating population
+
+for _ in range(10):
+    population.iteration().draw()  # drawing a population without saving
 ```
 ![alt text](https://github.com/MaEgV/population-modeling/blob/population/examples/population_image_example_res.gif)
