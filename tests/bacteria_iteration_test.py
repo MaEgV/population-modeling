@@ -1,6 +1,5 @@
 import pytest
-from .src.population_modeling.bacteria import create_bacteria
-from .src.population_modeling.selector import Selector, ExternalFactors
+import .src.population_modeling
 
 
 class Case:
@@ -10,7 +9,7 @@ class Case:
         self.population_max = population_max
         self.antagonism = antagonism
         self.overpopulation = overpopulation
-        self.bacteria = create_bacteria(max_life_time, p_for_death, p_for_reproduction)
+        self.bacteria = src.population_modeling.bacteria.create_bacteria(max_life_time, p_for_death, p_for_reproduction)
 
 
 TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, antagonism=0, overpopulation=0,
@@ -19,9 +18,9 @@ TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, ant
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_iteration_alive.bacteria.iteration(Selector(ExternalFactors(
-                                                                    bacteria_iteration_alive.antagonism,
-                                                                    bacteria_iteration_alive.overpopulation)))
+    result = bacteria_iteration_alive.bacteria.iteration(src.population_modeling.population.Selector(
+        src.population_modeling.population.ExternalFactors(bacteria_iteration_alive.antagonism,
+                                                           bacteria_iteration_alive.overpopulation)))
     assert len(result) >= 0
 
 
@@ -30,5 +29,5 @@ def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
     bacteria_iteration_dead.bacteria.is_alive = False
     with pytest.raises(BaseException):
         bacteria_iteration_dead.bacteria.iteration(Selector(ExternalFactors(
-                                                              bacteria_iteration_dead.antagonism,
-                                                              bacteria_iteration_dead.overpopulation)))
+            bacteria_iteration_dead.antagonism,
+            bacteria_iteration_dead.overpopulation)))
