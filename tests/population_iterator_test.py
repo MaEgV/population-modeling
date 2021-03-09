@@ -2,6 +2,7 @@ import pytest
 from src.population_modeling.bacteria import create_bacteria
 from src.population_modeling.population import Population, Selector, ExternalFactors
 
+
 class Case:
     def __init__(self, name, population_max, antagonism, overpopulation, max_life_time, p_for_death,
                  p_for_reproduction, result):
