@@ -1,5 +1,5 @@
 import pytest
-import .src.population_modeling
+import src.population_modeling
 
 
 class Case:
