@@ -1,5 +1,5 @@
 import pytest
-from .src.population_modeling import bacteria, population, Selector, ExternalFactors
+from .population_modeling import bacteria, population, Selector, ExternalFactors
 
 
 class Case:
