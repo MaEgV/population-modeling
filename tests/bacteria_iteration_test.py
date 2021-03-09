@@ -1,5 +1,5 @@
 import pytest
-import population_modeling
+from ..population_modeling import *
 
 
 class Case:
