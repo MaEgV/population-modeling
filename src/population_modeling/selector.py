@@ -57,7 +57,7 @@ class Selector:
         self.have_to_reproduct_func = have_to_reproduct_func
         self.external_factors = external_factors
 
-    def have_to_die(self, genome: Genome) -> bool:
+    def is_died(self, genome: Genome) -> bool:
         """
         Decide if bacteria should die or not based on lifetime
         :param p: BacteriaParameters

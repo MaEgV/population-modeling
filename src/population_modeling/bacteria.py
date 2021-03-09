@@ -1,4 +1,5 @@
 from src.population_modeling.selector import Selector, Genome
+from src.population_modeling.exceptions import DeadBacteria
 
 
 class Bacteria:
@@ -9,7 +10,7 @@ class Bacteria:
        ----------
        is_alive : bool
            Is bacteria alive or dead
-       parameters :  BacteriaParameters
+       parameters : BacteriaParameters
            Parameters of bacteria
 
        Methods
@@ -30,11 +31,11 @@ class Bacteria:
             List of child's if they are, if Bacteria not alive returns None
         """
         if not self.is_alive:
-            raise BaseException('Addressing for a dead bacteria')
+            raise DeadBacteria(self)
 
         self.genome.spontaneous_mutation()
 
-        if selector.have_to_die(self.genome):
+        if selector.is_died(self.genome):
             self.is_alive = False
             return []
 
@@ -43,8 +44,8 @@ class Bacteria:
     def _get_children(self, selector: Selector):
         children = list()
         while selector.have_to_reproduct(self.genome):  # the Bernoulli test
-            child_parameters = self.genome.child_genome()
-            children.append(Bacteria(child_parameters))
+            child_genome = self.genome.child_genome()
+            children.append(Bacteria(child_genome))
 
         return children
 

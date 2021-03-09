@@ -38,7 +38,6 @@ class Population:
     __iter__(self) -> Iterator:
         get iterator of Population
     """
-
     INDIVIDUAL_KEY = 'bacteria'
     GENERATION_KEY = 'generation'
 
@@ -101,8 +100,8 @@ class Population:
         Recounting external factors after iteration. Changing living conditions
         Returns None
         '''
-        self.selector.external_factors.antagonism = 0
-        self.selector.external_factors.overpopulation = 0
+        self.selector.external_factors.antagonism = 0  # temporary solution
+        self.selector.external_factors.overpopulation = 0  # temporary solution
 
     def draw(self, filename=None):
         '''
