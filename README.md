@@ -41,7 +41,6 @@ Population является основным классом, а Selector пар�
 1. iteration - один жизненный цикл всех бактерий в популяции;
 2. draw - отрисовка графа популяции.
 
-![alt text](https://github.com/MaEgV/population-modeling/blob/population/examples/population_image_example.py)
 
 **Пример использования**
 ======================
@@ -55,4 +54,4 @@ for i in Population(param, n=15, p_for_death=0.2, p_for_reproduction=0.4,
                     max_life_time=10):  # passing the population parameters, the maximum number of iterations, and the parameters of the first individual
     i.draw()  # drawing a population graph without saving
 ```
-![alt text](https://github.com/MaEgV/population-modeling/blob/population/example_res.gif)
+![alt text](https://github.com/MaEgV/population-modeling/blob/population/examples/population_image_example_res.gif)
