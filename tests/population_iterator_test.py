@@ -1,15 +1,16 @@
 import pytest
-from .src.population_modeling import bacteria, Population, Selector, ExternalFactors
+import population_modeling
 
 
 class Case:
     def __init__(self, name, population_max, antagonism, overpopulation, max_life_time, p_for_death,
                  p_for_reproduction, result):
         self.name = name
-        self.population = Population(Selector(ExternalFactors(antagonism, overpopulation)), max_life_time, p_for_death,
-                                     p_for_reproduction)
+        self.population = population_modeling.Population(
+            population_modeling.Selector(population_modeling.ExternalFactors(antagonism, overpopulation)),
+            max_life_time, p_for_death, p_for_reproduction)
         self.max_population = population_max
-        self.bacteria = bacteria.create_bacteria(max_life_time, p_for_death, p_for_reproduction)
+        self.bacteria = population_modeling.create_bacteria(max_life_time, p_for_death, p_for_reproduction)
         self.result = result
 
 
