@@ -1,5 +1,5 @@
 from population_modeling.genome import Genome
-from scipy.stats import uniform, norm
+from scipy.stats import uniform, norm  # type: ignore
 
 
 class ExternalFactors:

@@ -1,5 +1,5 @@
 from population_modeling.bacteria import create_bacteria, Selector
-import igraph
+import igraph # type: ignore
 
 
 def create_graph(first_bacteria):

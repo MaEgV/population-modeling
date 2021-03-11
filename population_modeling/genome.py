@@ -1,4 +1,4 @@
-from scipy.stats import norm, uniform
+from scipy.stats import norm  # type: ignore
 from math import fabs
 
 
