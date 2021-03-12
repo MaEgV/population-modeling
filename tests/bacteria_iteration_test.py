@@ -1,5 +1,6 @@
 import pytest
 from population_modeling import bacteria, population, Selector, ExternalFactors
+from population_modeling.bacteria import iteration
 
 
 class Case:
@@ -18,9 +19,9 @@ TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, ant
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_iteration_alive.bacteria.iteration(population.Selector(
+    result = iteration(population.Selector(
         ExternalFactors(bacteria_iteration_alive.antagonism,
-                        bacteria_iteration_alive.overpopulation)))
+                        bacteria_iteration_alive.overpopulation)), bacteria_iteration_alive.bacteria)
     assert len(result) >= 0
 
 
@@ -28,5 +29,5 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
     bacteria_iteration_dead.bacteria.is_alive = False
     with pytest.raises(BaseException):
-        bacteria_iteration_dead.bacteria.iteration(Selector(ExternalFactors(bacteria_iteration_dead.antagonism,
-                                                                            bacteria_iteration_dead.overpopulation)))
+        iteration(Selector(ExternalFactors(bacteria_iteration_dead.antagonism,
+                                           bacteria_iteration_dead.overpopulation)), bacteria_iteration_dead.bacteria)

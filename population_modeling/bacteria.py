@@ -10,38 +10,36 @@ class Bacteria:
        ----------
        is_alive : bool
            Is bacteria alive or dead
-       parameters : BacteriaParameters
-           Parameters of bacteria
+       genome : Genome
+           Genome of bacteria
 
        Methods
        -------
-        iteration(self) -> list[Bacteria]
-           In each iteration bacteria can die or can reproduct
+
+        get_children(self, selector: Selector) -> list
+            Generate children
        """
 
-    def __init__(self, p: Genome):
+    def __init__(self, genome: Genome):
         self.is_alive = True
-        self.genome = p
+        self.genome = genome
 
-    def iteration(self, selector: Selector) -> list:
+    def get_children(self, selector: Selector) -> list:
+        """
+
+        Generate bacteria's children
+
+        Parameters
+        ----------
+        selector: Selector
+            Make decisions about bacteria's future actions
+
+        Returns
+        -------
+        list[Bacteria]
+            Bacteria's children (if they are be)
 
         """
-        In method EvolutionSimulator decide fate of bactria: should it die or should it reproduct
-        :return: list[Bacteria]
-            List of child's if they are, if Bacteria not alive returns None
-        """
-        if not self.is_alive:
-            raise DeadBacteria(self)
-
-        self.genome.spontaneous_mutation()
-
-        if selector.is_died(self.genome):
-            self.is_alive = False
-            return []
-
-        return self._get_children(selector)
-
-    def _get_children(self, selector: Selector):
         children = list()
         while selector.have_to_reproduct(self.genome):  # the Bernoulli test
             child_genome = self.genome.child_genome()
@@ -50,16 +48,54 @@ class Bacteria:
         return children
 
 
+def iteration(selector: Selector, bacteria: Bacteria) -> list:
+    """
+
+        In method selector decide fate of bactria: should it die or should it reproduct
+
+        Parameters
+        ----------
+        bacteria: Bacteria
+
+        selector: Selector
+            Decide fate of bactria
+        Returns
+        -------
+        list
+            List of child's if they are, if Bacteria not alive returns empty list
+
+    """
+    if not bacteria.is_alive:
+        raise DeadBacteria(bacteria)
+
+    bacteria.genome.mutation_type.spontaneous_mutation(bacteria.genome)
+
+    if selector.is_died(bacteria.genome):
+        bacteria.is_alive = False
+        return []
+
+    return bacteria.get_children(selector)
+
+
 def create_bacteria(max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:
     """
+
     Create bacteria from different parameters
-    :param max_life_time: int
+
+    Parameters
+    ----------
+    max_life_time: int
         Maximum iterations for bacteria
-    :param p_for_death: float
+    p_for_death: float
         Probability of death
-    :param p_for_reproduction: float
+    p_for_reproduction: float
         Probability of reproduction
-    :return: Bacteria
+
+    Returns
+    -------
+    Bacteria
         Bacteria with set parameters
+
     """
+
     return Bacteria(Genome(max_life_time, p_for_death, p_for_reproduction))

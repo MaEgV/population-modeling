@@ -1,4 +1,4 @@
-from population_modeling.bacteria import create_bacteria, Selector
+from population_modeling.bacteria import create_bacteria, Selector, iteration
 import igraph # type: ignore
 
 
@@ -54,7 +54,7 @@ class Population:
             parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
             if parent.is_alive:
-                children = parent.iteration(self.selector)
+                children = iteration(self.selector, parent)
 
                 if children:
                     new_generation.append((vertex, children))
