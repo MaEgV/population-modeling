@@ -1,4 +1,4 @@
-from population_modeling.population import Population
+from population_modeling.population import Population, igraph
 from population_modeling.selector import Selector, ExternalFactors
 from population_modeling.mutations import MutationalProcesses, NormalMutations
 from population_modeling.bacteria_iteration import iterate as iterate_bacteria
@@ -37,7 +37,7 @@ def _process_new_generation(population: Population, new_generation: list) -> Non
         _process_offspring(population, parent, children)
 
 
-def _process_offspring(population: Population, parent, children: list) -> None:
+def _process_offspring(population: Population, parent: igraph.Graph.vs, children: list) -> None:
     """
     Processing parent-child pairs
 
