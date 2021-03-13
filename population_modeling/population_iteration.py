@@ -6,7 +6,7 @@ from population_modeling.bacteria_iteration import iterate as iterate_bacteria
 
 def iterate(population: Population, selector: Selector, mutation_mode: MutationalProcesses):
     """
-    Iteration of population. Call bacterias iterations and process children
+    Iteration of population. Call bacterias iterations and process children - append new generation at genealogical tree
     :return: self
     """
     new_generation = list()

@@ -72,14 +72,12 @@ class Selector:
 
     Attributes
     ----------
-    max_probability : int
-        Maximum probability value
-
-    variation_probability_borders : list[float]
-        List of borders in which probability can variate
-
-    live_borders : list[float]
-        List of borders in which lifetime can variate
+    external_factors: ExternalFactors
+        external factors affecting the life of bacteria
+    have_to_die_funс:
+        implementation of have to die logic
+    have_to_reproduct_func:
+        implementation of have to reproduce logic
 
     Methods
     -------

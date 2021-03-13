@@ -7,7 +7,7 @@ from population_modeling.mutations import MutationalProcesses
 def iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacteria) -> list:
     """
 
-    In this method selector decide fate of bactria: should it die or should it reproduce
+    Function that implements a single time cycle of a bacterium, during which it can die or multiply
 
     Parameters
     ----------
