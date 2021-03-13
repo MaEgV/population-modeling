@@ -101,8 +101,8 @@ class Selector:
 
     def __init__(self,
                  external_factors: ExternalFactors,
-                 have_to_die_func: Callable[...] = default_have_to_die,
-                 have_to_reproduct_func: Callable[...] = default_have_to_reproduct
+                 have_to_die_func: Callable = default_have_to_die,
+                 have_to_reproduct_func: Callable = default_have_to_reproduct
                  ):
         self.have_to_die_func = have_to_die_func
         self.have_to_reproduct_func = have_to_reproduct_func
