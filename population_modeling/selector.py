@@ -1,5 +1,6 @@
 from population_modeling.genome import Genome
 from scipy.stats import uniform, norm  # type: ignore
+from typing import Callable
 
 
 class ExternalFactors:
@@ -100,8 +101,8 @@ class Selector:
 
     def __init__(self,
                  external_factors: ExternalFactors,
-                 have_to_die_func: callable = default_have_to_die,
-                 have_to_reproduct_func: callable = default_have_to_reproduct
+                 have_to_die_func: Callable[...] = default_have_to_die,
+                 have_to_reproduct_func: Callable[...] = default_have_to_reproduct
                  ):
         self.have_to_die_func = have_to_die_func
         self.have_to_reproduct_func = have_to_reproduct_func
