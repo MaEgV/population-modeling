@@ -20,7 +20,7 @@ class ExternalFactors:
 
     """
 
-    def __init__(self, antagonism=0, overpopulation=0):
+    def __init__(self, antagonism: float = 0, overpopulation: float = 0):
         self.antagonism = antagonism  # may be negative (collaboration)
         self.overpopulation = overpopulation
 
@@ -100,8 +100,8 @@ class Selector:
 
     def __init__(self,
                  external_factors: ExternalFactors,
-                 have_to_die_func=default_have_to_die,
-                 have_to_reproduct_func=default_have_to_reproduct
+                 have_to_die_func: callable = default_have_to_die,
+                 have_to_reproduct_func: callable = default_have_to_reproduct
                  ):
         self.have_to_die_func = have_to_die_func
         self.have_to_reproduct_func = have_to_reproduct_func

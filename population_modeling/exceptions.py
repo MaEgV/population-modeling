@@ -10,5 +10,5 @@ class DeadBacteriaException(Exception):
         self.bacteria = bacteria
         self.message = message
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.bacteria} -> {self.message}'

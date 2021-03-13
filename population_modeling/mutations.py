@@ -24,19 +24,19 @@ class MutationalProcesses:
         Realize mutation of reproduction probability
     """
     @abstractmethod
-    def _child_max_n(self, parent_genome: Genome):
+    def _child_max_n(self, parent_genome: Genome) -> int:
         raise NotImplementedError
 
     @abstractmethod
-    def _child_p_for_death(self, parent_genome: Genome):
+    def _child_p_for_death(self, parent_genome: Genome) -> float:
         raise NotImplementedError
 
     @abstractmethod
-    def _child_p_for_reproduction(self, parent_genome: Genome):
+    def _child_p_for_reproduction(self, parent_genome: Genome) -> float:
         raise NotImplementedError
 
     @abstractmethod
-    def mutation(self, genome: Genome):
+    def mutation(self, genome: Genome) -> None:
         raise NotImplementedError
 
     def child_genome(self, parent_genome: Genome) -> Genome:
@@ -82,7 +82,7 @@ class NormalMutations(MutationalProcesses):
     PARAMS_MAX_N_VARIATION = {'loc': 0, 'scale': 3}
     PARAMS_CHILD_VARIATION = {'loc': 0, 'scale': 0.01}
 
-    def _child_max_n(self, parent_genome: Genome):
+    def _child_max_n(self, parent_genome: Genome) -> int:
         """
 
         Generate mutation of maximum lifetime

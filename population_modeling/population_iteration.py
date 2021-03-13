@@ -4,7 +4,7 @@ from population_modeling.mutations import MutationalProcesses, NormalMutations
 from population_modeling.bacteria_iteration import iterate as iterate_bacteria
 
 
-def iterate(population: Population, selector: Selector, mutation_mode: MutationalProcesses):
+def iterate(population: Population, selector: Selector, mutation_mode: MutationalProcesses) -> Population:
     """
     Iteration of population. Call bacterias iterations and process children - append new generation at genealogical tree
     :return: self
@@ -25,7 +25,7 @@ def iterate(population: Population, selector: Selector, mutation_mode: Mutationa
     return population
 
 
-def _process_new_generation(population: Population, new_generation: list):
+def _process_new_generation(population: Population, new_generation: list) -> None:
     """
     Wrapper for processing parent-child pairs
 
