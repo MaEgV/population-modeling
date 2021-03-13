@@ -61,7 +61,7 @@ class MutationalProcesses:
     Methods
     -------
 
-    spontaneous_mutation(self) -> None
+    mutation(self) -> None
         Realize random mutation of the genome's parameters
     child_max_n(self) -> int
         Realize mutation of maximum lifetime
@@ -83,7 +83,7 @@ class MutationalProcesses:
         raise NotImplementedError
 
     @abstractmethod
-    def spontaneous_mutation(self, genome: Genome):
+    def mutation(self, genome: Genome):
         raise NotImplementedError
 
 
@@ -95,7 +95,7 @@ class NormalMutations(MutationalProcesses):
     -------
     def child_genome(self) -> Genome
         Returns generated child's genome
-    spontaneous_mutation(self) -> None
+    mutation(self) -> None
         Realize random mutation of the genome's parameters
     child_max_n(self) -> int
         Realize mutation of maximum lifetime
@@ -106,9 +106,9 @@ class NormalMutations(MutationalProcesses):
     """
 
     MAX_PROBABILITY = 1
-    PARAMS_SPONTANEOUS_MUTATION = [0, 0.001]
-    PARAMS_MAX_N_VARIATION = [0, 3]
-    PARAMS_PROBABILITY_VARIATION = [0, 0.01]
+    PARAMS_SPONTANEOUS_MUTATION = {'loc': 0, 'scale': 0.001}
+    PARAMS_MAX_N_VARIATION = {'loc': 0, 'scale': 3}
+    PARAMS_CHILD_VARIATION = {'loc': 0, 'scale': 0.01}
 
     def child_max_n(self, parent_genome: Genome):
         """
@@ -146,7 +146,7 @@ class NormalMutations(MutationalProcesses):
             New value of death probability
         """
 
-        variation = norm.rvs(*NormalMutations.PARAMS_PROBABILITY_VARIATION)
+        variation = norm.rvs(**NormalMutations.PARAMS_CHILD_VARIATION)
         parameter = fabs(parent_genome.p_for_death + variation)
 
         return min(parameter, NormalMutations.MAX_PROBABILITY)
@@ -167,12 +167,12 @@ class NormalMutations(MutationalProcesses):
             New value of death reproduction
         """
 
-        variation = norm.rvs(*NormalMutations.PARAMS_PROBABILITY_VARIATION)
+        variation = norm.rvs(*NormalMutations.PARAMS_CHILD_VARIATION)
         parameter = fabs(parent_genome.p_for_reproduction + variation)
 
         return min(parameter, NormalMutations.MAX_PROBABILITY)
 
-    def spontaneous_mutation(self, genome: Genome) -> None:
+    def mutation(self, genome: Genome) -> None:
         """
 
         Realize spontaneous mutation of the genome
@@ -187,7 +187,7 @@ class NormalMutations(MutationalProcesses):
         None
         """
 
-        genome.p_for_death = min(genome.p_for_death + norm.rvs(*NormalMutations.PARAMS_SPONTANEOUS_MUTATION),
+        genome.p_for_death = min(genome.p_for_death + norm.rvs(**NormalMutations.PARAMS_SPONTANEOUS_MUTATION),
                                  NormalMutations.MAX_PROBABILITY)
-        genome.p_for_reproduction = min(genome.p_for_reproduction + norm.rvs(*NormalMutations.
+        genome.p_for_reproduction = min(genome.p_for_reproduction + norm.rvs(**NormalMutations.
                                         PARAMS_SPONTANEOUS_MUTATION), NormalMutations.MAX_PROBABILITY)

@@ -42,7 +42,7 @@ class Population:
 
     def __init__(self, selector_: Selector, max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5):
         self.selector = selector_
-        self.graph = create_graph(create_bacteria(max_life_time, p_for_death, p_for_reproduction))
+        self.genealogical_tree = create_graph(create_bacteria(max_life_time, p_for_death, p_for_reproduction))
 
     def iteration(self):
         '''
@@ -50,7 +50,7 @@ class Population:
         :return: self
         '''
         new_generation = list()
-        for vertex in self.graph.vs:
+        for vertex in self.genealogical_tree.vs:
             parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
             if parent.is_alive:
@@ -84,14 +84,14 @@ class Population:
         :return: None
         """
         # Add children to graph vertices with new generation labels
-        self.graph.add_vertices(
+        self.genealogical_tree.add_vertices(
             len(children),
             {Population.INDIVIDUAL_KEY: children,
              Population.GENERATION_KEY: [parent[Population.GENERATION_KEY] + 1] * len(children)}
         )
 
         # Add directed edges from parent to children
-        self.graph.add_edges([(parent, child) for child in self.graph.vs[-len(children)::]])
+        self.genealogical_tree.add_edges([(parent, child) for child in self.genealogical_tree.vs[-len(children)::]])
 
     def _update_properties(self) -> None:
         '''
@@ -107,12 +107,12 @@ class Population:
         Drawing directed graph with reingold layout and show in png format
         :return: None
         '''
-        layout = self.graph.layout_reingold_tilford(root=[0])
+        layout = self.genealogical_tree.layout_reingold_tilford(root=[0])
         igraph.plot(
-            self.graph,
+            self.genealogical_tree,
             filename,
             layout=layout,
-            vertex_label=[node.index for node in self.graph.vs],
+            vertex_label=[node.index for node in self.genealogical_tree.vs],
             bbox=(600, 600),
-            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive else 'red' for node in self.graph.vs]
+            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive else 'red' for node in self.genealogical_tree.vs]
         )

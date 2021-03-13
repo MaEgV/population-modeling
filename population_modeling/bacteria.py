@@ -1,5 +1,5 @@
 from population_modeling.selector import Selector, Genome
-from population_modeling.exceptions import DeadBacteria
+from population_modeling.exceptions import DeadBacteriaException
 
 
 class Bacteria:
@@ -19,33 +19,44 @@ class Bacteria:
         get_children(self, selector: Selector) -> list
             Generate children
        """
+    _next_id = 0
 
     def __init__(self, genome: Genome):
+        self.id = Bacteria._get_id()
         self.is_alive = True
+        self.age = 0
         self.genome = genome
 
-    def get_children(self, selector: Selector) -> list:
-        """
+    @staticmethod
+    def _get_id():
+        Bacteria._next_id += 1
 
-        Generate bacteria's children
+        return Bacteria._next_id
 
-        Parameters
-        ----------
-        selector: Selector
-            Make decisions about bacteria's future actions
 
-        Returns
-        -------
-        list[Bacteria]
-            Bacteria's children (if they are be)
+def get_children(selector: Selector, bacteria: Bacteria) -> list:
+    """
+    Generate bacteria's children
 
-        """
-        children = list()
-        while selector.have_to_reproduct(self.genome):  # the Bernoulli test
-            child_genome = self.genome.child_genome()
-            children.append(Bacteria(child_genome))
+    Parameters
+    ----------
+    bacteria: Bacteria
+        A bacterium whose descendants may appear
+    selector: Selector
+        Make decisions about bacteria's future actions
 
-        return children
+    Returns
+    -------
+    list[Bacteria]
+        Bacteria's children (if they are be)
+
+    """
+    children = list()
+    while selector.have_to_reproduct(bacteria.genome):  # the Bernoulli test
+        child_genome = bacteria.genome.child_genome()
+        children.append(Bacteria(child_genome))
+
+    return children
 
 
 def iteration(selector: Selector, bacteria: Bacteria) -> list:
@@ -66,15 +77,16 @@ def iteration(selector: Selector, bacteria: Bacteria) -> list:
 
     """
     if not bacteria.is_alive:
-        raise DeadBacteria(bacteria)
+        raise DeadBacteriaException(bacteria)
 
-    bacteria.genome.mutation_type.spontaneous_mutation(bacteria.genome)
-
-    if selector.is_died(bacteria.genome):
+    bacteria.genome.mutation_type.mutation(bacteria.genome)
+    if bacteria.age > bacteria.genome.max_life_time or selector.is_died(bacteria.genome):
         bacteria.is_alive = False
         return []
 
-    return bacteria.get_children(selector)
+    bacteria.age += 1
+
+    return get_children(selector, bacteria)
 
 
 def create_bacteria(max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:

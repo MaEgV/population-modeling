@@ -25,12 +25,12 @@ TEST_CASES_POPULATION_ITERATOR = [Case(name="One offspring", population_max=10, 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR_ONE, ids=str)
 def test_iterator_population_one(population_iterator: Case) -> None:
     result = population_iterator.population.iteration()
-    graph = result.graph
+    graph = result.genealogical_tree
     assert graph.vcount() == population_iterator.result
 
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR, ids=str)
 def test_iterator_population(population_iterator: Case) -> None:
     result = population_iterator.population.iteration()
-    graph = result.graph
+    graph = result.genealogical_tree
     assert graph.vcount() >= population_iterator.result
