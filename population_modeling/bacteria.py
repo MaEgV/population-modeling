@@ -25,7 +25,10 @@ class Bacteria:
         self.genome = genome
 
 
-def create_bacteria(max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:
+def create_bacteria(
+        max_life_time: int = 5,
+        p_for_death: float = 0.5,
+        p_for_reproduction: float = 0.5) -> Bacteria:
     """
 
     Create bacteria from different parameters
