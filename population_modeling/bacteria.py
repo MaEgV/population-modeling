@@ -1,6 +1,6 @@
 from population_modeling.selector import Selector, Genome
 from population_modeling.exceptions import DeadBacteriaException
-
+from population_modeling.mutations import MutationalProcesses, NormalMutations
 
 class Bacteria:
     """
