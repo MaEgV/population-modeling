@@ -1,5 +1,6 @@
 from population_modeling.bacteria import create_bacteria, Selector, iteration
-import igraph # type: ignore
+from population_modeling.mutations import MutationalProcesses
+import igraph  # type: ignore
 
 
 def create_graph(first_bacteria):
@@ -15,14 +16,14 @@ def create_graph(first_bacteria):
     return graph
 
 
-class Population:
+class PopulationParams:
     """
-    A class containing information about the population. An iterator is implemented using a class Population.Iterator.
-    Bacteria can get information about their population to adjust their behavior
+
+    Data-class with all population parameters
 
     Attributes
     ----------
-    selector_: Selector
+    selector: Selector
         an instance of the selection class that includes the initial parameters
         of the living conditions in the populatio
     max_life_time: int
@@ -32,17 +33,39 @@ class Population:
     p_for_reproduction: float
         probability for reproduce 1 child per iteration of first bacteria (could be many children)
 
-    Methods
+    """
+    def __init__(self,
+                 selector: Selector,
+                 mutation_mode: MutationalProcesses,
+                 max_life_time: int = 5,
+                 p_for_death: float = 0.5,
+                 p_for_reproduction: float = 0.5):
+        self.selector = selector
+        self.mutation_mode = mutation_mode
+        self.first_bacteria = create_bacteria(max_life_time, p_for_death, p_for_reproduction)
+
+
+class Population:
+    """
+    A class containing information about the population. An iterator is implemented using a class Population.Iterator.
+    Bacteria can get information about their population to adjust their behavior
+
+    Parameters
+    ----------
+    params: PopulationParams
+        Class parameters-container
+
+    Returns
     -------
-    __iter__(self) -> Iterator:
-        get iterator of Population
+    Bacteria
+        Bacteria with set parameters
     """
     INDIVIDUAL_KEY = 'bacteria'
     GENERATION_KEY = 'generation'
 
-    def __init__(self, selector_: Selector, max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5):
-        self.selector = selector_
-        self.genealogical_tree = create_graph(create_bacteria(max_life_time, p_for_death, p_for_reproduction))
+    def __init__(self, params: PopulationParams):
+        self.params = params  # !shallow copy!
+        self.genealogical_tree = create_graph(params.first_bacteria)
 
     def iteration(self):
         '''
@@ -54,7 +77,7 @@ class Population:
             parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
             if parent.is_alive:
-                children = iteration(self.selector, parent)
+                children = iteration(self.params.selector, self.params.mutation_mode, parent)
 
                 if children:
                     new_generation.append((vertex, children))

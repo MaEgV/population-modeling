@@ -3,7 +3,7 @@ from abc import abstractmethod
 from scipy.stats import norm  # type: ignore
 from math import fabs
 
-from genome import Genome
+from population_modeling.genome import Genome
 
 
 class MutationalProcesses:
@@ -24,15 +24,15 @@ class MutationalProcesses:
         Realize mutation of reproduction probability
     """
     @abstractmethod
-    def child_max_n(self, parent_genome: Genome):
+    def _child_max_n(self, parent_genome: Genome):
         raise NotImplementedError
 
     @abstractmethod
-    def child_p_for_death(self, parent_genome:   Genome):
+    def _child_p_for_death(self, parent_genome:   Genome):
         raise NotImplementedError
 
     @abstractmethod
-    def child_p_for_reproduction(self, parent_genome: Genome):
+    def _child_p_for_reproduction(self, parent_genome: Genome):
         raise NotImplementedError
 
     @abstractmethod
@@ -51,9 +51,9 @@ class MutationalProcesses:
         """
 
         childs_genome = Genome(
-            self.child_max_n(parent_genome),
-            self.child_p_for_death(parent_genome),
-            self.child_p_for_reproduction(parent_genome)
+            self._child_max_n(parent_genome),
+            self._child_p_for_death(parent_genome),
+            self._child_p_for_reproduction(parent_genome)
         )
 
         return childs_genome
@@ -82,7 +82,7 @@ class NormalMutations(MutationalProcesses):
     PARAMS_MAX_N_VARIATION = {'loc': 0, 'scale': 3}
     PARAMS_CHILD_VARIATION = {'loc': 0, 'scale': 0.01}
 
-    def child_max_n(self, parent_genome: Genome):
+    def _child_max_n(self, parent_genome: Genome):
         """
 
         Generate mutation of maximum lifetime
@@ -102,7 +102,7 @@ class NormalMutations(MutationalProcesses):
 
         return round(fabs(parent_genome.max_life_time + variation))
 
-    def child_p_for_death(self, parent_genome: Genome) -> float:
+    def _child_p_for_death(self, parent_genome: Genome) -> float:
         """
 
         Generate mutation of death probability
@@ -123,7 +123,7 @@ class NormalMutations(MutationalProcesses):
 
         return min(parameter, NormalMutations.MAX_PROBABILITY)
 
-    def child_p_for_reproduction(self, parent_genome: Genome) -> float:
+    def _child_p_for_reproduction(self, parent_genome: Genome) -> float:
         """
 
         Generate mutation of reproduction probability

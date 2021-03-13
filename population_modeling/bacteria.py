@@ -2,9 +2,10 @@ from population_modeling.selector import Selector, Genome
 from population_modeling.exceptions import DeadBacteriaException
 from population_modeling.mutations import MutationalProcesses, NormalMutations
 
+
 class Bacteria:
     """
-       Represents bacteria with its parameters and ability for reproduction.
+       Represents bacteria with its parameters
 
        Attributes
        ----------
@@ -19,27 +20,21 @@ class Bacteria:
         get_children(self, selector: Selector) -> list
             Generate children
        """
-    _next_id = 0
 
     def __init__(self, genome: Genome):
-        self.id = Bacteria._get_id()
         self.is_alive = True
         self.age = 0
         self.genome = genome
 
-    @staticmethod
-    def _get_id():
-        Bacteria._next_id += 1
 
-        return Bacteria._next_id
-
-
-def get_children(selector: Selector, bacteria: Bacteria) -> list:
+def get_children(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacteria) -> list:
     """
     Generate bacteria's children
 
     Parameters
     ----------
+    mutation_mode:
+        Implementation of mutation mechanisms
     bacteria: Bacteria
         A bacterium whose descendants may appear
     selector: Selector
@@ -51,23 +46,26 @@ def get_children(selector: Selector, bacteria: Bacteria) -> list:
         Bacteria's children (if they are be)
 
     """
+
     children = list()
     while selector.have_to_reproduct(bacteria.genome):  # the Bernoulli test
-        child_genome = bacteria.genome.child_genome()
+        child_genome = mutation_mode.child_genome(bacteria.genome)
         children.append(Bacteria(child_genome))
 
     return children
 
 
-def iteration(selector: Selector, bacteria: Bacteria) -> list:
+def iteration(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacteria) -> list:
     """
 
         In method selector decide fate of bactria: should it die or should it reproduct
 
         Parameters
         ----------
+        mutation_mode: MutationalProcesses
+            Implementation of mutation mechanisms
         bacteria: Bacteria
-
+            Instance of the class Bacteria which iterated
         selector: Selector
             Decide fate of bactria
         Returns
@@ -79,14 +77,15 @@ def iteration(selector: Selector, bacteria: Bacteria) -> list:
     if not bacteria.is_alive:
         raise DeadBacteriaException(bacteria)
 
-    bacteria.genome.mutation_type.mutation(bacteria.genome)
+    mutation_mode.mutation(bacteria.genome)
+
     if bacteria.age > bacteria.genome.max_life_time or selector.is_died(bacteria.genome):
         bacteria.is_alive = False
         return []
 
     bacteria.age += 1
 
-    return get_children(selector, bacteria)
+    return get_children(selector, mutation_mode, bacteria)
 
 
 def create_bacteria(max_life_time=5, p_for_death=0.5, p_for_reproduction=0.5) -> Bacteria:
