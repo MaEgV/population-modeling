@@ -28,7 +28,7 @@ class MutationalProcesses:
         raise NotImplementedError
 
     @abstractmethod
-    def _child_p_for_death(self, parent_genome:   Genome):
+    def _child_p_for_death(self, parent_genome: Genome):
         raise NotImplementedError
 
     @abstractmethod
@@ -98,7 +98,7 @@ class NormalMutations(MutationalProcesses):
                 New value of maximum lifetime
         """
 
-        variation = norm.rvs(*NormalMutations.PARAMS_MAX_N_VARIATION)
+        variation = norm.rvs(**NormalMutations.PARAMS_MAX_N_VARIATION)
 
         return round(fabs(parent_genome.max_life_time + variation))
 
@@ -139,7 +139,7 @@ class NormalMutations(MutationalProcesses):
             New value of death reproduction
         """
 
-        variation = norm.rvs(*NormalMutations.PARAMS_CHILD_VARIATION)
+        variation = norm.rvs(**NormalMutations.PARAMS_CHILD_VARIATION)
         parameter = fabs(parent_genome.p_for_reproduction + variation)
 
         return min(parameter, NormalMutations.MAX_PROBABILITY)

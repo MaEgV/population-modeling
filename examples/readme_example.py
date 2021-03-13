@@ -1,7 +1,10 @@
-from population_modeling import Population, Selector, ExternalFactors
+from population_modeling import *
 
-param = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
-population = Population(param, p_for_death=0.1, p_for_reproduction=0.5, max_life_time=10) # creating population
+first_bacteria = create_bacteria(p_for_death=0.1)
+population = create_population(first_bacteria)  # creating population
+
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+mutation_mode = NormalMutations()
 
 for _ in range(10):
-    population.iteration().draw()  # drawing a population without saving
+    draw(iterate(population, selector, mutation_mode))  # drawing a population without saving
