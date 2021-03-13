@@ -1,45 +1,59 @@
 # Population Modeling
-**Установка**
-======================
-Для использования данного пакета необходимо установить зависимости, отражённые в файле requirements.txt и поместить исходный код пакета(содержимое директории src) в доступное для импорта вашей программой место.
-Установка указанных зависимостей осуществляется из консоли, с помощью следующей команды:
+
+***
+## Installation
+
+You must install the dependencies reflected in the file requirements.txt and put the source code of the package(the contents of the src directory) in a place available for import by your program.
+The specified dependencies are installed from the console, using the following command:
 `pip install -r requirements.txt`
 ***
-**Глоссарий**
-======================
-* Бактерия - экземпляр класса Bacteria. Сущность, участвующая в естественном отборе. Поведение сущности обеспечивает изменчивость её параметров, основные из которых: вероятность умереть и вероятность во время итерации;
-* Геном - экземпляр класса Genome. Совокупность внутренних параметров бактерии, на которые не влияют никакие внешние факторы(радиационный фон пока не предусмотрен). 
-* Популяция - экземпляр класса Population. Совокупнсоть бактерий, объединенная с механизмом селекции, обеспечивающим управляемый(но стохастический) отбор особей в популяции;
-* Итерация - метод iteration у классов Population и Bacteria. Означает дискретную единицу времени эволюции. Итерация популяции должна обеспечивать синхронизацию состояния популяции для всех бактерий.
+## Glossary
 
-**Описание**
-======================
-После установки для импорта будет доступно три класса:
-* Population;
-* Selector;
-* ExternalFactors.
+* Bacterium-an instance of the Bacteria class. An entity that participates in natural selection. The variability of its parameters ensures the primitive behavior of this entity. The only possible actions are: dying and reproducing.
+* Genome-an instance of the Genome class. The set of internal parameters of the bacterium;
+* Population-an instance of the Population class. A collection of bacteria linked by a relationship of kinship. Such a collection forms a tree graph;
+* Iteration-iteration functions for the Population and Bacteria classes. Means a discrete unit of evolution time. The population iteration should ensure that the population state is synchronized for all bacteria.
+***
 
-
-Population является основным классом, а Selector параметризует его. ExternalFactors в свою очередь, является параметром для Selector.
-Чтобы создать модель эволюции популяции необходимо сначала создать объект класса ExternalFactors, который содержит в себе описание условий, в которых существуют бактерии в популяции. Внешние факторы могут меняться по ходу эволюции, однако начальные значения крайне важны.
+## Description
+The package is based on three classes and their processing logic:
+* Bacteria - a class that stores the state of the bacterium;
+* Population - a class that stores a set of bacteria and a parent-child relationship on this set;
+* Selector-a class that implements the mechanisms of natural selection within a population.
 
 
-Затем нужно создать оператор селекции, т.е. объект класса Selector, который будет хранить в себе экземпляр класса ExternalFactors и интерпретировать их при
-осуществлении селекции.
+### Population
+This class stores a graph of the bacteria in the population. The graph forms a tree, so the only attribute of the class is the genealogical tree field. It is also passed to initialize an instance of the class when it is created:  
+```Python
+    def __init__(self, genealogical_tree: igraph.Graph):
+        self.genealogical_tree = genealogical_tree
+```
 
+As you can see from the example, the jpgraph library is used for storing and manipulating the graph.
+See the [documentation](https://igraph.org/python/).
 
-Селекция включает в себя принятие решения о гибели особи а так же о её делении.
+The main manipulations with the population class are drawing and the possibility of development over time.  
+Draw and iterate are responsible for this, respectively.
 
+#### Draw
+```Python
+draw(population: Population, filename: str = None) -> None
+```
+Implements the tree graph rendering mechanism.  
 
-Наконец, необходимо создать экземпляр класса Population, передав в него в качестве параметра опретатор селекции. 
-Кроме этого, нужно указать характеристики первой особи популяции: вероятность умереть за итерацию, вероятность дать хотя бы одного потомка(потомков может быть сколь угодно много, поэтому с данным параметром стоить быть аккуратней) и наконец, максимальное число жизненных циклов.
-Со временем, даже эта особь будет митуровать, однако все остальные особи, 
-особенно при малой разнице поколений, будут иметь похожие параметры, поэтому важно соблюдать баланс в параметрах, чтобы не допустить преждевременного вымирания. Однако, даже если сделать вероятность смерти первой особи крайне низкой, никто не гарантирует, что она сразу же не погибнет. Обидно, но это часть эволюции.
+`population` - instance of the class that you want to display.   
+`filename` - a string with the name of the file to save the image to. If the filename parameter is omitted, the image will be displayed by the standard image viewer on your device without saving it.
 
+#### Iterate
+```Python
+iterate(population: Population, selector: Selector, mutation_mode: MutationalProcesses)
+```
+Function that implements a single time cycle of a bacterium, during which it can die or multiply.  
 
-Класс Population имеет 2 публичных метода:
-1. iteration - один жизненный цикл всех бактерий в популяции;
-2. draw - отрисовка графа популяции.
+`population` - instance of the population class that you want to iterate.  
+`selector` - implementation of the selection mechanism for each bacteria in population for this iteration.
+`mutation_mode` - implementation of the evolving mechanism for each bacteria in population for this iteration.
+
 
 
 **Пример использования**
@@ -47,12 +61,16 @@ Population является основным классом, а Selector пар�
 Рассмотрим простой пример настройки популяции и отрисовки результата симуляции эволюции:
 
 ```Python
-from population_modeling import Population, Selector, ExternalFactors
+from population_modeling import *
 
-param = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
-population = Population(param, p_for_death=0.1, p_for_reproduction=0.5, max_life_time=10) # creating population
+first_bacteria = create_bacteria(p_for_death=0.1)  # creating first bacteria to start a population
+population = create_population(first_bacteria)  # creating population
+
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
 for _ in range(10):
-    population.iteration().draw()  # drawing a population without saving
+    draw(iterate(population, selector, mutation_mode))  # drawing a population without saving
+
 ```
 ![alt text](https://github.com/MaEgV/population-modeling/blob/population/examples/population_image_example_res.gif)
