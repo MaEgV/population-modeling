@@ -16,6 +16,7 @@ class Population:
     -------
     Bacteria
         Bacteria with set parameters
+
     """
     INDIVIDUAL_KEY = 'bacteria'
     GENERATION_KEY = 'generation'
@@ -28,9 +29,17 @@ def create_graph(first_bacteria: Bacteria) -> igraph.Graph:
     """
     Create new graph with one node and two labels
 
-    :param first_bacteria: label of the node
-    :return: graph
+    Parameters
+    ----------
+    first_bacteria: Bacteria
+        Bacteria that is the basis for the graph
+
+    Returns
+    -------
+    igraph.Graph
+        New graph
     """
+
     graph = igraph.Graph(directed=True)
     graph.add_vertex(bacteria=first_bacteria, generation= 0)
 
@@ -45,6 +54,7 @@ def create_population(first_bacteria: Bacteria) -> Population:
     ----------
     first_bacteria: Bacteria
         Bacteria class instance
+
     Returns
     -------
         Population
@@ -56,19 +66,20 @@ def create_population(first_bacteria: Bacteria) -> Population:
 
 def draw(population: Population, filename: str = None) -> None:
     """
-
-    Fuctions, that implement drawing of Population instance in tree form.
+    Functions, that implement drawing of Population instance in tree form.
 
     Parameters
     ----------
     population: Population
         witch population should be drawn
+
     filename: str
         the name of the file to save the drawing to
 
     Returns
     -------
         None
+
     """
 
     layout = population.genealogical_tree.layout_reingold_tilford(root=[0])

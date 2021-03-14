@@ -15,10 +15,13 @@ def iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Ba
     ----------
     mutation_mode: MutationalProcesses
         Implementation of mutation mechanisms
+
     bacteria: Bacteria
         Instance of the class Bacteria which iterated
+
     selector: Selector
         Decide fate of bactria
+
     Returns
     -------
     list
@@ -47,8 +50,10 @@ def _get_children(selector: Selector, mutation_mode: MutationalProcesses, bacter
     ----------
     mutation_mode:
         Implementation of mutation mechanisms
+
     bacteria: Bacteria
         A bacterium whose descendants may appear
+
     selector: Selector
         Make decisions about bacteria's future actions
 

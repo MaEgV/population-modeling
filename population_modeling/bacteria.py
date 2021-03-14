@@ -9,14 +9,15 @@ class Bacteria:
        ----------
        is_alive : bool
            Is bacteria alive or dead
+
        genome : Genome
            Genome of bacteria
 
        Methods
        -------
-
         get_children(self, selector: Selector) -> list
             Generate children
+
        """
 
     def __init__(self, genome: Genome):
@@ -30,15 +31,16 @@ def create_bacteria(
         p_for_death: float = 0.5,
         p_for_reproduction: float = 0.5) -> Bacteria:
     """
-
     Create bacteria from different parameters
 
     Parameters
     ----------
     max_life_time: int
         Maximum iterations for bacteria
+
     p_for_death: float
         Probability of death
+
     p_for_reproduction: float
         Probability of reproduction
 

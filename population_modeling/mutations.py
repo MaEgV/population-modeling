@@ -13,15 +13,18 @@ class MutationalProcesses:
 
     Methods
     -------
-
     mutation(self) -> None
         Realize random mutation of the genome's parameters
+
     child_max_n(self) -> int
         Realize mutation of maximum lifetime
+
     child_p_for_death(self) -> float
         Realize mutation of death probability
+
     child_p_for_reproduction(self) -> float
         Realize mutation of reproduction probability
+
     """
     @abstractmethod
     def _child_max_n(self, parent_genome: Genome) -> int:
@@ -41,13 +44,13 @@ class MutationalProcesses:
 
     def child_genome(self, parent_genome: Genome) -> Genome:
         """
-
         Creates a descendant genome based on the parent genome
 
         Returns
         -------
         Genome
             Child's genome
+
         """
 
         childs_genome = Genome(
@@ -67,14 +70,19 @@ class NormalMutations(MutationalProcesses):
     -------
     def child_genome(self) -> Genome
         Returns generated child's genome
+
     mutation(self) -> None
         Realize random mutation of the genome's parameters
+
     child_max_n(self) -> int
         Realize mutation of maximum lifetime
+
     child_p_for_death(self) -> float
         Realize mutation of death probability
+
     child_p_for_reproduction(self) -> float
         Realize mutation of reproduction probability
+
     """
 
     MAX_PROBABILITY = 1
@@ -84,7 +92,6 @@ class NormalMutations(MutationalProcesses):
 
     def _child_max_n(self, parent_genome: Genome) -> int:
         """
-
         Generate mutation of maximum lifetime
 
         Parameters
@@ -95,7 +102,8 @@ class NormalMutations(MutationalProcesses):
         Returns
         -------
         int
-                New value of maximum lifetime
+            New value of maximum lifetime
+
         """
 
         variation = norm.rvs(**NormalMutations.PARAMS_MAX_N_VARIATION)
@@ -104,7 +112,6 @@ class NormalMutations(MutationalProcesses):
 
     def _child_p_for_death(self, parent_genome: Genome) -> float:
         """
-
         Generate mutation of death probability
 
         Parameters
@@ -116,6 +123,7 @@ class NormalMutations(MutationalProcesses):
         -------
         float
             New value of death probability
+
         """
 
         variation = norm.rvs(**NormalMutations.PARAMS_CHILD_VARIATION)
@@ -125,7 +133,6 @@ class NormalMutations(MutationalProcesses):
 
     def _child_p_for_reproduction(self, parent_genome: Genome) -> float:
         """
-
         Generate mutation of reproduction probability
 
         Parameters
@@ -137,6 +144,7 @@ class NormalMutations(MutationalProcesses):
         -------
         float
             New value of death reproduction
+
         """
 
         variation = norm.rvs(**NormalMutations.PARAMS_CHILD_VARIATION)
@@ -146,7 +154,6 @@ class NormalMutations(MutationalProcesses):
 
     def mutation(self, genome: Genome) -> None:
         """
-
         Realize spontaneous mutation of the genome
 
         Parameters
@@ -157,6 +164,7 @@ class NormalMutations(MutationalProcesses):
         Returns
         -------
         None
+
         """
 
         genome.p_for_death = min(genome.p_for_death + norm.rvs(**NormalMutations.PARAMS_SPONTANEOUS_MUTATION),

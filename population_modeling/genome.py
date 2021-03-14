@@ -1,6 +1,5 @@
 class Genome:
     """
-
     Class for description of bacteria's genome.
 
     Attributes
@@ -13,11 +12,6 @@ class Genome:
 
     p_for_reproduction : float
         Probability of reproduction
-
-    Methods
-    -------
-    child_genome(self) -> Genome
-        Returns generated child's genome
 
     """
 
