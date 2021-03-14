@@ -35,6 +35,7 @@ def default_have_to_die(ext_factors: ExternalFactors, genome: Genome) -> bool:
     ----------
     ext_factors: ExternalFactors
         External bacteria's factors
+
     genome: Genome
         Bacteria's genome
 
@@ -55,6 +56,7 @@ def default_have_to_reproduct(ext_factors: ExternalFactors, genome: Genome) -> b
     ----------
     ext_factors: ExternalFactors
         External bacteria's factors
+
     genome: Genome
         Bacteria's genome
 
@@ -75,8 +77,10 @@ class Selector:
     ----------
     external_factors: ExternalFactors
         external factors affecting the life of bacteria
+
     have_to_die_funс:
         implementation of have to die logic
+        
     have_to_reproduct_func:
         implementation of have to reproduce logic
 
