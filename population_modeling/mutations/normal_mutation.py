@@ -8,7 +8,20 @@ from population_modeling.mutations.variation_parameters import MutationalParams
 
 class NormalMutations(AbstractMutation):
     """
+
     Include mutational processes based on normal distribution.
+
+    Attributes
+    ----------
+
+    mutational_params: MutationalParams
+        Mean and standard deviation for normal mutation
+
+    max_n_params: MutationalParams
+        Mean and standard deviation for maximum lifetime variation
+
+    child_params: MutationalParams
+            Mean and standard deviation for child's genome variation
 
     Methods
     -------
@@ -39,6 +52,7 @@ class NormalMutations(AbstractMutation):
 
     def _child_max_n(self, parent_genome: Genome) -> int:
         """
+
         Generate mutation of maximum lifetime
 
         Parameters
@@ -59,6 +73,7 @@ class NormalMutations(AbstractMutation):
 
     def _child_p_for_death(self, parent_genome: Genome) -> float:
         """
+
         Generate mutation of death probability
 
         Parameters
@@ -80,6 +95,7 @@ class NormalMutations(AbstractMutation):
 
     def _child_p_for_reproduction(self, parent_genome: Genome) -> float:
         """
+
         Generate mutation of reproduction probability
 
         Parameters
@@ -101,6 +117,7 @@ class NormalMutations(AbstractMutation):
 
     def mutation(self, genome: Genome) -> None:
         """
+
         Realize spontaneous mutation of the genome
 
         Parameters
