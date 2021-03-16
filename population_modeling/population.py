@@ -1,7 +1,10 @@
 from population_modeling.bacteria import Bacteria
+from typing import ClassVar
+from dataclasses import dataclass
 import igraph  # type: ignore
 
 
+@dataclass(frozen=True)
 class Population:
     """
     A class containing information about the population. An iterator is implemented using a class Population.Iterator.
@@ -12,17 +15,44 @@ class Population:
     genealogical_tree: igraph.Graph
         Structure of the population
 
-    Returns
+    Methods
     -------
-    Bacteria
-        Bacteria with set parameters
-
+    draw(self, filename: str = None) -> None
+        Drawing of population-graph
     """
-    INDIVIDUAL_KEY = 'bacteria'
-    GENERATION_KEY = 'generation'
 
-    def __init__(self, genealogical_tree: igraph.Graph):
-        self.genealogical_tree = genealogical_tree
+    genealogical_tree: igraph.Graph
+    INDIVIDUAL_KEY: ClassVar[str] = 'bacteria'
+    GENERATION_KEY: ClassVar[str] = 'generation'
+
+    def draw(self, filename: str = None) -> None:
+        """
+        Method, that implement drawing of Population instance in tree form.
+
+        Parameters
+        ----------
+        population: Population
+            witch population should be drawn
+
+        filename: str
+            the name of the file to save the drawing to
+
+        Returns
+        -------
+        None
+
+        """
+
+        layout = self.genealogical_tree.layout_reingold_tilford(root=[0])
+        igraph.plot(
+            self.genealogical_tree,
+            filename,
+            layout=layout,
+            vertex_label=[node.index for node in self.genealogical_tree.vs],
+            bbox=(600, 600),
+            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive() else 'red'
+                          for node in self.genealogical_tree.vs]
+        )
 
 
 def create_graph(first_bacteria: Bacteria) -> igraph.Graph:
@@ -59,36 +89,7 @@ def create_population(first_bacteria: Bacteria) -> Population:
     -------
         Population
     """
+
     genealogical_tree = create_graph(first_bacteria)  # TODO add multiple bacteria for initialization
 
     return Population(genealogical_tree)
-
-
-def draw(population: Population, filename: str = None) -> None:
-    """
-    Functions, that implement drawing of Population instance in tree form.
-
-    Parameters
-    ----------
-    population: Population
-        witch population should be drawn
-
-    filename: str
-        the name of the file to save the drawing to
-
-    Returns
-    -------
-        None
-
-    """
-
-    layout = population.genealogical_tree.layout_reingold_tilford(root=[0])
-    igraph.plot(
-        population.genealogical_tree,
-        filename,
-        layout=layout,
-        vertex_label=[node.index for node in population.genealogical_tree.vs],
-        bbox=(600, 600),
-        vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive else 'red'
-                      for node in population.genealogical_tree.vs]
-    )

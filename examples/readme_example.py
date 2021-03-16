@@ -7,4 +7,4 @@ selector = Selector(ExternalFactors())  # creating the initial parameters of the
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
 for _ in range(10):
-    draw(iterate(population, selector, mutation_mode))  # drawing a population without saving
+    iterate(population, selector, mutation_mode).draw()  # drawing a population without saving

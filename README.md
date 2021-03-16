@@ -53,12 +53,15 @@ Function that implements a single time cycle of a population. This cycle consist
 
 
 ### Bacteria
-This class stores the state of a particular bacterium. The main parameters of the bacterium are the values stored in the additional Genome class. Parameters from Genome can change under the influence of mutational mechanisms. Based on the same parameters, the selection operator performs natural selection.  
+This class stores the state of a particular bacterium. The main parameters of the bacterium are the values stored in the additional Genome class. Parameters from Genome can change under the influence of mutational mechanisms. Based on the same parameters, the selection operator performs natural selection.
+
 ```Python
     def __init__(self, genome: Genome):
-        self.is_alive = True
-        self.age = 0
-        self.genome = genome
+
+
+    self._is_alive = True
+self._age = 0
+self.genome = genome
 ```
 `genome` - instance of the Genome class with the initial parameters.
 The main functions for working with this class are described below.

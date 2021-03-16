@@ -28,16 +28,16 @@ def iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Ba
         List of child's if they are, if Bacteria not alive returns empty list
 
     """
-    if not bacteria.is_alive:
+    if not bacteria.is_alive():
         raise DeadBacteriaException(bacteria)
 
     mutation_mode.mutation(bacteria.genome)
 
-    if bacteria.age > bacteria.genome.max_life_time or selector.is_died(bacteria.genome):
-        bacteria.is_alive = False
+    if selector.is_died(bacteria.genome):
+        bacteria.die()
         return []
 
-    bacteria.age += 1
+    bacteria.inc_age()
 
     return _get_children(selector, mutation_mode, bacteria)
 

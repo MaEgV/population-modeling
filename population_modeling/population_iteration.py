@@ -31,7 +31,7 @@ def iterate(population: Population, selector: Selector, mutation_mode: Mutationa
     for vertex in population.genealogical_tree.vs:
         parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
-        if parent.is_alive:
+        if parent.is_alive():
             children = iterate_bacteria(selector, mutation_mode, parent)
 
             if children:
