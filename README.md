@@ -1,7 +1,7 @@
 ## Installation
 
 You must install the dependencies reflected in the file requirements.txt and put the source code of the package(the contents of the src directory) in a place available for import by your program.
-The specified dependencies are installed from the console, using the following command:
+The specified dependencies are installed from the console, using the following command:  
 `pip install -r requirements.txt`
 ***
 ## Glossary
@@ -22,8 +22,12 @@ This package is based on the following classes and the logic of working with the
 ### Population
 This class stores a graph of the bacteria in the population. The graph forms a tree, so the only attribute of the class is the genealogical tree field. It is also passed to initialize an instance of the class when it is created:  
 ```Python
-    def __init__(self, genealogical_tree: igraph.Graph):
-        self.genealogical_tree = genealogical_tree
+    genealogical_tree = igraph.Graph(directed=True)  # create population-graph
+    first_bacteria = create_bacteria()  # create bacteria by suggested function
+    genealogical_tree.add_vertex(
+    					bacteria=first_bacteria, 
+                        generation=0)  # add first bacteria to graph
+	population = Population(genealogical_tree)  # Correct instance of Population class 
 ```
 
 As you can see from the example, the jpgraph library is used for storing and manipulating the graph.
@@ -34,7 +38,10 @@ Draw and iterate are responsible for this, respectively.
 
 #### Draw
 ```Python
-draw(population: Population, filename: str = None) -> None
+	population.draw("filename.png")  # Draw a population as a tree and save pitcure at file
+```
+```Python
+	population.draw()  # Draw a population without saving
 ```
 Implements the tree graph rendering mechanism.  
 
@@ -43,7 +50,10 @@ Implements the tree graph rendering mechanism.
 
 #### Iterate
 ```Python
-iterate(population: Population, selector: Selector, mutation_mode: MutationalProcesses) -> Population
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
+
+iterate(population, selector, mutation_mode)  # Iterate all bacterias in population
 ```
 Function that implements a single time cycle of a population. This cycle consists in the sequential updating of the state of each bacterium, according to the mechanisms of selection and mutation.  
 
@@ -54,11 +64,11 @@ Function that implements a single time cycle of a population. This cycle consist
 
 ### Bacteria
 This class stores the state of a particular bacterium. The main parameters of the bacterium are the values stored in the additional Genome class. Parameters from Genome can change under the influence of mutational mechanisms. Based on the same parameters, the selection operator performs natural selection.  
+
 ```Python
-    def __init__(self, genome: Genome):
-        self.is_alive = True
-        self.age = 0
-        self.genome = genome
+	genome = Genome(0.5, 0.5, 0.5)  # Genome of future bacteria
+	new_bacteria = Bacteria(genome)
+
 ```
 `genome` - instance of the Genome class with the initial parameters.
 The main functions for working with this class are described below.
@@ -77,10 +87,10 @@ iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacter
 #### Genome
 Storage of the genetic parameters of the bacterium that will change and be inherited by descendants.
 ```Python
-    def __init__(self, max_life_time: int, p_for_death: float, p_for_reproduction: float):
-        self.max_life_time = max_life_time
-        self.p_for_death = p_for_death
-        self.p_for_reproduction = p_for_reproduction
+  selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+  mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
+
+  iterate(bacteria, selector, mutation_mode)  # Iterate all bacterias in population
 ```
 `max_life_time` - parameter that marks the maximum number of iterations that a bacterium can survive.
 `p_for_death` - internal probability of dying during the next iteration. The selection operator can affect the resulting probability.
@@ -89,14 +99,11 @@ Storage of the genetic parameters of the bacterium that will change and be inher
 ### Selector
 A class that implements a framework for building the logic of the selection operator.
 ```Python
-    def __init__(self,
-                 external_factors: ExternalFactors,
-                 have_to_die_func: Callable = default_have_to_die,
-                 have_to_reproduct_func: Callable = default_have_to_reproduct
-                 ):
-        self.have_to_die_func = have_to_die_func
-        self.have_to_reproduct_func = have_to_reproduct_func
-        self.external_factors = external_factors
+external_factors = ExternalFactors()
+have_to_die_func = default_have_to_die  # Callable[ext_factors: ExternalFactors, genome: Genome]
+have_to_reproduct = default_have_to_reproduct
+
+selector = Selector(external_factors, have_to_die_func, have_to_reproduct)  # creating the initial parameters of the population and selector
 ```
 `external_factors` - a set of initial external environmental factors.  
 `have_to_die_func` - a function that determines whether the bacteria should die based on the genome and external factors.  
@@ -123,10 +130,10 @@ selector = Selector(ExternalFactors())  # creating the initial parameters of the
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
 for _ in range(10):
-    draw(iterate(population, selector, mutation_mode))  # drawing a population without saving
+    iterate(population, selector, mutation_mode).draw()  # drawing a population without saving
 
 ```
-![alt text](https://github.com/MaEgV/population-modeling/blob/population/examples/population_image_example_res.gif)
+![alt text](https://github.com/MaEgV/population-modeling/blob/develop/examples/population_image_example_res.gif)
 
 ***
 ## Authors
