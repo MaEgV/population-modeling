@@ -1,13 +1,13 @@
 import pytest
 from population_modeling import bacteria, ExternalFactors
 from population_modeling.bacteria_iteration import iterate
-from population_modeling.mutations import NormalMutations
+from population_modeling.mutations.normal_mutation import NormalMutations
 from population_modeling.selector import Selector
-
+from population_modeling.mutations.variation_parameters import MutationalParams
 
 class Case:
     def __init__(self, name, population_max, antagonism, overpopulation, max_life_time, p_for_death,
-                 p_for_reproduction, mutation_mode):
+                 p_for_reproduction, mutation_mode, ):
         self.name = name
         self.population_max = population_max
         self.antagonism = antagonism
@@ -18,7 +18,9 @@ class Case:
 
 TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, antagonism=0, overpopulation=0,
                                       max_life_time=5, p_for_death=0.1, p_for_reproduction=0.1,
-                                      mutation_mode=NormalMutations())]
+                                      mutation_mode=NormalMutations(MutationalParams(0, 0.001),
+                                                                    MutationalParams(0, 3),
+                                                                    MutationalParams(0, 0.01)))]
 
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
