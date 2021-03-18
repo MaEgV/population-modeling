@@ -3,10 +3,10 @@ from typing import List
 from population_modeling.bacteria import Bacteria
 from population_modeling.exceptions import DeadBacteriaException
 from population_modeling.selector import Selector
-from population_modeling.mutations import MutationalProcesses
+from population_modeling.mutations.normal_mutation import AbstractMutation
 
 
-def iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacteria) -> list:
+def iterate(selector: Selector, mutation_mode: AbstractMutation, bacteria: Bacteria) -> list:
     """
 
     Function that implements a single time cycle of a bacterium, during which it can die or multiply
@@ -42,7 +42,7 @@ def iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Ba
     return _get_children(selector, mutation_mode, bacteria)
 
 
-def _get_children(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacteria) -> List[Bacteria]:
+def _get_children(selector: Selector, mutation_mode: AbstractMutation, bacteria: Bacteria) -> List[Bacteria]:
     """
     Generate bacteria's children
 

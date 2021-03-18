@@ -7,32 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to Population modeling’s documentation! &#8212; Population modeling  documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="search" title="Search" href="search.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Population modeling  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to Population modeling’s documentation!</a></li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-population-modeling-s-documentation">
 <h1>Welcome to Population modeling’s documentation!<a class="headerlink" href="#welcome-to-population-modeling-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 <span class="target" id="module-population_modeling"></span><span class="target" id="module-population_modeling.bacteria"></span><dl class="py class">
 <dt id="population_modeling.bacteria.Bacteria">
@@ -66,6 +75,24 @@
 </dl>
 <dl class="simple">
 <dt>Bacteria</dt><dd><p>Bacteria with set parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-population_modeling.bacteria_iteration"></span><dl class="py function">
+<dt id="population_modeling.bacteria_iteration.iterate">
+<code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria_iteration.</span></code><code class="sig-name descname"><span class="pre">iterate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.Selector" title="population_modeling.selector.Selector"><span class="pre">population_modeling.selector.Selector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.abstract_mutation.AbstractMutation" title="population_modeling.mutations.abstract_mutation.AbstractMutation"><span class="pre">population_modeling.mutations.abstract_mutation.AbstractMutation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacteria</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.bacteria.Bacteria" title="population_modeling.bacteria.Bacteria"><span class="pre">population_modeling.bacteria.Bacteria</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#population_modeling.bacteria_iteration.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that implements a single time cycle of a bacterium, during which it can die or multiply</p>
+<dl class="simple">
+<dt>mutation_mode: MutationalProcesses</dt><dd><p>Implementation of mutation mechanisms</p>
+</dd>
+<dt>bacteria: Bacteria</dt><dd><p>Instance of the class Bacteria which iterated</p>
+</dd>
+<dt>selector: Selector</dt><dd><p>Decide fate of bactria</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>list</dt><dd><p>List of child’s if they are, if Bacteria not alive returns empty list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -139,6 +166,25 @@ Bacteria can get information about their population to adjust their behavior</p>
 <blockquote>
 <div><p>None</p>
 </div></blockquote>
+</dd></dl>
+
+<span class="target" id="module-population_modeling.population_iteration"></span><dl class="py function">
+<dt id="population_modeling.population_iteration.iterate">
+<code class="sig-prename descclassname"><span class="pre">population_modeling.population_iteration.</span></code><code class="sig-name descname"><span class="pre">iterate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.Selector" title="population_modeling.selector.Selector"><span class="pre">population_modeling.selector.Selector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.abstract_mutation.AbstractMutation" title="population_modeling.mutations.abstract_mutation.AbstractMutation"><span class="pre">population_modeling.mutations.abstract_mutation.AbstractMutation</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a><a class="headerlink" href="#population_modeling.population_iteration.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iteration of population. Call bacterias iterations and process children - append new generation at genealogical
+tree.</p>
+<dl class="simple">
+<dt>population: Population</dt><dd><p>Iterable population</p>
+</dd>
+<dt>selector: Selector</dt><dd><p>Selector with preferred methods</p>
+</dd>
+<dt>mutation_mode: MutationalProcesses</dt><dd><p>Preferred type of mutations</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Population</dt><dd><p>Changed population</p>
+</dd>
+</dl>
 </dd></dl>
 
 <span class="target" id="module-population_modeling.selector"></span><dl class="py class">
@@ -249,6 +295,82 @@ Play the role of external factors of evolution.</p>
 </dl>
 </dd></dl>
 
+<span class="target" id="module-population_modeling.mutations.abstract_mutation"></span><dl class="py class">
+<dt id="population_modeling.mutations.abstract_mutation.AbstractMutation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.abstract_mutation.</span></code><code class="sig-name descname"><span class="pre">AbstractMutation</span></code><a class="headerlink" href="#population_modeling.mutations.abstract_mutation.AbstractMutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for different mutational processes. Include variation of maximum lifetime, death probability
+and reproduction probability for the child. Spontaneous mutation happens directly with the individual.</p>
+<dl class="simple">
+<dt>mutation(self) -&gt; None</dt><dd><p>Realize random mutation of the genome’s parameters</p>
+</dd>
+<dt>child_max_n(self) -&gt; int</dt><dd><p>Realize mutation of maximum lifetime</p>
+</dd>
+<dt>child_p_for_death(self) -&gt; float</dt><dd><p>Realize mutation of death probability</p>
+</dd>
+<dt>child_p_for_reproduction(self) -&gt; float</dt><dd><p>Realize mutation of reproduction probability</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="population_modeling.mutations.abstract_mutation.AbstractMutation.child_genome">
+<code class="sig-name descname"><span class="pre">child_genome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a><a class="headerlink" href="#population_modeling.mutations.abstract_mutation.AbstractMutation.child_genome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a descendant genome based on the parent genome</p>
+<dl class="simple">
+<dt>Genome</dt><dd><p>Child’s genome</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-population_modeling.mutations.normal_mutation"></span><dl class="py class">
+<dt id="population_modeling.mutations.normal_mutation.NormalMutations">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.normal_mutation.</span></code><code class="sig-name descname"><span class="pre">NormalMutations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutational_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="population_modeling.mutations.variation_parameters.MutationalParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationalParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="population_modeling.mutations.variation_parameters.MutationalParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationalParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="population_modeling.mutations.variation_parameters.MutationalParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationalParams</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.mutations.normal_mutation.NormalMutations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include mutational processes based on normal distribution.</p>
+<dl class="simple">
+<dt>mutational_params: MutationalParams</dt><dd><p>Mean and standard deviation for normal mutation</p>
+</dd>
+<dt>max_n_params: MutationalParams</dt><dd><p>Mean and standard deviation for maximum lifetime variation</p>
+</dd>
+<dt>child_params: MutationalParams</dt><dd><p>Mean and standard deviation for child’s genome variation</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>def child_genome(self) -&gt; Genome</dt><dd><p>Returns generated child’s genome</p>
+</dd>
+<dt>mutation(self) -&gt; None</dt><dd><p>Realize random mutation of the genome’s parameters</p>
+</dd>
+<dt>child_max_n(self) -&gt; int</dt><dd><p>Realize mutation of maximum lifetime</p>
+</dd>
+<dt>child_p_for_death(self) -&gt; float</dt><dd><p>Realize mutation of death probability</p>
+</dd>
+<dt>child_p_for_reproduction(self) -&gt; float</dt><dd><p>Realize mutation of reproduction probability</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="population_modeling.mutations.normal_mutation.NormalMutations.mutation">
+<code class="sig-name descname"><span class="pre">mutation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.mutations.normal_mutation.NormalMutations.mutation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Realize spontaneous mutation of the genome</p>
+<dl class="simple">
+<dt>genome</dt><dd><p>Bacteria’s genome</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-population_modeling.mutations.variation_parameters"></span><dl class="py class">
+<dt id="population_modeling.mutations.variation_parameters.MutationalParams">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.variation_parameters.</span></code><code class="sig-name descname"><span class="pre">MutationalParams</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataclass for such mutational parameters as mean(loc) and standard deviation(scale).</p>
+<dl class="simple">
+<dt>loc: float</dt><dd><p>Mean</p>
+</dd>
+<dt>scale: float</dt><dd><p>Standard deviation</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
@@ -260,30 +382,25 @@ Play the role of external factors of evolution.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">Population modeling</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Population modeling’s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
-</div>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -294,32 +411,26 @@ Play the role of external factors of evolution.</p>
     </div>
 </div>
 <script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2021, Egor Marin, Elizaveta Grishina.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Population modeling  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to Population modeling’s documentation!</a></li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Egor Marin, Elizaveta Grishina.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
+    </div>
   </body>
 </html>

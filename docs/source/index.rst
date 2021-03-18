@@ -10,10 +10,15 @@ Welcome to Population modeling's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+.. code-block:: python
+
 .. automodule:: population_modeling
    :members:
 
 .. automodule:: population_modeling.bacteria
+   :members:
+
+.. automodule:: population_modeling.bacteria_iteration
    :members:
 
 .. automodule:: population_modeling.genome
@@ -22,7 +27,19 @@ Welcome to Population modeling's documentation!
 .. automodule:: population_modeling.population
    :members:
 
+.. automodule:: population_modeling.population_iteration
+   :members:
+
 .. automodule:: population_modeling.selector
+   :members:
+
+.. automodule:: population_modeling.mutations.abstract_mutation
+   :members:
+
+.. automodule:: population_modeling.mutations.normal_mutation
+   :members:
+
+.. automodule:: population_modeling.mutations.variation_parameters
    :members:
 
 

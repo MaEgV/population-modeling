@@ -1,10 +1,10 @@
 from population_modeling.population import Population, igraph
 from population_modeling.selector import Selector
-from population_modeling.mutations import MutationalProcesses
+from population_modeling.mutations.normal_mutation import AbstractMutation
 from population_modeling.bacteria_iteration import iterate as iterate_bacteria
 
 
-def iterate(population: Population, selector: Selector, mutation_mode: MutationalProcesses) -> Population:
+def iterate(population: Population, selector: Selector, mutation_mode: AbstractMutation) -> Population:
     """
     Iteration of population. Call bacterias iterations and process children - append new generation at genealogical
     tree.
