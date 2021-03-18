@@ -71,7 +71,7 @@ def create_graph(first_bacteria: Bacteria) -> igraph.Graph:
     """
 
     graph = igraph.Graph(directed=True)
-    graph.add_vertex(bacteria=first_bacteria, generation= 0)
+    graph.add_vertex(bacteria=first_bacteria, generation=0)
 
     return graph
 
