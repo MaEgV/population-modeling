@@ -45,7 +45,7 @@
 </div>
 <span class="target" id="module-population_modeling"></span><span class="target" id="module-population_modeling.bacteria"></span><dl class="py class">
 <dt id="population_modeling.bacteria.Bacteria">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">Bacteria</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">Bacteria</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">genome:</span> <span class="pre">population_modeling.genome.Genome</span></em>, <em class="sig-param"><span class="pre">_status:</span> <span class="pre">population_modeling.bacteria.BacteriaStatus</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents bacteria with its parameters</p>
 <dl class="simple">
 <dt>is_alive<span class="classifier">bool</span></dt><dd><p>Is bacteria alive or dead</p>
@@ -55,10 +55,51 @@
 </dl>
 <blockquote>
 <div><dl class="simple">
-<dt>get_children(self, selector: Selector) -&gt; list</dt><dd><p>Generate children</p>
+<dt>is_alive(self) -&gt; bool</dt><dd><p>Returns status of aliving</p>
+</dd>
+<dt>inc_age(self) -&gt; None</dt><dd><p>Increment age counter</p>
+</dd>
+<dt>die(self) -&gt; None</dt><dd><p>Kill the bacteria</p>
 </dd>
 </dl>
 </div></blockquote>
+<dl class="py method">
+<dt id="population_modeling.bacteria.Bacteria.die">
+<code class="sig-name descname"><span class="pre">die</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria.die" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the status to deceased</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="population_modeling.bacteria.Bacteria.inc_age">
+<code class="sig-name descname"><span class="pre">inc_age</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria.inc_age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increase age counter of bacteria
+When the age exceeds the max_life_time from the genome, the bacteria automatically dies</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="population_modeling.bacteria.Bacteria.is_alive">
+<code class="sig-name descname"><span class="pre">is_alive</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria.is_alive" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if bacteria is alive, else - False</p>
+<dl class="simple">
+<dt>bool</dt><dd><p>Bacteria status</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="population_modeling.bacteria.BacteriaStatus">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">BacteriaStatus</span></code><a class="headerlink" href="#population_modeling.bacteria.BacteriaStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing properties of a bacterium that are not inherited by its children.</p>
+<dl class="simple">
+<dt>is_alive<span class="classifier">bool</span></dt><dd><p>Is bacteria alive or dead</p>
+</dd>
+<dt>age<span class="classifier">int</span></dt><dd><p>Current age of bacteria</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -121,9 +162,22 @@ Bacteria can get information about their population to adjust their behavior</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>Bacteria</dt><dd><p>Bacteria with set parameters</p>
+<dt>draw(self, filename: str = None) -&gt; None</dt><dd><p>Drawing of population-graph</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="population_modeling.population.Population.draw">
+<code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.Population.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method, that implement drawing of Population instance in tree form.</p>
+<dl class="simple">
+<dt>population: Population</dt><dd><p>witch population should be drawn</p>
+</dd>
+<dt>filename: str</dt><dd><p>the name of the file to save the drawing to</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -150,21 +204,6 @@ Bacteria can get information about their population to adjust their behavior</p>
 </dl>
 <blockquote>
 <div><p>Population</p>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py function">
-<dt id="population_modeling.population.draw">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.population.</span></code><code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Functions, that implement drawing of Population instance in tree form.</p>
-<dl class="simple">
-<dt>population: Population</dt><dd><p>witch population should be drawn</p>
-</dd>
-<dt>filename: str</dt><dd><p>the name of the file to save the drawing to</p>
-</dd>
-</dl>
-<blockquote>
-<div><p>None</p>
 </div></blockquote>
 </dd></dl>
 
