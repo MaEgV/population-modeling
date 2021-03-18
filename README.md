@@ -22,12 +22,12 @@ This package is based on the following classes and the logic of working with the
 ### Population
 This class stores a graph of the bacteria in the population. The graph forms a tree, so the only attribute of the class is the genealogical tree field. It is also passed to initialize an instance of the class when it is created:  
 ```Python
-    genealogical_tree = igraph.Graph(directed=True)  # create population-graph
-    first_bacteria = create_bacteria()  # create bacteria by suggested function
-    genealogical_tree.add_vertex(
-    					bacteria=first_bacteria, 
-                        generation=0)  # add first bacteria to graph
-	population = Population(genealogical_tree)  # Correct instance of Population class 
+genealogical_tree = igraph.Graph(directed=True)  # create population-graph
+first_bacteria = create_bacteria()  # create bacteria by suggested function
+genealogical_tree.add_vertex(
+		bacteria=first_bacteria, 
+		generation=0)  # add first bacteria to graph
+population = Population(genealogical_tree)  # Correct instance of Population class 
 ```
 
 As you can see from the example, the jpgraph library is used for storing and manipulating the graph.
@@ -38,10 +38,10 @@ Draw and iterate are responsible for this, respectively.
 
 #### Draw
 ```Python
-	population.draw("filename.png")  # Draw a population as a tree and save pitcure at file
+population.draw("filename.png")  # Draw a population as a tree and save pitcure at file
 ```
 ```Python
-	population.draw()  # Draw a population without saving
+population.draw()  # Draw a population without saving
 ```
 Implements the tree graph rendering mechanism.  
 
@@ -66,9 +66,8 @@ Function that implements a single time cycle of a population. This cycle consist
 This class stores the state of a particular bacterium. The main parameters of the bacterium are the values stored in the additional Genome class. Parameters from Genome can change under the influence of mutational mechanisms. Based on the same parameters, the selection operator performs natural selection.  
 
 ```Python
-	genome = Genome(0.5, 0.5, 0.5)  # Genome of future bacteria
-	new_bacteria = Bacteria(genome)
-
+genome = Genome(0.5, 0.5, 0.5)  # Genome of future bacteria
+new_bacteria = Bacteria(genome)
 ```
 `genome` - instance of the Genome class with the initial parameters.
 The main functions for working with this class are described below.
@@ -87,8 +86,8 @@ iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacter
 #### Genome
 Storage of the genetic parameters of the bacterium that will change and be inherited by descendants.
 ```Python
-  selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
-  mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
   iterate(bacteria, selector, mutation_mode)  # Iterate all bacterias in population
 ```
