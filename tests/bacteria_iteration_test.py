@@ -33,7 +33,7 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 
 @pytest.mark.parametrize('bacteria_iteration_dead', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
-    bacteria_iteration_dead.bacteria._is_alive = False
+    bacteria_iteration_dead.bacteria.die()
     with pytest.raises(BaseException):
         iterate(Selector(ExternalFactors(bacteria_iteration_dead.antagonism, bacteria_iteration_dead.overpopulation)),
                 bacteria_iteration_dead.mutation_mode, bacteria_iteration_dead.bacteria)
