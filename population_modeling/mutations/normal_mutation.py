@@ -44,8 +44,10 @@ class NormalMutations(AbstractMutation):
 
     MAX_PROBABILITY = 1
 
-    def __init__(self, mutational_params: MutationalParams, max_n_params: MutationalParams,
-                 child_params: MutationalParams):
+    def __init__(self,
+                 mutational_params: MutationalParams = MutationalParams(0, 0.01),
+                 max_n_params: MutationalParams = MutationalParams(0, 3),
+                 child_params: MutationalParams = MutationalParams(0, 0.05)):
         self.mutational_params = mutational_params
         self.max_n_params = max_n_params
         self.child_params = child_params

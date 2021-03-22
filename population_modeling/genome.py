@@ -1,6 +1,10 @@
+from dataclasses import dataclass
+
+
+@dataclass()
 class Genome:
     """
-    Class for description of bacteria's genome.
+    Dataclass for inherited parameters of bacteria
 
     Attributes
     ----------
@@ -14,8 +18,6 @@ class Genome:
         Probability of reproduction
 
     """
-
-    def __init__(self, max_life_time: int, p_for_death: float, p_for_reproduction: float):
-        self.max_life_time = max_life_time
-        self.p_for_death = p_for_death
-        self.p_for_reproduction = p_for_reproduction
+    max_life_time: int
+    p_for_death: float
+    p_for_reproduction: float
