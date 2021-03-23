@@ -11,41 +11,27 @@ class BacteriaStatus:
     ----------
     is_alive : bool
        Is bacteria alive or dead
+
     age : int
         Current age of bacteria
+
+           Methods
+       -------
+        is_alive(self) -> bool
+            Returns status of life status: alive or die
+
+        inc_age(self) -> None
+            Increment age counter
+
+        die(self) -> None
+            Kill the bacteria
+
     """
 
     is_alive: bool = field(init=False, default=True)
     age: int = field(init=False, default=0)
 
-
-@dataclass(frozen=True)
-class Bacteria:
-    """
-       Represents bacteria with its parameters
-
-       Attributes
-       ----------
-       is_alive : bool
-           Is bacteria alive or dead
-
-       genome : Genome
-           Genome of bacteria
-
-       Methods
-       -------
-        is_alive(self) -> bool
-            Returns status of aliving
-        inc_age(self) -> None
-            Increment age counter
-        die(self) -> None
-            Kill the bacteria
-       """
-
-    genome: Genome
-    _status: BacteriaStatus = field(default_factory=BacteriaStatus)
-
-    def is_alive(self) -> bool:
+    def get_is_alive(self) -> bool:
         """
         True if bacteria is alive, else - False
 
@@ -55,22 +41,28 @@ class Bacteria:
             Bacteria status
         """
 
-        return self._status.is_alive
+        return self.is_alive
 
-    def inc_age(self) -> None:
+    def inc_age(self, max_life_time: int) -> None:
+
         """
         Increase age counter of bacteria
         When the age exceeds the max_life_time from the genome, the bacteria automatically dies
+
+        Parameters
+        ----------
+        max_life_time: int
+            Maximum bacteria's lifetime
 
         Returns
         -------
         None
         """
 
-        self._status.age += 1
+        self.age += 1
 
-        if self._status.age > self.genome.max_life_time:
-            self._status.is_alive = False
+        if self.age > max_life_time:
+            self.is_alive = False
 
     def die(self) -> None:
         """
@@ -81,7 +73,26 @@ class Bacteria:
         None
         """
 
-        self._status.is_alive = False
+        self.is_alive = False
+
+
+@dataclass(frozen=True)
+class Bacteria:
+    """
+       Represents bacteria with its parameters
+
+       Attributes
+       ----------
+       _status: BacteriaStatus
+           Bacteria status about age and life: die or alive
+
+       genome : Genome
+           Genome of bacteria
+
+       """
+
+    genome: Genome
+    status: BacteriaStatus = field(default_factory=BacteriaStatus)
 
 
 def create_bacteria(

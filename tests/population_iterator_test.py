@@ -1,10 +1,10 @@
 import pytest
 from population_modeling import create_bacteria
 from population_modeling.population import create_population
-from population_modeling.mutations.normal_mutation import NormalMutations
+from population_modeling.mutations.normal_mutation import NormalMutator
 from population_modeling.population_iteration import iterate
 from population_modeling.selector import Selector, ExternalFactors
-from population_modeling.mutations.variation_parameters import MutationalParams
+from population_modeling.mutations.variation_parameters import MutationParams
 
 
 class Case:
@@ -20,15 +20,15 @@ class Case:
 
 TEST_CASES_POPULATION_ITERATOR_ZERO = [Case(name="Zero iterations", antagonism=0, overpopulation=0, max_life_time=0,
                                             p_for_death=1, p_for_reproduction=0, result=1,
-                                            mutation_mode=NormalMutations(MutationalParams(0, 0.001),
-                                                                          MutationalParams(0, 3),
-                                                                          MutationalParams(0, 0.01)))]
+                                            mutation_mode=NormalMutator(MutationParams(0, 0.001),
+                                                                        MutationParams(0, 3),
+                                                                        MutationParams(0, 0.01)))]
 
 TEST_CASES_POPULATION_ITERATOR = [Case(name="One offspring", antagonism=0, overpopulation=0, max_life_time=5,
                                        p_for_death=0.3, p_for_reproduction=0.7, result=1,
-                                       mutation_mode=NormalMutations(MutationalParams(0, 0.001),
-                                                                     MutationalParams(0, 3),
-                                                                     MutationalParams(0, 0.01)))]
+                                       mutation_mode=NormalMutator(MutationParams(0, 0.001),
+                                                                   MutationParams(0, 3),
+                                                                   MutationParams(0, 0.01)))]
 
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR_ZERO, ids=str)

@@ -2,7 +2,7 @@ from abc import abstractmethod
 from population_modeling.genome import Genome
 
 
-class AbstractMutation:
+class AbstractMutator:
     """
     Base class for different mutational processes. Include variation of maximum lifetime, death probability
     and reproduction probability for the child. Spontaneous mutation happens directly with the individual.

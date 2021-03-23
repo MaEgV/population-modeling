@@ -1,9 +1,9 @@
 import pytest
 from population_modeling import bacteria, ExternalFactors
 from population_modeling.bacteria_iteration import iterate
-from population_modeling.mutations.normal_mutation import NormalMutations
+from population_modeling.mutations.normal_mutation import NormalMutator
 from population_modeling.selector import Selector
-from population_modeling.mutations.variation_parameters import MutationalParams
+from population_modeling.mutations.variation_parameters import MutationParams
 
 class Case:
     def __init__(self, name, population_max, antagonism, overpopulation, max_life_time, p_for_death,
@@ -18,9 +18,9 @@ class Case:
 
 TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, antagonism=0, overpopulation=0,
                                       max_life_time=5, p_for_death=0.1, p_for_reproduction=0.1,
-                                      mutation_mode=NormalMutations(MutationalParams(0, 0.001),
-                                                                    MutationalParams(0, 3),
-                                                                    MutationalParams(0, 0.01)))]
+                                      mutation_mode=NormalMutator(MutationParams(0, 0.001),
+                                                                  MutationParams(0, 3),
+                                                                  MutationParams(0, 0.01)))]
 
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
@@ -33,7 +33,7 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 
 @pytest.mark.parametrize('bacteria_iteration_dead', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
-    bacteria_iteration_dead.bacteria.die()
+    bacteria_iteration_dead.bacteria.status.die()
     with pytest.raises(BaseException):
         iterate(Selector(ExternalFactors(bacteria_iteration_dead.antagonism, bacteria_iteration_dead.overpopulation)),
                 bacteria_iteration_dead.mutation_mode, bacteria_iteration_dead.bacteria)

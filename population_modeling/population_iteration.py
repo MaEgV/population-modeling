@@ -1,10 +1,10 @@
 from population_modeling.population import Population, igraph
 from population_modeling.selector import Selector
-from population_modeling.mutations.normal_mutation import AbstractMutation
+from population_modeling.mutations.normal_mutation import AbstractMutator
 from population_modeling.bacteria_iteration import iterate as iterate_bacteria
 
 
-def iterate(population: Population, selector: Selector, mutation_mode: AbstractMutation) -> Population:
+def iterate(population: Population, selector: Selector, mutation_mode: AbstractMutator) -> Population:
     """
     Iteration of population. Call bacterias iterations and process children - append new generation at genealogical
     tree.
@@ -31,7 +31,7 @@ def iterate(population: Population, selector: Selector, mutation_mode: AbstractM
     for vertex in population.genealogical_tree.vs:
         parent = vertex[Population.INDIVIDUAL_KEY]  # Get the object of the bacterium from the node
 
-        if parent.is_alive():
+        if parent.status.get_is_alive():
             children = iterate_bacteria(selector, mutation_mode, parent)
 
             if children:

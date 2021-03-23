@@ -2,11 +2,11 @@ from scipy.stats import norm  # type: ignore
 from math import fabs
 
 from population_modeling.genome import Genome
-from population_modeling.mutations.abstract_mutation import AbstractMutation
-from population_modeling.mutations.variation_parameters import MutationalParams
+from population_modeling.mutations.abstract_mutation import AbstractMutator
+from population_modeling.mutations.variation_parameters import MutationParams
 
 
-class NormalMutations(AbstractMutation):
+class NormalMutator(AbstractMutator):
     """
 
     Include mutational processes based on normal distribution.
@@ -14,13 +14,13 @@ class NormalMutations(AbstractMutation):
     Attributes
     ----------
 
-    mutational_params: MutationalParams
+    mutational_params: MutationParams
         Mean and standard deviation for normal mutation
 
-    max_n_params: MutationalParams
+    max_n_params: MutationParams
         Mean and standard deviation for maximum lifetime variation
 
-    child_params: MutationalParams
+    child_params: MutationParams
             Mean and standard deviation for child's genome variation
 
     Methods
@@ -45,9 +45,9 @@ class NormalMutations(AbstractMutation):
     MAX_PROBABILITY = 1
 
     def __init__(self,
-                 mutational_params: MutationalParams = MutationalParams(0, 0.01),
-                 max_n_params: MutationalParams = MutationalParams(0, 3),
-                 child_params: MutationalParams = MutationalParams(0, 0.05)):
+                 mutational_params: MutationParams = MutationParams(0, 0.01),
+                 max_n_params: MutationParams = MutationParams(0, 3),
+                 child_params: MutationParams = MutationParams(0, 0.05)):
         self.mutational_params = mutational_params
         self.max_n_params = max_n_params
         self.child_params = child_params
@@ -93,7 +93,7 @@ class NormalMutations(AbstractMutation):
         variation = norm.rvs(self.child_params.loc, self.child_params.scale)
         parameter = fabs(parent_genome.p_for_death + variation)
 
-        return min(parameter, NormalMutations.MAX_PROBABILITY)
+        return min(parameter, NormalMutator.MAX_PROBABILITY)
 
     def _child_p_for_reproduction(self, parent_genome: Genome) -> float:
         """
@@ -115,7 +115,7 @@ class NormalMutations(AbstractMutation):
         variation = norm.rvs(self.child_params.loc, self.child_params.scale)
         parameter = fabs(parent_genome.p_for_reproduction + variation)
 
-        return min(parameter, NormalMutations.MAX_PROBABILITY)
+        return min(parameter, NormalMutator.MAX_PROBABILITY)
 
     def mutation(self, genome: Genome) -> None:
         """
@@ -134,7 +134,7 @@ class NormalMutations(AbstractMutation):
         """
 
         genome.p_for_death = min(genome.p_for_death + norm.rvs(self.mutational_params.loc, self.mutational_params.scale)
-                                 , NormalMutations.MAX_PROBABILITY)
+                                 , NormalMutator.MAX_PROBABILITY)
         genome.p_for_reproduction = min(genome.p_for_reproduction + norm.rvs(self.mutational_params.loc,
                                                                              self.mutational_params.scale),
-                                        NormalMutations.MAX_PROBABILITY)
+                                        NormalMutator.MAX_PROBABILITY)

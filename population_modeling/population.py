@@ -32,7 +32,7 @@ class Population:
         Parameters
         ----------
         population: Population
-            witch population should be drawn
+            which population should be drawn
 
         filename: str
             the name of the file to save the drawing to
@@ -50,7 +50,7 @@ class Population:
             layout=layout,
             vertex_label=[node.index for node in self.genealogical_tree.vs],
             bbox=(600, 600),
-            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive() else 'red'
+            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].get_is_alive() else 'red'
                           for node in self.genealogical_tree.vs]
         )
 
