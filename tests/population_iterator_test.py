@@ -1,9 +1,9 @@
 import pytest
 from population_modeling import create_bacteria
 from population_modeling.population import create_population
-from population_modeling.mutations.normal_mutation import NormalMutator
-from population_modeling.population_iteration import iterate
-from population_modeling.selector import Selector, ExternalFactors
+from population_modeling.mutations.normal_mutator import NormalMutator
+from population_modeling.life_cycle import iterate
+from population_modeling.selector import AbstractSelector, ExternalFactors
 from population_modeling.mutations.variation_parameters import MutationParams
 
 
@@ -15,7 +15,7 @@ class Case:
         self.population = create_population(self.bacteria)
         self.result = result
         self.mutation_mode = mutation_mode
-        self.selector = Selector(ExternalFactors(antagonism, overpopulation))
+        self.selector = AbstractSelector(ExternalFactors(antagonism, overpopulation))
 
 
 TEST_CASES_POPULATION_ITERATOR_ZERO = [Case(name="Zero iterations", antagonism=0, overpopulation=0, max_life_time=0,

@@ -35,7 +35,7 @@ class AbstractMutator:
         raise NotImplementedError
 
     @abstractmethod
-    def mutation(self, genome: Genome) -> None:
+    def mutate(self, genome: Genome) -> None:
         raise NotImplementedError
 
     def child_genome(self, parent_genome: Genome) -> Genome:

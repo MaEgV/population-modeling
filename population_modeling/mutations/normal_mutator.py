@@ -2,7 +2,7 @@ from scipy.stats import norm  # type: ignore
 from math import fabs
 
 from population_modeling.genome import Genome
-from population_modeling.mutations.abstract_mutation import AbstractMutator
+from population_modeling.mutations.abstract_mutator import AbstractMutator
 from population_modeling.mutations.variation_parameters import MutationParams
 
 
@@ -117,7 +117,7 @@ class NormalMutator(AbstractMutator):
 
         return min(parameter, NormalMutator.MAX_PROBABILITY)
 
-    def mutation(self, genome: Genome) -> None:
+    def mutate(self, genome: Genome) -> None:
         """
 
         Realize spontaneous mutation of the genome

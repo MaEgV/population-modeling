@@ -121,7 +121,8 @@ See more information in [documentation](https://github.com/MaEgV/population-mode
 Consider a simple example of setting up a population and drawing the result of an evolution simulation:
 
 ```Python
-from population_modeling import create_bacteria, create_population, NormalMutator, Selector, ExternalFactors, iterate
+from population_modeling import create_bacteria, create_population, NormalMutator, AbstractSelector, ExternalFactors,
+    iterate
 
 first_bacteria = create_bacteria(p_for_death=0.1)  # creating first bacteria to start a population
 population = create_population(first_bacteria)  # creating population

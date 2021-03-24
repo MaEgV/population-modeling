@@ -1,9 +1,10 @@
-from population_modeling.selector import Genome
+from population_modeling.exceptions import DeadBacteriaException
+from population_modeling.selector.selector import Genome
 from dataclasses import dataclass, field
 
 
 @dataclass
-class BacteriaStatus:
+class BacteriaProperties:
     """
     A class containing properties of a bacterium that are not inherited by its children.
 
@@ -17,19 +18,22 @@ class BacteriaStatus:
 
            Methods
        -------
-        is_alive(self) -> bool
+        get_is_alive(self) -> bool
             Returns status of life status: alive or die
 
         inc_age(self) -> None
             Increment age counter
+
+        get_age(self) -> int:
+            Returns age
 
         die(self) -> None
             Kill the bacteria
 
     """
 
-    is_alive: bool = field(init=False, default=True)
-    age: int = field(init=False, default=0)
+    _is_alive: bool = field(init=False, default=True)
+    _age: int = field(init=False, default=0)
 
     def get_is_alive(self) -> bool:
         """
@@ -41,28 +45,31 @@ class BacteriaStatus:
             Bacteria status
         """
 
-        return self.is_alive
+        return self._is_alive
 
-    def inc_age(self, max_life_time: int) -> None:
+    def inc_age(self) -> None:
 
         """
         Increase age counter of bacteria
         When the age exceeds the max_life_time from the genome, the bacteria automatically dies
-
-        Parameters
-        ----------
-        max_life_time: int
-            Maximum bacteria's lifetime
 
         Returns
         -------
         None
         """
 
-        self.age += 1
+        self._age += 1
 
-        if self.age > max_life_time:
-            self.is_alive = False
+    def get_age(self) -> int:
+        """
+        Getter of the age property
+
+        Returns
+        -------
+        int
+            age property
+        """
+        return self._age
 
     def die(self) -> None:
         """
@@ -73,7 +80,7 @@ class BacteriaStatus:
         None
         """
 
-        self.is_alive = False
+        self._is_alive = False
 
 
 @dataclass(frozen=True)
@@ -83,7 +90,7 @@ class Bacteria:
 
        Attributes
        ----------
-       _status: BacteriaStatus
+       _status: BacteriaProperties
            Bacteria status about age and life: die or alive
 
        genome : Genome
@@ -92,7 +99,47 @@ class Bacteria:
        """
 
     genome: Genome
-    status: BacteriaStatus = field(default_factory=BacteriaStatus)
+    properties: BacteriaProperties = field(default_factory=BacteriaProperties)
+
+    def is_alive(self) -> bool:
+        """
+        True if bacteria is alive, else - False
+
+        Returns
+        -------
+        bool
+            Bacteria status
+        """
+        return self.properties.get_is_alive()
+
+    def die(self) -> None:
+        """
+        Changes live status to false
+
+        Returns
+        -------
+        None
+        """
+
+        if not self.is_alive():
+            raise DeadBacteriaException(str(self))
+
+        self.properties.die()
+
+    def inc_age(self):
+        """
+        Increase age counter of bacteria
+        When the age exceeds the max_life_time from the genome, the bacteria automatically dies
+
+        Returns
+        -------
+        None
+        """
+
+        if not self.is_alive():
+            raise DeadBacteriaException(str(self))
+
+        self.properties.inc_age()
 
 
 def create_bacteria(
@@ -117,7 +164,6 @@ def create_bacteria(
     -------
     Bacteria
         Bacteria with set parameters
-
     """
 
     return Bacteria(Genome(max_life_time, p_for_death, p_for_reproduction))

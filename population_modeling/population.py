@@ -25,17 +25,44 @@ class Population:
     INDIVIDUAL_KEY: ClassVar[str] = 'bacteria'
     GENERATION_KEY: ClassVar[str] = 'generation'
 
-    def draw(self, filename: str = None) -> None:
+    def __getitem__(self, key):
+        return self.genealogical_tree.vs[Population.INDIVIDUAL_KEY][key]
+
+    def add(self, new_generation: list) -> None:
         """
-        Method, that implement drawing of Population instance in tree form.
+        Wrapper for processing parent-child pairs.
 
         Parameters
         ----------
         population: Population
-            which population should be drawn
+            Processed population
 
-        filename: str
-            the name of the file to save the drawing to
+        new_generation: list
+            Contain pairs parent-children
+
+        Returns
+        -------
+        None
+
+        """
+        for parent, children in new_generation:
+            parent_vs = self.genealogical_tree.vs.find(**{Population.INDIVIDUAL_KEY: parent})
+            self._process_offspring(parent_vs, children)
+
+    def _process_offspring(self, parent: igraph.Graph.vs, children: list) -> None:
+        """
+        Processing parent-child pairs
+
+        Parameters
+        ----------
+        population: Population
+            Processed population
+
+        parent: igraph.Graph.vs
+            Parent-graph
+
+        children: list
+            List of new children, which should be added to graph
 
         Returns
         -------
@@ -43,53 +70,63 @@ class Population:
 
         """
 
-        layout = self.genealogical_tree.layout_reingold_tilford(root=[0])
-        igraph.plot(
-            self.genealogical_tree,
-            filename,
-            layout=layout,
-            vertex_label=[node.index for node in self.genealogical_tree.vs],
-            bbox=(600, 600),
-            vertex_color=['green' if node[Population.INDIVIDUAL_KEY].get_is_alive() else 'red'
-                          for node in self.genealogical_tree.vs]
+        # Add children to graph vertices with new generation labels
+        self.genealogical_tree.add_vertices(
+            len(children),
+            {Population.INDIVIDUAL_KEY: children,
+             Population.GENERATION_KEY: [parent[Population.GENERATION_KEY] + 1] * len(children)}
+        )
+
+        # Add directed edges from parent to children
+        self.genealogical_tree.add_edges(
+            [(parent, child) for child in self.genealogical_tree.vs[-len(children)::]]
         )
 
 
-def create_graph(first_bacteria: Bacteria) -> igraph.Graph:
+def draw(population: Population, filename: str = None) -> None:
     """
-    Create new graph with one node and two labels
+    Method, that implement drawing of Population instance in tree form.
 
     Parameters
     ----------
-    first_bacteria: Bacteria
-        Bacteria that is the basis for the graph
+    population: Population
+        witch population should be drawn
+
+    filename: str
+        the name of the file to save the drawing to
 
     Returns
     -------
-    igraph.Graph
-        New graph
+    None
+
     """
 
-    graph = igraph.Graph(directed=True)
-    graph.add_vertex(bacteria=first_bacteria, generation=0)
+    layout = population.genealogical_tree.layout_reingold_tilford(root=[0])
+    igraph.plot(
+        population.genealogical_tree,
+        filename,
+        layout=layout,
+        vertex_label=[node.index for node in population.genealogical_tree.vs],
+        bbox=(600, 600),
+        vertex_color=['green' if node[Population.INDIVIDUAL_KEY].is_alive() else 'red'
+                      for node in population.genealogical_tree.vs]
+    )
 
-    return graph
 
-
-def create_population(first_bacteria: Bacteria) -> Population:
+def create_population(bacteria: Bacteria) -> Population:
     """
     Simple creating population from one bacteria
 
     Parameters
     ----------
-    first_bacteria: Bacteria
+    bacteria: Bacteria
         Bacteria class instance
 
     Returns
     -------
         Population
     """
-
-    genealogical_tree = create_graph(first_bacteria)  # TODO add multiple bacteria for initialization
+    genealogical_tree = igraph.Graph(directed=True)
+    genealogical_tree.add_vertex(bacteria=bacteria, generation=0)
 
     return Population(genealogical_tree)

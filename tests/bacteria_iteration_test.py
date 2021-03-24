@@ -1,8 +1,8 @@
 import pytest
 from population_modeling import bacteria, ExternalFactors
 from population_modeling.bacteria_iteration import iterate
-from population_modeling.mutations.normal_mutation import NormalMutator
-from population_modeling.selector import Selector
+from population_modeling.mutations.normal_mutator import NormalMutator
+from population_modeling.selector import AbstractSelector
 from population_modeling.mutations.variation_parameters import MutationParams
 
 class Case:
@@ -25,7 +25,7 @@ TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, ant
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = iterate(Selector(
+    result = iterate(AbstractSelector(
         ExternalFactors(bacteria_iteration_alive.antagonism, bacteria_iteration_alive.overpopulation)),
         bacteria_iteration_alive.mutation_mode, bacteria_iteration_alive.bacteria)
     assert len(result) >= 0
@@ -33,7 +33,7 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 
 @pytest.mark.parametrize('bacteria_iteration_dead', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
-    bacteria_iteration_dead.bacteria.status.die()
+    bacteria_iteration_dead.bacteria.properties.die()
     with pytest.raises(BaseException):
-        iterate(Selector(ExternalFactors(bacteria_iteration_dead.antagonism, bacteria_iteration_dead.overpopulation)),
+        iterate(AbstractSelector(ExternalFactors(bacteria_iteration_dead.antagonism, bacteria_iteration_dead.overpopulation)),
                 bacteria_iteration_dead.mutation_mode, bacteria_iteration_dead.bacteria)
