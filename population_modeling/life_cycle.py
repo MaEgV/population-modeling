@@ -66,13 +66,13 @@ class LifeCycle:
 
         for bacteria in self.population.genealogical_tree.vs[Population.INDIVIDUAL_KEY]:
             if bacteria.is_alive():
-                children = _bacteria_cycle(bacteria, selector, mutator)
+                children = bacteria_cycle(bacteria, selector, mutator)
                 new_generation.extend(children)
 
         return new_generation
 
 
-def _bacteria_cycle(bacteria: Bacteria, selector: AbstractSelector, mutator: AbstractMutator) -> list:
+def bacteria_cycle(bacteria: Bacteria, selector: AbstractSelector, mutator: AbstractMutator) -> list:
     """
     Life iteration of bacteria
 
