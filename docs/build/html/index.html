@@ -45,28 +45,18 @@
 </div>
 <span class="target" id="module-population_modeling"></span><span class="target" id="module-population_modeling.bacteria"></span><dl class="py class">
 <dt id="population_modeling.bacteria.Bacteria">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">Bacteria</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">genome:</span> <span class="pre">population_modeling.genome.Genome</span></em>, <em class="sig-param"><span class="pre">_status:</span> <span class="pre">population_modeling.bacteria.BacteriaStatus</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">Bacteria</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">genome:</span> <span class="pre">population_modeling.genome.Genome</span></em>, <em class="sig-param"><span class="pre">properties:</span> <span class="pre">population_modeling.bacteria.BacteriaProperties</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents bacteria with its parameters</p>
 <dl class="simple">
-<dt>is_alive<span class="classifier">bool</span></dt><dd><p>Is bacteria alive or dead</p>
+<dt>_status: BacteriaProperties</dt><dd><p>Bacteria status about age and life: die or alive</p>
 </dd>
 <dt>genome<span class="classifier">Genome</span></dt><dd><p>Genome of bacteria</p>
 </dd>
 </dl>
-<blockquote>
-<div><dl class="simple">
-<dt>is_alive(self) -&gt; bool</dt><dd><p>Returns status of aliving</p>
-</dd>
-<dt>inc_age(self) -&gt; None</dt><dd><p>Increment age counter</p>
-</dd>
-<dt>die(self) -&gt; None</dt><dd><p>Kill the bacteria</p>
-</dd>
-</dl>
-</div></blockquote>
 <dl class="py method">
 <dt id="population_modeling.bacteria.Bacteria.die">
 <code class="sig-name descname"><span class="pre">die</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.bacteria.Bacteria.die" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes the status to deceased</p>
+<dd><p>Changes live status to false</p>
 <p>None</p>
 </dd></dl>
 
@@ -91,8 +81,8 @@ When the age exceeds the max_life_time from the genome, the bacteria automatical
 </dd></dl>
 
 <dl class="py class">
-<dt id="population_modeling.bacteria.BacteriaStatus">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">BacteriaStatus</span></code><a class="headerlink" href="#population_modeling.bacteria.BacteriaStatus" title="Permalink to this definition">¶</a></dt>
+<dt id="population_modeling.bacteria.BacteriaProperties">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria.</span></code><code class="sig-name descname"><span class="pre">BacteriaProperties</span></code><a class="headerlink" href="#population_modeling.bacteria.BacteriaProperties" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class containing properties of a bacterium that are not inherited by its children.</p>
 <dl class="simple">
 <dt>is_alive<span class="classifier">bool</span></dt><dd><p>Is bacteria alive or dead</p>
@@ -100,6 +90,51 @@ When the age exceeds the max_life_time from the genome, the bacteria automatical
 <dt>age<span class="classifier">int</span></dt><dd><p>Current age of bacteria</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>get_is_alive(self) -&gt; bool</dt><dd><p>Returns status of life status: alive or die</p>
+</dd>
+<dt>inc_age(self) -&gt; None</dt><dd><p>Increment age counter</p>
+</dd>
+<dt>get_age(self) -&gt; int:</dt><dd><p>Returns age</p>
+</dd>
+<dt>die(self) -&gt; None</dt><dd><p>Kill the bacteria</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="population_modeling.bacteria.BacteriaProperties.die">
+<code class="sig-name descname"><span class="pre">die</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.bacteria.BacteriaProperties.die" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the status to deceased</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="population_modeling.bacteria.BacteriaProperties.get_age">
+<code class="sig-name descname"><span class="pre">get_age</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#population_modeling.bacteria.BacteriaProperties.get_age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter of the age property</p>
+<dl class="simple">
+<dt>int</dt><dd><p>age property</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="population_modeling.bacteria.BacteriaProperties.get_is_alive">
+<code class="sig-name descname"><span class="pre">get_is_alive</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.bacteria.BacteriaProperties.get_is_alive" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if bacteria is alive, else - False</p>
+<dl class="simple">
+<dt>bool</dt><dd><p>Bacteria status</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="population_modeling.bacteria.BacteriaProperties.inc_age">
+<code class="sig-name descname"><span class="pre">inc_age</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.bacteria.BacteriaProperties.inc_age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increase age counter of bacteria
+When the age exceeds the max_life_time from the genome, the bacteria automatically dies</p>
+<p>None</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -115,43 +150,59 @@ When the age exceeds the max_life_time from the genome, the bacteria automatical
 </dd>
 </dl>
 <dl class="simple">
-<dt>draw(self, filename: str = None) -&gt; None</dt><dd><p>Drawing of population-graph</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt id="population_modeling.population.Population.draw">
-<code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.Population.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method, that implement drawing of Population instance in tree form.</p>
-<dl class="simple">
-<dt>population: Population</dt><dd><p>witch population should be drawn</p>
-</dd>
-<dt>filename: str</dt><dd><p>the name of the file to save the drawing to</p>
+<dt>Bacteria</dt><dd><p>Bacteria with set parameters</p>
 </dd>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-population_modeling.bacteria_iteration"></span><dl class="py function">
-<dt id="population_modeling.bacteria_iteration.iterate">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.bacteria_iteration.</span></code><code class="sig-name descname"><span class="pre">iterate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.Selector" title="population_modeling.selector.Selector"><span class="pre">population_modeling.selector.Selector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.abstract_mutation.AbstractMutation" title="population_modeling.mutations.abstract_mutation.AbstractMutation"><span class="pre">population_modeling.mutations.abstract_mutation.AbstractMutation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bacteria</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.bacteria.Bacteria" title="population_modeling.bacteria.Bacteria"><span class="pre">population_modeling.bacteria.Bacteria</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#population_modeling.bacteria_iteration.iterate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that implements a single time cycle of a bacterium, during which it can die or multiply</p>
+<span class="target" id="module-population_modeling.life_cycle"></span><dl class="py class">
+<dt id="population_modeling.life_cycle.LifeCycle">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.life_cycle.</span></code><code class="sig-name descname"><span class="pre">LifeCycle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.life_cycle.LifeCycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main cycle of the package with secondary iteration using the iterate method</p>
 <dl class="simple">
-<dt>mutation_mode: MutationalProcesses</dt><dd><p>Implementation of mutation mechanisms</p>
-</dd>
-<dt>bacteria: Bacteria</dt><dd><p>Instance of the class Bacteria which iterated</p>
-</dd>
-<dt>selector: Selector</dt><dd><p>Decide fate of bactria</p>
+<dt>population: Population</dt><dd><p>Initial population</p>
 </dd>
 </dl>
 <dl class="simple">
-<dt>list</dt><dd><p>List of child’s if they are, if Bacteria not alive returns empty list</p>
+<dt>iterate(self, selector: AbstractSelector, mutator: AbstractMutator, draw_func=lambda x: x) -&gt; None</dt><dd><p>Processes the possible descendants of all individuals in the population</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt id="population_modeling.life_cycle.LifeCycle.iterate">
+<code class="sig-name descname"><span class="pre">iterate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">selector:</span> <span class="pre">population_modeling.selector.selector.AbstractSelector</span></em>, <em class="sig-param"><span class="pre">mutator:</span> <span class="pre">population_modeling.mutations.abstract_mutator.AbstractMutator</span></em>, <em class="sig-param"><span class="pre">draw_func:</span> <span class="pre">Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">LifeCycle.&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.life_cycle.LifeCycle.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time unit of evolution for a population. Processes a new generation in the population</p>
+<dl class="simple">
+<dt>selector: AbstractSelector</dt><dd><p>Selection operator</p>
+</dd>
+<dt>mutator: AbstractMutator</dt><dd><p>Mutation operator</p>
+</dd>
+<dt>draw_func: Callable</dt><dd><p>Population rendering function</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="population_modeling.life_cycle.bacteria_cycle">
+<code class="sig-prename descclassname"><span class="pre">population_modeling.life_cycle.</span></code><code class="sig-name descname"><span class="pre">bacteria_cycle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bacteria</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.bacteria.Bacteria" title="population_modeling.bacteria.Bacteria"><span class="pre">population_modeling.bacteria.Bacteria</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.selector.AbstractSelector" title="population_modeling.selector.selector.AbstractSelector"><span class="pre">population_modeling.selector.selector.AbstractSelector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.abstract_mutator.AbstractMutator" title="population_modeling.mutations.abstract_mutator.AbstractMutator"><span class="pre">population_modeling.mutations.abstract_mutator.AbstractMutator</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">list</span><a class="headerlink" href="#population_modeling.life_cycle.bacteria_cycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Life iteration of bacteria</p>
+<dl class="simple">
+<dt>bacteria: Bacteria</dt><dd><p>Individual bacteria, witch is iterated</p>
+</dd>
+<dt>selector: AbstractSelector</dt><dd><p>Selection operator</p>
+</dd>
+<dt>mutator: AbstractMutator</dt><dd><p>Mutation operator</p>
+</dd>
+</dl>
+<p>list</p>
 </dd></dl>
 
 <span class="target" id="module-population_modeling.genome"></span><dl class="py class">
 <dt id="population_modeling.genome.Genome">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.genome.</span></code><code class="sig-name descname"><span class="pre">Genome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_life_time</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_for_death</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_for_reproduction</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.genome.Genome" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class for description of bacteria’s genome.</p>
+<dd><p>Dataclass for inherited parameters of bacteria</p>
 <dl class="simple">
 <dt>max_life_time<span class="classifier">int</span></dt><dd><p>Maximum iterations for bacteria</p>
 </dd>
@@ -160,6 +211,21 @@ When the age exceeds the max_life_time from the genome, the bacteria automatical
 <dt>p_for_reproduction<span class="classifier">float</span></dt><dd><p>Probability of reproduction</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>update(self, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs) -&gt; None</dt><dd><p>Update genome parameters, which indicated in parameter ‘params’</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="population_modeling.genome.Genome.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.genome.Genome.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update genome parameters, which indicated in parameter ‘params’</p>
+<dl class="simple">
+<dt>params: float</dt><dd><p>Dictionary with parameters</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
 </dd></dl>
 
 <span class="target" id="module-population_modeling.population"></span><dl class="py class">
@@ -176,8 +242,36 @@ Bacteria can get information about their population to adjust their behavior</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="population_modeling.population.Population.draw">
-<code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.Population.draw" title="Permalink to this definition">¶</a></dt>
+<dt id="population_modeling.population.Population.add">
+<code class="sig-name descname"><span class="pre">add</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_generation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.Population.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for processing parent-child pairs.</p>
+<dl class="simple">
+<dt>population: Population</dt><dd><p>Processed population</p>
+</dd>
+<dt>new_generation: list</dt><dd><p>Contain pairs parent-children</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="population_modeling.population.create_population">
+<code class="sig-prename descclassname"><span class="pre">population_modeling.population.</span></code><code class="sig-name descname"><span class="pre">create_population</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bacteria</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.bacteria.Bacteria" title="population_modeling.bacteria.Bacteria"><span class="pre">population_modeling.bacteria.Bacteria</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a><a class="headerlink" href="#population_modeling.population.create_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple creating population from one bacteria</p>
+<dl class="simple">
+<dt>bacteria: Bacteria</dt><dd><p>Bacteria class instance</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>Population</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt id="population_modeling.population.draw">
+<code class="sig-prename descclassname"><span class="pre">population_modeling.population.</span></code><code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.draw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method, that implement drawing of Population instance in tree form.</p>
 <dl class="simple">
 <dt>population: Population</dt><dd><p>witch population should be drawn</p>
@@ -188,74 +282,9 @@ Bacteria can get information about their population to adjust their behavior</p>
 <p>None</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py function">
-<dt id="population_modeling.population.create_graph">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.population.</span></code><code class="sig-name descname"><span class="pre">create_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first_bacteria</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.bacteria.Bacteria" title="population_modeling.bacteria.Bacteria"><span class="pre">population_modeling.bacteria.Bacteria</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">igraph.Graph</span><a class="headerlink" href="#population_modeling.population.create_graph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create new graph with one node and two labels</p>
-<dl class="simple">
-<dt>first_bacteria: Bacteria</dt><dd><p>Bacteria that is the basis for the graph</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>igraph.Graph</dt><dd><p>New graph</p>
-</dd>
-</dl>
-<p>None</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt id="population_modeling.population.create_population">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.population.</span></code><code class="sig-name descname"><span class="pre">create_population</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first_bacteria</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.bacteria.Bacteria" title="population_modeling.bacteria.Bacteria"><span class="pre">population_modeling.bacteria.Bacteria</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a><a class="headerlink" href="#population_modeling.population.create_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simple creating population from one bacteria</p>
-<dl class="simple">
-<dt>first_bacteria: Bacteria</dt><dd><p>Bacteria class instance</p>
-</dd>
-</dl>
-<blockquote>
-<div><p>Population</p>
-</div></blockquote>
-</dd></dl>
-
-<span class="target" id="module-population_modeling.population_iteration"></span><dl class="py function">
-<dt id="population_modeling.population_iteration.iterate">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.population_iteration.</span></code><code class="sig-name descname"><span class="pre">iterate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.Selector" title="population_modeling.selector.Selector"><span class="pre">population_modeling.selector.Selector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_mode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.abstract_mutation.AbstractMutation" title="population_modeling.mutations.abstract_mutation.AbstractMutation"><span class="pre">population_modeling.mutations.abstract_mutation.AbstractMutation</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.population.Population" title="population_modeling.population.Population"><span class="pre">population_modeling.population.Population</span></a><a class="headerlink" href="#population_modeling.population_iteration.iterate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iteration of population. Call bacterias iterations and process children - append new generation at genealogical
-tree.</p>
-<dl class="simple">
-<dt>population: Population</dt><dd><p>Iterable population</p>
-</dd>
-<dt>selector: Selector</dt><dd><p>Selector with preferred methods</p>
-</dd>
-<dt>mutation_mode: MutationalProcesses</dt><dd><p>Preferred type of mutations</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Population</dt><dd><p>Changed population</p>
-</dd>
-</dl>
-</dd></dl>
-
-<span class="target" id="module-population_modeling.selector"></span><dl class="py class">
-<dt id="population_modeling.selector.ExternalFactors">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.selector.</span></code><code class="sig-name descname"><span class="pre">ExternalFactors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">antagonism</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overpopulation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.selector.ExternalFactors" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class of population parameters that allows you to learn about the state of the population.</p>
-<p>With the help of this class of bacteria are able to control their size and composition.
-Play the role of external factors of evolution.</p>
-<dl class="simple">
-<dt>antagonism<span class="classifier">float</span></dt><dd><p>External factor which increases death probability</p>
-</dd>
-<dt>overpopulation<span class="classifier">float</span></dt><dd><p>Degree of overcrowding. Influence on reproduction probability.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py class">
-<dt id="population_modeling.selector.Selector">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.selector.</span></code><code class="sig-name descname"><span class="pre">Selector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">external_factors:</span> <span class="pre">population_modeling.selector.ExternalFactors</span></em>, <em class="sig-param"><span class="pre">have_to_die_func:</span> <span class="pre">Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">default_have_to_die&gt;</span></em>, <em class="sig-param"><span class="pre">have_to_reproduct_func:</span> <span class="pre">Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">default_have_to_reproduct&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.selector.Selector" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-population_modeling.selector.selector"></span><dl class="py class">
+<dt id="population_modeling.selector.selector.AbstractSelector">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.selector.selector.</span></code><code class="sig-name descname"><span class="pre">AbstractSelector</span></code><a class="headerlink" href="#population_modeling.selector.selector.AbstractSelector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simulate evolution processes. Decide what parameters should have child.</p>
 <dl class="simple">
 <dt>external_factors: ExternalFactors</dt><dd><p>external factors affecting the life of bacteria</p>
@@ -285,9 +314,14 @@ Play the role of external factors of evolution.</p>
 </dl>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="population_modeling.selector.Selector.have_to_reproduct">
-<code class="sig-name descname"><span class="pre">have_to_reproduct</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.selector.Selector.have_to_reproduct" title="Permalink to this definition">¶</a></dt>
+</dd></dl>
+
+<dl class="py class">
+<dt id="population_modeling.selector.selector.DefaultSelector">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.selector.selector.</span></code><code class="sig-name descname"><span class="pre">DefaultSelector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.selector_params.SelectorParams" title="population_modeling.selector.selector_params.SelectorParams"><span class="pre">population_modeling.selector.selector_params.SelectorParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext_factors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.selector.ExternalFactors" title="population_modeling.selector.selector.ExternalFactors"><span class="pre">population_modeling.selector.selector.ExternalFactors</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.selector.selector.DefaultSelector" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="population_modeling.selector.selector.DefaultSelector.have_to_reproduct">
+<code class="sig-name descname"><span class="pre">have_to_reproduct</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.selector.selector.DefaultSelector.have_to_reproduct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decide if bacteria should reproduct or not</p>
 <dl class="simple">
 <dt>genome: Genome</dt><dd><p>Bacteria’s genome</p>
@@ -300,8 +334,8 @@ Play the role of external factors of evolution.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="population_modeling.selector.Selector.is_died">
-<code class="sig-name descname"><span class="pre">is_died</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.selector.Selector.is_died" title="Permalink to this definition">¶</a></dt>
+<dt id="population_modeling.selector.selector.DefaultSelector.is_died">
+<code class="sig-name descname"><span class="pre">is_died</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.selector.selector.DefaultSelector.is_died" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decide if bacteria should die or not based on lifetime</p>
 <dl class="simple">
 <dt>genome: Genome</dt><dd><p>Bacteria’s genome</p>
@@ -315,41 +349,35 @@ Play the role of external factors of evolution.</p>
 
 </dd></dl>
 
-<dl class="py function">
-<dt id="population_modeling.selector.default_have_to_die">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.selector.</span></code><code class="sig-name descname"><span class="pre">default_have_to_die</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext_factors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.ExternalFactors" title="population_modeling.selector.ExternalFactors"><span class="pre">population_modeling.selector.ExternalFactors</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.selector.default_have_to_die" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default way to decide should bacteria die or not.</p>
+<dl class="py class">
+<dt id="population_modeling.selector.selector.ExternalFactors">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.selector.selector.</span></code><code class="sig-name descname"><span class="pre">ExternalFactors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">antagonism</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overpopulation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.selector.selector.ExternalFactors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class of population parameters that allows you to learn about the state of the population.</p>
+<p>With the help of this class of bacteria are able to control their size and composition.
+Play the role of external factors of evolution.</p>
 <dl class="simple">
-<dt>ext_factors: ExternalFactors</dt><dd><p>External bacteria’s factors</p>
+<dt>antagonism<span class="classifier">float</span></dt><dd><p>External factor which increases death probability</p>
 </dd>
-<dt>genome: Genome</dt><dd><p>Bacteria’s genome</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>bool</dt><dd><p>Deciding whether bacteria should die</p>
+<dt>overpopulation<span class="classifier">float</span></dt><dd><p>Degree of overcrowding. Influence on reproduction probability.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="population_modeling.selector.default_have_to_reproduct">
-<code class="sig-prename descclassname"><span class="pre">population_modeling.selector.</span></code><code class="sig-name descname"><span class="pre">default_have_to_reproduct</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext_factors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.selector.ExternalFactors" title="population_modeling.selector.ExternalFactors"><span class="pre">population_modeling.selector.ExternalFactors</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#population_modeling.selector.default_have_to_reproduct" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default way to decide should bacteria reproduct or not.</p>
+<span class="target" id="module-population_modeling.selector.selector_params"></span><dl class="py class">
+<dt id="population_modeling.selector.selector_params.SelectorParams">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.selector.selector_params.</span></code><code class="sig-name descname"><span class="pre">SelectorParams</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.selector.selector_params.SelectorParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataclass for such mutational parameters as mean(loc) and standard deviation(scale).</p>
 <dl class="simple">
-<dt>ext_factors: ExternalFactors</dt><dd><p>External bacteria’s factors</p>
+<dt>loc: float</dt><dd><p>Mean</p>
 </dd>
-<dt>genome: Genome</dt><dd><p>Bacteria’s genome</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>bool</dt><dd><p>Deciding whether bacteria should reproduct</p>
+<dt>scale: float</dt><dd><p>Standard deviation</p>
 </dd>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-population_modeling.mutations.abstract_mutation"></span><dl class="py class">
-<dt id="population_modeling.mutations.abstract_mutation.AbstractMutation">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.abstract_mutation.</span></code><code class="sig-name descname"><span class="pre">AbstractMutation</span></code><a class="headerlink" href="#population_modeling.mutations.abstract_mutation.AbstractMutation" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-population_modeling.mutations.abstract_mutator"></span><dl class="py class">
+<dt id="population_modeling.mutations.abstract_mutator.AbstractMutator">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.abstract_mutator.</span></code><code class="sig-name descname"><span class="pre">AbstractMutator</span></code><a class="headerlink" href="#population_modeling.mutations.abstract_mutator.AbstractMutator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for different mutational processes. Include variation of maximum lifetime, death probability
 and reproduction probability for the child. Spontaneous mutation happens directly with the individual.</p>
 <dl class="simple">
@@ -363,8 +391,8 @@ and reproduction probability for the child. Spontaneous mutation happens directl
 </dd>
 </dl>
 <dl class="py method">
-<dt id="population_modeling.mutations.abstract_mutation.AbstractMutation.child_genome">
-<code class="sig-name descname"><span class="pre">child_genome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a><a class="headerlink" href="#population_modeling.mutations.abstract_mutation.AbstractMutation.child_genome" title="Permalink to this definition">¶</a></dt>
+<dt id="population_modeling.mutations.abstract_mutator.AbstractMutator.child_genome">
+<code class="sig-name descname"><span class="pre">child_genome</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent_genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a><a class="headerlink" href="#population_modeling.mutations.abstract_mutator.AbstractMutator.child_genome" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a descendant genome based on the parent genome</p>
 <dl class="simple">
 <dt>Genome</dt><dd><p>Child’s genome</p>
@@ -374,16 +402,16 @@ and reproduction probability for the child. Spontaneous mutation happens directl
 
 </dd></dl>
 
-<span class="target" id="module-population_modeling.mutations.normal_mutation"></span><dl class="py class">
-<dt id="population_modeling.mutations.normal_mutation.NormalMutations">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.normal_mutation.</span></code><code class="sig-name descname"><span class="pre">NormalMutations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutational_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="population_modeling.mutations.variation_parameters.MutationalParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationalParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="population_modeling.mutations.variation_parameters.MutationalParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationalParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="population_modeling.mutations.variation_parameters.MutationalParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationalParams</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.mutations.normal_mutation.NormalMutations" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-population_modeling.mutations.normal_mutator"></span><dl class="py class">
+<dt id="population_modeling.mutations.normal_mutator.NormalMutator">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.normal_mutator.</span></code><code class="sig-name descname"><span class="pre">NormalMutator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mutational_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationParams" title="population_modeling.mutations.variation_parameters.MutationParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationParams</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">MutationParams(loc=0,</span> <span class="pre">scale=0.01)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_n_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationParams" title="population_modeling.mutations.variation_parameters.MutationParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationParams</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">MutationParams(loc=0,</span> <span class="pre">scale=3)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.mutations.variation_parameters.MutationParams" title="population_modeling.mutations.variation_parameters.MutationParams"><span class="pre">population_modeling.mutations.variation_parameters.MutationParams</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">MutationParams(loc=0,</span> <span class="pre">scale=0.05)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.mutations.normal_mutator.NormalMutator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Include mutational processes based on normal distribution.</p>
 <dl class="simple">
-<dt>mutational_params: MutationalParams</dt><dd><p>Mean and standard deviation for normal mutation</p>
+<dt>mutational_params: MutationParams</dt><dd><p>Mean and standard deviation for normal mutation</p>
 </dd>
-<dt>max_n_params: MutationalParams</dt><dd><p>Mean and standard deviation for maximum lifetime variation</p>
+<dt>max_n_params: MutationParams</dt><dd><p>Mean and standard deviation for maximum lifetime variation</p>
 </dd>
-<dt>child_params: MutationalParams</dt><dd><p>Mean and standard deviation for child’s genome variation</p>
+<dt>child_params: MutationParams</dt><dd><p>Mean and standard deviation for child’s genome variation</p>
 </dd>
 </dl>
 <dl class="simple">
@@ -399,8 +427,8 @@ and reproduction probability for the child. Spontaneous mutation happens directl
 </dd>
 </dl>
 <dl class="py method">
-<dt id="population_modeling.mutations.normal_mutation.NormalMutations.mutation">
-<code class="sig-name descname"><span class="pre">mutation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.mutations.normal_mutation.NormalMutations.mutation" title="Permalink to this definition">¶</a></dt>
+<dt id="population_modeling.mutations.normal_mutator.NormalMutator.mutate">
+<code class="sig-name descname"><span class="pre">mutate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">genome</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#population_modeling.genome.Genome" title="population_modeling.genome.Genome"><span class="pre">population_modeling.genome.Genome</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.mutations.normal_mutator.NormalMutator.mutate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Realize spontaneous mutation of the genome</p>
 <dl class="simple">
 <dt>genome</dt><dd><p>Bacteria’s genome</p>
@@ -412,8 +440,8 @@ and reproduction probability for the child. Spontaneous mutation happens directl
 </dd></dl>
 
 <span class="target" id="module-population_modeling.mutations.variation_parameters"></span><dl class="py class">
-<dt id="population_modeling.mutations.variation_parameters.MutationalParams">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.variation_parameters.</span></code><code class="sig-name descname"><span class="pre">MutationalParams</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.mutations.variation_parameters.MutationalParams" title="Permalink to this definition">¶</a></dt>
+<dt id="population_modeling.mutations.variation_parameters.MutationParams">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">population_modeling.mutations.variation_parameters.</span></code><code class="sig-name descname"><span class="pre">MutationParams</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#population_modeling.mutations.variation_parameters.MutationParams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dataclass for such mutational parameters as mean(loc) and standard deviation(scale).</p>
 <dl class="simple">
 <dt>loc: float</dt><dd><p>Mean</p>
