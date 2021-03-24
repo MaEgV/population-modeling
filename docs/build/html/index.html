@@ -115,7 +115,17 @@ When the age exceeds the max_life_time from the genome, the bacteria automatical
 </dd>
 </dl>
 <dl class="simple">
-<dt>Bacteria</dt><dd><p>Bacteria with set parameters</p>
+<dt>draw(self, filename: str = None) -&gt; None</dt><dd><p>Drawing of population-graph</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="population_modeling.population.Population.draw">
+<code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#population_modeling.population.Population.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method, that implement drawing of Population instance in tree form.</p>
+<dl class="simple">
+<dt>population: Population</dt><dd><p>witch population should be drawn</p>
+</dd>
+<dt>filename: str</dt><dd><p>the name of the file to save the drawing to</p>
 </dd>
 </dl>
 </dd></dl>
@@ -192,6 +202,9 @@ Bacteria can get information about their population to adjust their behavior</p>
 <dt>igraph.Graph</dt><dd><p>New graph</p>
 </dd>
 </dl>
+<p>None</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">

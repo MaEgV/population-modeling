@@ -28,14 +28,14 @@ class Genome:
     p_for_death: float
     p_for_reproduction: float
 
-    def update(self, **params) -> None:
+    def update(self, **params: float) -> None:
         """
 
         Update genome parameters, which indicated in parameter 'params'
 
         Parameters
         ----------
-        params: dict(float)
+        params: float
             Dictionary with parameters
 
         Returns
