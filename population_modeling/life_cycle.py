@@ -1,3 +1,5 @@
+from typing import Callable
+
 from population_modeling.population import Population
 from population_modeling.selector.selector import AbstractSelector
 from population_modeling.mutations.normal_mutator import AbstractMutator
@@ -22,7 +24,7 @@ class LifeCycle:
         self.population = population
         # TODO: Include external factors in this class
 
-    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator, draw_func=lambda x: x) -> None:
+    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator, draw_func: Callable = lambda x: x) -> None:
         """
         The time unit of evolution for a population. Processes a new generation in the population
 
@@ -62,7 +64,7 @@ class LifeCycle:
         """
         new_generation = list()
 
-        for bacteria in self.population:
+        for bacteria in self.population.genealogical_tree.vs[Population.INDIVIDUAL_KEY]:
             if bacteria.is_alive():
                 children = _bacteria_cycle(bacteria, selector, mutator)
                 new_generation.extend(children)
@@ -127,23 +129,23 @@ def _parent_children(selector: AbstractSelector, mutation_mode: AbstractMutator,
     return [(bacteria, children)] if children else []
 
 
-def _update_properties(population: Population, selector: AbstractSelector) -> None:
-    """
-    IN PROGRESS
-    Recounting external factors after iteration. Changing living conditions
-
-    Parameters
-    ----------
-    population: Population
-        Processed population
-
-    selector: AbstractSelector
-        Required selector
-
-    Returns
-    -------
-    None
-    """
-
-    selector.external_factors.antagonism = 0  # TODO: add logic
-    selector.external_factors.overpopulation = 0  # TODO: add logic
+# def _update_properties(population: Population, selector: AbstractSelector) -> None:
+#     """
+#     IN PROGRESS
+#     Recounting external factors after iteration. Changing living conditions
+#
+#     Parameters
+#     ----------
+#     population: Population
+#         Processed population
+#
+#     selector: AbstractSelector
+#         Required selector
+#
+#     Returns
+#     -------
+#     None
+#     """
+#
+#     selector.external_factors.antagonism = 0  # TODO: add logic
+#     selector.external_factors.overpopulation = 0  # TODO: add logic

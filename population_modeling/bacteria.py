@@ -126,7 +126,7 @@ class Bacteria:
 
         self.properties.die()
 
-    def inc_age(self):
+    def inc_age(self) -> None:
         """
         Increase age counter of bacteria
         When the age exceeds the max_life_time from the genome, the bacteria automatically dies

@@ -1,5 +1,5 @@
 from population_modeling.bacteria import Bacteria
-from typing import ClassVar
+from typing import ClassVar, Any
 from dataclasses import dataclass
 import igraph  # type: ignore
 
@@ -24,9 +24,6 @@ class Population:
     genealogical_tree: igraph.Graph
     INDIVIDUAL_KEY: ClassVar[str] = 'bacteria'
     GENERATION_KEY: ClassVar[str] = 'generation'
-
-    def __getitem__(self, key):
-        return self.genealogical_tree.vs[Population.INDIVIDUAL_KEY][key]
 
     def add(self, new_generation: list) -> None:
         """
