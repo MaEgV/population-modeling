@@ -38,11 +38,11 @@ def test_iterator_population_one(population_iterator: Case) -> None:
                                                       population_iterator.mutation_mode)
 
     graph = population_iterator.population.genealogical_tree
-    assert graph.vcount() == population_iterator.result
+    assert graph.number_of_nodes() == population_iterator.result
 
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR, ids=str)
 def test_iterator_population(population_iterator: Case) -> None:
     LifeCycle(population_iterator.population).iterate(population_iterator.selector, population_iterator.mutation_mode)
     graph = population_iterator.population.genealogical_tree
-    assert graph.vcount() >= population_iterator.result
+    assert graph.number_of_nodes() >= population_iterator.result
