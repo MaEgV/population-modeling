@@ -17,7 +17,31 @@ class Genome:
     p_for_reproduction : float
         Probability of reproduction
 
+    Methods
+    -------
+
+    update(self, **kwargs) -> None
+        Update genome parameters, which indicated in parameter 'params'
+
     """
     max_life_time: int
     p_for_death: float
     p_for_reproduction: float
+
+    def update(self, **params: float) -> None:
+        """
+
+        Update genome parameters, which indicated in parameter 'params'
+
+        Parameters
+        ----------
+        params: float
+            Dictionary with parameters
+
+        Returns
+        -------
+        None
+
+        """
+        self.p_for_death = params['p_for_death']
+        self.p_for_reproduction = params['p_for_reproduction']

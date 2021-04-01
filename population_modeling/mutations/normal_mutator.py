@@ -133,8 +133,9 @@ class NormalMutator(AbstractMutator):
 
         """
 
-        genome.p_for_death = min(genome.p_for_death + norm.rvs(self.mutational_params.loc, self.mutational_params.scale)
-                                 , NormalMutator.MAX_PROBABILITY)
-        genome.p_for_reproduction = min(genome.p_for_reproduction + norm.rvs(self.mutational_params.loc,
-                                                                             self.mutational_params.scale),
-                                        NormalMutator.MAX_PROBABILITY)
+        new_p_for_death = min(genome.p_for_death + norm.rvs(self.mutational_params.loc, self.mutational_params.scale)
+                              , NormalMutator.MAX_PROBABILITY)
+        new_p_for_reproduction = min(genome.p_for_reproduction + norm.rvs(self.mutational_params.loc,
+                                                                          self.mutational_params.scale),
+                                     NormalMutator.MAX_PROBABILITY)
+        genome.update(p_for_death=new_p_for_death, p_for_reproduction=new_p_for_reproduction)

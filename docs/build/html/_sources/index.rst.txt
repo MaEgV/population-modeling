@@ -18,7 +18,7 @@ Welcome to Population modeling's documentation!
 .. automodule:: population_modeling.bacteria
    :members:
 
-.. automodule:: population_modeling.bacteria_iteration
+.. automodule:: population_modeling.life_cycle
    :members:
 
 .. automodule:: population_modeling.genome
@@ -27,16 +27,16 @@ Welcome to Population modeling's documentation!
 .. automodule:: population_modeling.population
    :members:
 
-.. automodule:: population_modeling.population_iteration
+.. automodule:: population_modeling.selector.selector
    :members:
 
-.. automodule:: population_modeling.selector
+.. automodule:: population_modeling.selector.selector_params
    :members:
 
-.. automodule:: population_modeling.mutations.abstract_mutation
+.. automodule:: population_modeling.mutations.abstract_mutator
    :members:
 
-.. automodule:: population_modeling.mutations.normal_mutation
+.. automodule:: population_modeling.mutations.normal_mutator
    :members:
 
 .. automodule:: population_modeling.mutations.variation_parameters
