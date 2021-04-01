@@ -64,10 +64,11 @@ class LifeCycle:
         """
         new_generation = list()
 
-        for bacteria in self.population.genealogical_tree.vs[Population.INDIVIDUAL_KEY]:
+        for id in self.population.genealogical_tree:
+            bacteria = self.population.genealogical_tree.nodes[id][Population.INDIVIDUAL_KEY]
             if bacteria.is_alive():
                 children = bacteria_cycle(bacteria, selector, mutator)
-                new_generation.extend(children)
+                new_generation.append((id, children))
 
         return new_generation
 
@@ -126,7 +127,7 @@ def _parent_children(selector: AbstractSelector, mutation_mode: AbstractMutator,
         child_genome = mutation_mode.child_genome(bacteria.genome)
         children.append(Bacteria(child_genome))
 
-    return [(bacteria, children)] if children else []
+    return children
 
 
 # def _update_properties(population: Population, selector: AbstractSelector) -> None:

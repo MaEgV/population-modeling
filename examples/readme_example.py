@@ -1,6 +1,6 @@
 from population_modeling import *
 
-first_bacteria = create_bacteria(p_for_death=0.1, p_for_reproduction=0.5)  # creating first bacteria to start a population
+first_bacteria = create_bacteria(p_for_death=0.1, p_for_reproduction=0.8)  # creating first bacteria to start a population
 population = create_population(first_bacteria)  # creating population
 
 
