@@ -1,11 +1,11 @@
 from population_modeling.bacteria import Bacteria
 from typing import ClassVar, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import networkx as nx  # type: ignore
 import matplotlib.pyplot as plt
 
 
-@dataclass(frozen=True)
+@dataclass
 class Population:
     """
     A class containing information about the population. An iterator is implemented using a class Population.Iterator.
@@ -16,6 +16,9 @@ class Population:
     genealogical_tree: igraph.Graph
         Structure of the population
 
+    individuals: list
+        List with all bacterias
+
     Methods
     -------
     draw(self, filename: str = None) -> None
@@ -23,6 +26,7 @@ class Population:
     """
 
     genealogical_tree: nx.DiGraph
+    individuals: list = field(default_factory=None)
     INDIVIDUAL_KEY: ClassVar[str] = 'bacteria'
     GENERATION_KEY: ClassVar[str] = 'generation'
 
@@ -30,7 +34,7 @@ class Population:
         """
         Wrapper for processing parent-child pairs.
 
-        Parameters
+        Attributes
         ----------
         population: Population
             Processed population
@@ -46,10 +50,24 @@ class Population:
         last_id = len(self.genealogical_tree.nodes)
         for parent, children in new_generation:
             for child in children:
+                self.individuals.append(child)
                 self.genealogical_tree.add_node(last_id + 1, bacteria=child)
                 self.genealogical_tree.add_edge(parent, last_id + 1)
                 last_id += 1
 
+    def get_number_individuals(self):
+        return len(self.individuals)
+
+    def get_alive_and_dead(self):
+        num_alive = 0
+        num_dead = 0
+        alive = lambda individual: individual.properties.get_is_alive()
+        for individual in self.individuals:
+            if alive(individual):
+                num_alive += 1
+            else:
+                num_dead += 1
+        return num_alive, num_dead
 
     # def _process_offspring(self, parent: igraph.Graph.vs, children: list) -> None:
     #     """
@@ -104,9 +122,8 @@ def draw(population: Population, filename: str = None) -> None:
     """
 
     # layout = population.genealogical_tree.layout_reingold_tilford(root=[0])
-    print(len(population.genealogical_tree.nodes))
-    nx.draw(population.genealogical_tree)
-    plt.show()
+    # nx.draw(population.genealogical_tree)
+    # plt.show()
 
     # nx.plot(
     #     population.genealogical_tree,
@@ -134,5 +151,7 @@ def create_population(bacteria: Bacteria) -> Population:
     """
     genealogical_tree = nx.DiGraph()
     genealogical_tree.add_node(0, bacteria=bacteria)
+    individuals = list()
+    individuals.append(bacteria)
 
-    return Population(genealogical_tree)
+    return Population(genealogical_tree, individuals)

@@ -24,7 +24,7 @@ class LifeCycle:
         self.population = population
         # TODO: Include external factors in this class
 
-    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator, draw_func: Callable = lambda x: x) -> None:
+    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> None:
         """
         The time unit of evolution for a population. Processes a new generation in the population
 
@@ -44,8 +44,7 @@ class LifeCycle:
         new_generation = self._get_new_generation(selector, mutator)
 
         self.population.add(new_generation)
-
-        draw_func(self.population)
+        # draw_func(self.population)
 
     def _get_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator) -> list:
         """

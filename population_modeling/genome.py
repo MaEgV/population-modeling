@@ -19,7 +19,6 @@ class Genome:
 
     Methods
     -------
-
     update(self, **kwargs) -> None
         Update genome parameters, which indicated in parameter 'params'
 

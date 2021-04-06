@@ -16,19 +16,19 @@ class BacteriaProperties:
     age : int
         Current age of bacteria
 
-           Methods
-       -------
-        get_is_alive(self) -> bool
-            Returns status of life status: alive or die
+    Methods
+    -------
+    get_is_alive(self) -> bool
+        Returns status of life status: alive or die
 
-        inc_age(self) -> None
-            Increment age counter
+    inc_age(self) -> None
+         Increment age counter
 
-        get_age(self) -> int:
-            Returns age
+    get_age(self) -> int:
+        Returns age
 
-        die(self) -> None
-            Kill the bacteria
+    die(self) -> None
+        Kill the bacteria
 
     """
 
