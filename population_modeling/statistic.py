@@ -1,4 +1,5 @@
-from population_modeling import AbstractSelector, AbstractMutator
+from population_modeling import AbstractSelector, AbstractMutator, DefaultSelector, NormalMutator, ExternalFactors, \
+    SelectorParams
 from population_modeling.life_cycle import LifeCycle
 from pandas import DataFrame
 import numpy as np
@@ -23,7 +24,14 @@ class Statistics:
     def __init__(self, cycle):
         self.cycle: LifeCycle = cycle
 
-    def num_of_individuals(self, num_iter: int, selector: AbstractSelector, mutator: AbstractMutator) -> DataFrame:
+    @staticmethod
+    def prepare(selector_name: str = 'DefaultSelector', loc: float = 1, scale: float = 1):
+        params = SelectorParams(loc, scale)
+        if selector_name == 'DefaultSelector':
+            return DefaultSelector(params, ExternalFactors())
+
+    def num_of_individuals(self, num_iter: int, selector: str = 'DefaultSelector', mutator: AbstractMutator
+    = NormalMutator(), loc: float = 1, scale: float = 1) -> DataFrame:
         """
         Give data in DataFrame about population size and state on each iteration
 
@@ -44,6 +52,7 @@ class Statistics:
             Table with state of population on each iteration
 
         """
+        selector = self.prepare(selector, loc, scale)
         num_ind = list()
         alive_num = list()
         dead_num = list()
