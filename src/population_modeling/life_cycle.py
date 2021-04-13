@@ -1,9 +1,7 @@
-from typing import Callable
-
-from population_modeling.population import Population
-from population_modeling.selector.selector import AbstractSelector
-from population_modeling.mutations.normal_mutator import AbstractMutator
-from population_modeling.bacteria import Bacteria
+from src.population_modeling.population import Population
+from .selector.selector import AbstractSelector
+from .mutations.normal_mutator import AbstractMutator
+from .bacteria import Bacteria
 
 
 class LifeCycle:

@@ -1,12 +1,12 @@
 import pytest
 
-from population_modeling import create_bacteria
-from population_modeling.life_cycle import LifeCycle
-from population_modeling.mutations.normal_mutator import NormalMutator
-from population_modeling.mutations.variation_parameters import MutationParams
-from population_modeling.population import create_population
-from population_modeling.selector.selector import DefaultSelector, ExternalFactors
-from population_modeling.selector.selector_params import SelectorParams
+from src.population_modeling import create_bacteria
+from src.population_modeling.life_cycle import LifeCycle
+from src.population_modeling.mutations.normal_mutator import NormalMutator
+from src.population_modeling.mutations.variation_parameters import MutationParams
+from src.population_modeling.population import create_population
+from src.population_modeling.selector.selector import DefaultSelector, ExternalFactors
+from src.population_modeling.selector.selector_params import SelectorParams
 
 class Case:
     def __init__(self, name,  max_life_time, antagonism, overpopulation, p_for_death,

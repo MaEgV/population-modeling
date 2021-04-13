@@ -1,5 +1,5 @@
-from population_modeling import AbstractSelector, AbstractMutator
-from population_modeling.life_cycle import LifeCycle
+from src.population_modeling import AbstractSelector, AbstractMutator
+from src.population_modeling.life_cycle import LifeCycle
 from pandas import DataFrame
 import numpy as np
 

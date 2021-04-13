@@ -1,7 +1,7 @@
-from population_modeling.genome import Genome
-from scipy.stats import uniform, norm  # type: ignore
+from ..genome import Genome
+from scipy.stats import uniform  # type: ignore
 from abc import abstractmethod
-from population_modeling.selector.selector_params import SelectorParams
+from ..selector.selector_params import SelectorParams
 
 
 class ExternalFactors:

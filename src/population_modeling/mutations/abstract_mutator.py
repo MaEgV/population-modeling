@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from population_modeling.genome import Genome
+from src.population_modeling.genome import Genome
 
 
 class AbstractMutator:
