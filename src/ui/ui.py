@@ -22,7 +22,8 @@ class DashUI:
     def __init__(self, page: AbstractPage):
         self.app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
         self.app.layout = page.get_layout()
-        add_callbacks(self.app, page.get_callbacks())  # linking callbacks to an app
+
+        add_callbacks(self.app, page.get_callbacks())
 
     def run(self):
         self.app.run_server(debug=True, host='127.0.0.1')
@@ -30,8 +31,6 @@ class DashUI:
 
 def add_callbacks(app, callbacks: list):
     for callback in callbacks:
-
         @app.callback(*(callback.get_params()))
         def inner(*args, **kwargs):
-            callback.get_function()(*args, **kwargs)
-
+            return callback.get_function()(*args, **kwargs)

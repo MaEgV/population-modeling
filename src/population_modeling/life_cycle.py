@@ -1,6 +1,7 @@
 from src.population_modeling.population import Population
-from .selector.selector import AbstractSelector
-from .mutations.normal_mutator import AbstractMutator
+from .selector.selector import AbstractSelector, DefaultSelector, ExternalFactors
+from .selector.selector_params import SelectorParams
+from .mutations.normal_mutator import AbstractMutator, NormalMutator
 from .bacteria import Bacteria
 
 
@@ -42,9 +43,11 @@ class LifeCycle:
         new_generation = self._get_new_generation(selector, mutator)
 
         self.population.add(new_generation)
-        # draw_func(self.population)
 
-    def _get_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator) -> list:
+    def _get_new_generation(
+            self,
+            selector: AbstractSelector = DefaultSelector(SelectorParams(0,0.001), ExternalFactors(0, 0)),
+            mutator: AbstractMutator = NormalMutator()) -> list:
         """
         Creates a new generation of bacteria
 
@@ -61,11 +64,10 @@ class LifeCycle:
         """
         new_generation = list()
 
-        for id in self.population.genealogical_tree:
-            bacteria = self.population.genealogical_tree.nodes[id][Population.INDIVIDUAL_KEY]
+        for bacteria in self.population.individuals:
+
             if bacteria.is_alive():
-                children = bacteria_cycle(bacteria, selector, mutator)
-                new_generation.append((id, children))
+                new_generation.extend(bacteria_cycle(bacteria, selector, mutator))
 
         return new_generation
 

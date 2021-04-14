@@ -1,12 +1,12 @@
 from src.population_modeling import *
-from src.stats.statistic import Statistics
+from src.stats.statistic import PopulationStats
 
 first_bacteria = create_bacteria(p_for_death=0.1, p_for_reproduction=0.8)  # creating first bacteria to start a population
 population = create_population(first_bacteria)  # creating population
 
 cycle = LifeCycle(population)  # main cycle
 
-stats = Statistics(cycle)
+stats = PopulationStats(cycle)
 data = stats.num_of_individuals(4, selector='DefaultSelector', mutator=NormalMutator(), loc=1, scale=0)
 print(data)
 

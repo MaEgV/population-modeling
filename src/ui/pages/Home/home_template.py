@@ -7,17 +7,26 @@ from dataclasses import dataclass, field
 
 class HomeTemplate:
     _children: list = [
-            html.Button(id='button'),
-            dcc.Graph(id='price-chart')
-        ]
+        html.Button(id='button'),
+        dcc.Graph(id='main_graph'),
+        html.Div(id='global-data', style={'display': 'none'}),  # Global storage on client side
+    ]
 
     _callbacks: list = [
-                Callback(
-                    (Output('price-chart', 'children'),
-                     [Input('button', 'n_clicks')]),
-                    lambda: None
-                )
-        ]
+        # Graph
+        Callback(
+            (Output('main_graph', 'figure'),
+             Input('button', 'n_clicks')),
+            lambda: None
+        ),
+
+        # # Graph redrawer
+        # Callback(
+        #     (Output('main_graph', 'figure'),
+        #      Input('global-data', 'children')),
+        #     lambda: None
+        # )
+    ]
 
     @staticmethod
     def get_children():

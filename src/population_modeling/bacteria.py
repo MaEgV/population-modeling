@@ -34,7 +34,6 @@ class BacteriaProperties:
 
     _is_alive: bool = field(init=False, default=True)
     _age: int = field(init=False, default=0)
-
     def get_is_alive(self) -> bool:
         """
         True if bacteria is alive, else - False
