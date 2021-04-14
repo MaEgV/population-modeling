@@ -8,6 +8,7 @@ from src.population_modeling.population import create_population
 from src.population_modeling.selector.selector import DefaultSelector, ExternalFactors
 from src.population_modeling.selector.selector_params import SelectorParams
 
+
 class Case:
     def __init__(self, name,  max_life_time, antagonism, overpopulation, p_for_death,
                  p_for_reproduction, result, mutation_mode):
