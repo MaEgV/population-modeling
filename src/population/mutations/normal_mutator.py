@@ -1,9 +1,9 @@
 from scipy.stats import norm  # type: ignore
 from math import fabs
 
-from src.population_modeling.genome import Genome
-from src.population_modeling.mutations.abstract_mutator import AbstractMutator
-from src.population_modeling.mutations.variation_parameters import MutationParams
+from src.population.genome import Genome
+from src.population.mutations.abstract_mutator import AbstractMutator
+from src.population.mutations.mutator_parameters import MutatorParams
 
 
 class NormalMutator(AbstractMutator):
@@ -14,13 +14,13 @@ class NormalMutator(AbstractMutator):
     Attributes
     ----------
 
-    mutational_params: MutationParams
+    mutational_params: MutatorParams
         Mean and standard deviation for normal mutation
 
-    max_n_params: MutationParams
+    max_n_params: MutatorParams
         Mean and standard deviation for maximum lifetime variation
 
-    child_params: MutationParams
+    child_params: MutatorParams
             Mean and standard deviation for child's genome variation
 
     Methods
@@ -45,9 +45,9 @@ class NormalMutator(AbstractMutator):
     MAX_PROBABILITY = 1
 
     def __init__(self,
-                 mutational_params: MutationParams = MutationParams(0, 0.01),
-                 max_n_params: MutationParams = MutationParams(0, 3),
-                 child_params: MutationParams = MutationParams(0, 0.05)):
+                 mutational_params: MutatorParams = MutatorParams(0, 0.01),
+                 max_n_params: MutatorParams = MutatorParams(0, 3),
+                 child_params: MutatorParams = MutatorParams(0, 0.05)):
         self.mutational_params = mutational_params
         self.max_n_params = max_n_params
         self.child_params = child_params

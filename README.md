@@ -50,7 +50,7 @@ Implements the tree graph rendering mechanism.
 
 #### Iterate
 ```Python
-selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selectors
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
 iterate(population, selector, mutation_mode)  # Iterate all bacterias in population
@@ -86,7 +86,7 @@ iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacter
 #### Genome
 Storage of the genetic parameters of the bacterium that will change and be inherited by descendants.
 ```Python
-selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selectors
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
   iterate(bacteria, selector, mutation_mode)  # Iterate all bacterias in population
@@ -102,7 +102,7 @@ external_factors = ExternalFactors()
 have_to_die_func = default_have_to_die  # Callable[ext_factors: ExternalFactors, genome: Genome]
 have_to_reproduct = default_have_to_reproduct
 
-selector = Selector(external_factors, have_to_die_func, have_to_reproduct)  # creating the initial parameters of the population and selector
+selector = Selector(external_factors, have_to_die_func, have_to_reproduct)  # creating the initial parameters of the population and selectors
 ```
 `external_factors` - a set of initial external environmental factors.  
 `have_to_die_func` - a function that determines whether the bacteria should die based on the genome and external factors.  
@@ -129,7 +129,7 @@ iterate
 first_bacteria = create_bacteria(p_for_death=0.1)  # creating first bacteria to start a population
 population = create_population(first_bacteria)  # creating population
 
-selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selector
+selector = Selector(ExternalFactors())  # creating the initial parameters of the population and selectors
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
 for _ in range(10):

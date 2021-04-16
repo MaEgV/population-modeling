@@ -5,7 +5,6 @@ from src.ui.pages.Home.home_page import HomePage
 from callback_logic import *
 
 
-
 class App:
     def __init__(self):
         tmp = HomePage([update_graph])
@@ -14,8 +13,6 @@ class App:
     def run(self):
         self.ui.run()
 
-
-# TODO: Ыыыы
 
 if __name__ == "__main__":
     App().run()

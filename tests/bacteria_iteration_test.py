@@ -1,8 +1,9 @@
 import pytest
-from src.population_modeling import bacteria, ExternalFactors, DefaultSelector
+from src.population_modeling import ExternalFactors, UniformSelector
+from src.population_modeling.individuals import bacteria
 from src.population_modeling.mutations.normal_mutator import NormalMutator
 from src.population_modeling.life_cycle import bacteria_cycle
-from src.population_modeling.mutations.variation_parameters import MutationParams
+from src.population_modeling.mutations.mutator_parameters import MutatorParams
 from src.population_modeling.selector.selector_params import SelectorParams
 
 class Case:
@@ -18,25 +19,25 @@ class Case:
 
 TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10, antagonism=0, overpopulation=0,
                                       max_life_time=5, p_for_death=0.1, p_for_reproduction=0.1,
-                                      mutation_mode=NormalMutator(MutationParams(0, 0.001),
-                                                                  MutationParams(0, 3),
-                                                                  MutationParams(0, 0.01)))]
+                                      mutation_mode=NormalMutator(MutatorParams(0, 0.001),
+                                                                  MutatorParams(0, 3),
+                                                                  MutatorParams(0, 0.01)))]
 
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_cycle(bacteria_iteration_alive.bacteria, DefaultSelector(
+    result = bacteria_cycle(bacteria_iteration_alive.bacteria, UniformSelector(
         SelectorParams(0, 1),
         ExternalFactors(bacteria_iteration_alive.antagonism, bacteria_iteration_alive.overpopulation)),
-        bacteria_iteration_alive.mutation_mode)
+                            bacteria_iteration_alive.mutation_mode)
     assert len(result) >= 0
 
 
 @pytest.mark.parametrize('bacteria_iteration_dead', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
-    bacteria_iteration_dead.bacteria.properties.die()
+    bacteria_iteration_dead.bacteria._properties.die()
     with pytest.raises(BaseException):
-        bacteria_cycle(bacteria_iteration_dead.bacteria, DefaultSelector(
+        bacteria_cycle(bacteria_iteration_dead.bacteria, UniformSelector(
             SelectorParams(0, 1),
             ExternalFactors(bacteria_iteration_dead.antagonism, bacteria_iteration_dead.overpopulation)),
-                                bacteria_iteration_dead.mutation_mode)
+                       bacteria_iteration_dead.mutation_mode)

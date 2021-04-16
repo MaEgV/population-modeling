@@ -1,8 +1,4 @@
-from .bacteria import Bacteria
-from typing import ClassVar
 from dataclasses import dataclass, field
-import networkx as nx  # type: ignore
-
 
 @dataclass
 class Population:
@@ -23,7 +19,7 @@ class Population:
     draw(self, filename: str = None) -> None
         Drawing of population-graph
     """
-    individuals: list = field(default_factory=list)
+    _individuals: list = field(default_factory=list)
 
     def add(self, new_generation: list) -> None:
         """
@@ -42,18 +38,13 @@ class Population:
         None
 
         """
-        self.individuals.extend(new_generation)
+        self._individuals.extend(new_generation)
 
-    def get_number_individuals(self):
-        return len(self.individuals)
+    def get_all(self):
+        return self._individuals
 
-    def get_alive_and_dead(self):
-        num_alive = 0
-        num_dead = 0
-        alive = lambda individual: individual.properties.get_is_alive()
-        for individual in self.individuals:
-            if alive(individual):
-                num_alive += 1
-            else:
-                num_dead += 1
-        return num_alive, num_dead
+    def get_alive(self):
+        return list(filter(lambda x: x.is_alive(), self._individuals))
+
+    def get_dead(self):
+        return list(filter(lambda x: not x.is_alive(), self._individuals))

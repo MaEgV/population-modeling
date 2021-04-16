@@ -1,5 +1,5 @@
 from .mutations.normal_mutator import *
 from .life_cycle import LifeCycle
-from .bacteria import *
+from src.population.individuals.bacteria import *
 from .population import *
-from .selector.selector import *
+from .selectors.bacterial_selector import *

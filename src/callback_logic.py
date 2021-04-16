@@ -1,17 +1,13 @@
-import json
-
-import dash_core_components as dcc
-from stats.statistic import PopulationStats
-from population_modeling.bacteria import create_bacteria
-import dash_html_components as html
+from research.statistic import Stats
+from src.population.individuals.bacteria import create_bacteria
 import plotly.express as px
-import pandas as pd
+
 
 def update_data(click_n):
     print('update_data')
     if click_n:
         print('update_data-1')
-        stats = PopulationStats(bacterias=[create_bacteria()])
+        stats = Stats(bacterias=[create_bacteria()])
         data = stats.num_of_individuals(click_n)
         print(data.to_json())
         return data.to_json()
@@ -21,7 +17,7 @@ def update_data(click_n):
 
 def update_graph(click_n):
     if click_n:
-        stats = PopulationStats(bacterias=[create_bacteria()])
+        stats = Stats(bacterias=[create_bacteria()])
         data = stats.num_of_individuals(click_n)
 
         return px.scatter(

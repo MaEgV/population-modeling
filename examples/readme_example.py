@@ -1,15 +1,13 @@
-from src.population_modeling import *
-from src.stats.statistic import PopulationStats
+from src.population import create_bacteria
+from src.research.statistic import Stats, ResearchParams
 
-first_bacteria = create_bacteria(p_for_death=0.1, p_for_reproduction=0.8)  # creating first bacteria to start a population
-population = create_population(first_bacteria)  # creating population
+init_group = [create_bacteria(5, 0.6, 0.2) for i in range(5)]
 
-cycle = LifeCycle(population)  # main cycle
+stats = Stats(init_group)
 
-stats = PopulationStats(cycle)
-data = stats.num_of_individuals(4, selector='DefaultSelector', mutator=NormalMutator(), loc=1, scale=0)
-print(data)
+iteration_params = ResearchParams('uniform', 'default', 'normal', 'default')
 
-# for _ in range(10):
-    # cycle.iterate(selector, mutation_mode, draw_func=draw)  # drawing a population without saving
+# Получить возможные строки(можно пихать эти массивы в выпадающие окошки пока что):
+print(ResearchParams.get_modes())
 
+print(stats.research(10, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params

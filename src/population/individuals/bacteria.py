@@ -1,5 +1,9 @@
-from .exceptions import DeadBacteriaException
-from .selector.selector import Genome
+from typing import List
+
+from src.population.selectors.abstract_selector import AbstractSelector
+from src.population.exceptions import DeadBacteriaException
+from src.population.individuals.abstract_individual import AbstractIndividual
+from src.population import Genome, AbstractMutator
 from dataclasses import dataclass, field
 
 
@@ -31,9 +35,9 @@ class BacteriaProperties:
         Kill the bacteria
 
     """
-
     _is_alive: bool = field(init=False, default=True)
     _age: int = field(init=False, default=0)
+
     def get_is_alive(self) -> bool:
         """
         True if bacteria is alive, else - False
@@ -83,22 +87,47 @@ class BacteriaProperties:
 
 
 @dataclass(frozen=True)
-class Bacteria:
+class Bacteria(AbstractIndividual):
     """
        Represents bacteria with its parameters
 
        Attributes
        ----------
-       _status: BacteriaProperties
+       _properties: BacteriaProperties
            Bacteria status about age and life: die or alive
-
-       genome : Genome
-           Genome of bacteria
-
        """
 
-    genome: Genome
-    properties: BacteriaProperties = field(default_factory=BacteriaProperties)
+    _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
+
+    def cycle(self, selector: AbstractSelector, mutator: AbstractMutator) -> List[AbstractIndividual]:
+        """
+        Life iteration of bacteria
+
+        Parameters
+        ----------
+        bacteria: Bacteria
+            Individual bacteria, witch is iterated
+        selector: AbstractSelector
+            Selection operator
+        mutator: AbstractMutator
+            Mutation operator
+
+        Returns
+        -------
+        list
+        """
+        if not self._properties.get_is_alive():
+            raise DeadBacteriaException(str(self))
+
+        mutator.mutate(self._genome)
+
+        self._properties.inc_age()
+
+        if selector.is_died(self._genome):
+            self._die()
+            return []
+
+        return self._get_children(selector, mutator)
 
     def is_alive(self) -> bool:
         """
@@ -109,9 +138,10 @@ class Bacteria:
         bool
             Bacteria status
         """
-        return self.properties.get_is_alive()
 
-    def die(self) -> None:
+        return self._properties.get_is_alive()
+
+    def _die(self) -> None:
         """
         Changes live status to false
 
@@ -123,22 +153,36 @@ class Bacteria:
         if not self.is_alive():
             raise DeadBacteriaException(str(self))
 
-        self.properties.die()
+        self._properties.die()
 
-    def inc_age(self) -> None:
+    def _get_children(self, selector: AbstractSelector, mutation_mode: AbstractMutator) -> list:
         """
-        Increase age counter of bacteria
-        When the age exceeds the max_life_time from the genome, the bacteria automatically dies
+        Generate bacteria's children
+
+        Parameters
+        ----------
+        mutation_mode: AbstractMutator
+            Implementation of mutation mechanisms
+
+        bacteria: Bacteria
+            A bacterium whose descendants may appear
+
+        selector: AbstractSelector
+            Make decisions about bacteria's future actions
 
         Returns
         -------
-        None
+        list[Bacteria]
+            Bacteria's children (if they are be)
+
         """
 
-        if not self.is_alive():
-            raise DeadBacteriaException(str(self))
+        children = list()
+        while selector.have_to_reproduct(self._genome):  # the Bernoulli test
+            child_genome = mutation_mode.child_genome(self._genome)
+            children.append(Bacteria(child_genome))
 
-        self.properties.inc_age()
+        return children
 
 
 def create_bacteria(

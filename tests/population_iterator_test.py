@@ -3,9 +3,9 @@ import pytest
 from src.population_modeling import create_bacteria
 from src.population_modeling.life_cycle import LifeCycle
 from src.population_modeling.mutations.normal_mutator import NormalMutator
-from src.population_modeling.mutations.variation_parameters import MutationParams
+from src.population_modeling.mutations.mutator_parameters import MutatorParams
 from src.population_modeling.population import create_population
-from src.population_modeling.selector.selector import DefaultSelector, ExternalFactors
+from src.population_modeling.selector.selector import UniformSelector, ExternalFactors
 from src.population_modeling.selector.selector_params import SelectorParams
 
 
@@ -17,20 +17,20 @@ class Case:
         self.population = create_population(self.bacteria)
         self.result = result
         self.mutation_mode = mutation_mode
-        self.selector = DefaultSelector(SelectorParams(0, 1), ExternalFactors(antagonism, overpopulation))
+        self.selector = UniformSelector(SelectorParams(0, 1), ExternalFactors(antagonism, overpopulation))
 
 
 TEST_CASES_POPULATION_ITERATOR_ZERO = [Case(name="Zero iterations", antagonism=0, overpopulation=0, max_life_time=0,
                                             p_for_death=1, p_for_reproduction=0, result=1,
-                                            mutation_mode=NormalMutator(MutationParams(0, 0.001),
-                                                                        MutationParams(0, 3),
-                                                                        MutationParams(0, 0.01)))]
+                                            mutation_mode=NormalMutator(MutatorParams(0, 0.001),
+                                                                        MutatorParams(0, 3),
+                                                                        MutatorParams(0, 0.01)))]
 
 TEST_CASES_POPULATION_ITERATOR = [Case(name="One offspring", antagonism=0, overpopulation=0, max_life_time=5,
                                        p_for_death=0.3, p_for_reproduction=0.7, result=1,
-                                       mutation_mode=NormalMutator(MutationParams(0, 0.001),
-                                                                   MutationParams(0, 3),
-                                                                   MutationParams(0, 0.01)))]
+                                       mutation_mode=NormalMutator(MutatorParams(0, 0.001),
+                                                                   MutatorParams(0, 3),
+                                                                   MutatorParams(0, 0.01)))]
 
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR_ZERO, ids=str)
