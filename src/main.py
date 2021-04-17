@@ -7,7 +7,7 @@ from callback_logic import *
 
 class App:
     def __init__(self):
-        tmp = HomePage([update_graph])
+        tmp = HomePage([update_output, add])
         self.ui = DashUI(tmp)
 
     def run(self):

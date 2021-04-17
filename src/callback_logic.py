@@ -1,6 +1,12 @@
+from dash.exceptions import PreventUpdate
+
 from research.statistic import Stats
 from src.population.individuals.bacteria import create_bacteria
+from src.population import Population
 import plotly.express as px
+
+
+population = Population()
 
 
 def update_data(click_n):
@@ -21,7 +27,20 @@ def update_graph(click_n):
         data = stats.num_of_individuals(click_n)
 
         return px.scatter(
-           data
+            data
         )
 
     return px.scatter()
+
+
+def update_output(death, reproduction):
+    return "You've selected " + str(death) + " for death probability and " + str(reproduction) + \
+           " for reproduction probability"
+
+
+def add(n_clicks, lifetime, death, reproduction):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        population.add([create_bacteria(lifetime, death, reproduction)])
+        return "clicks " + str(n_clicks)
