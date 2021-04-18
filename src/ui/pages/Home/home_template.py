@@ -109,11 +109,11 @@ class HomeTemplate:
         html.Div(id='graph')]
 
     _callbacks: list = [Callback((Output('output', 'children'),
-                                 Input('reproduction', 'value'),
-                                 Input('death', 'value')), {'prevent_initial_call': True}),
+                                 State('reproduction', 'value'),
+                                 State('death', 'value')), {'prevent_initial_call': True}),
                         Callback((Output('graph', 'children'), Input('add', 'n_clicks'),
-                                  Input('lifetime', 'value'), Input('death', 'value'),
-                                  Input('reproduction', 'value')), {'prevent_initial_call': True})]
+                                  State('lifetime', 'value'), State('death', 'value'),
+                                  State('reproduction', 'value')), {'prevent_initial_call': True})]
 
     # # Graph redrawer
     # Callback(
