@@ -1,16 +1,20 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
 class Callback:
-    params: tuple
-    func: callable
+    args: tuple  # positional params for callback
+    kwargs: dict = field(default_factory=dict)  # named parameters for callback (not required)
+    func: callable = field(init=False, default=lambda x: None)  # function responsible for the return value
 
     def set_func(self, new_func):
         self.func = new_func
 
-    def get_params(self):
-        return self.params
+    def get_args(self):
+        return self.args
 
-    def get_function(self):
+    def get_kwargs(self):
+        return self.kwargs
+
+    def get_func(self):
         return self.func

@@ -108,11 +108,12 @@ class HomeTemplate:
         html.Div(id='output', style={'width': '40%', 'position': 'relative', 'left': '50%'}),
         html.Div(id='graph')]
 
-    _callbacks: list = [Callback((Output('output', 'children'), Input('reproduction', 'value'),
-                                  Input('death', 'value')), lambda: None),
+    _callbacks: list = [Callback((Output('output', 'children'),
+                                 Input('reproduction', 'value'),
+                                 Input('death', 'value')), {'prevent_initial_call': True}),
                         Callback((Output('graph', 'children'), Input('add', 'n_clicks'),
                                   Input('lifetime', 'value'), Input('death', 'value'),
-                                  Input('reproduction', 'value')), lambda: None)]
+                                  Input('reproduction', 'value')), {'prevent_initial_call': True})]
 
     # # Graph redrawer
     # Callback(
