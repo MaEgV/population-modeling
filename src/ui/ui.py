@@ -31,6 +31,6 @@ class DashUI:
 
 def add_callbacks(app, callbacks: list):
     for callback in callbacks:
-        @app.callback(*callback.get_args(), **callback.get_kwargs())
+        @app.callback(callback.get_args(), **callback.get_kwargs())
         def inner(*args, **kwargs):
             return callback.get_func()(*args, **kwargs)

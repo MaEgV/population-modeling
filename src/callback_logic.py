@@ -41,7 +41,7 @@ def update_output(death, reproduction):
 def add(n_clicks, lifetime, death, reproduction):
     print(n_clicks, lifetime, death, reproduction)
     if n_clicks is None:
-        raise "clicks " + str(n_clicks)
+        raise ["clicks " + str(n_clicks)]
     else:
         population.add([create_bacteria(lifetime, death, reproduction)])
-        return "clicks " + str(n_clicks)
+        return ["clicks " + str(n_clicks)]

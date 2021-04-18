@@ -110,10 +110,14 @@ class HomeTemplate:
 
     _callbacks: list = [Callback((Output('output', 'children'),
                                  State('reproduction', 'value'),
-                                 State('death', 'value')), {'prevent_initial_call': True}),
-                        Callback((Output('graph', 'children'), Input('add', 'n_clicks'),
-                                  State('lifetime', 'value'), State('death', 'value'),
-                                  State('reproduction', 'value')), {'prevent_initial_call': True})]
+                                 State('death', 'value')),
+                                 {'prevent_initial_call': True}),
+                        Callback((Output('graph', 'children'),
+                                  Input('add', 'n_clicks'),
+                                  State('lifetime', 'value'),
+                                  State('death', 'value'),
+                                  State('reproduction', 'value')),
+                                 {'prevent_initial_call': True})]
 
     # # Graph redrawer
     # Callback(
