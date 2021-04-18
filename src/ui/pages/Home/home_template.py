@@ -16,20 +16,6 @@ df = pd.DataFrame({
 
 
 class HomeTemplate:
-    # _children: list = [
-    #     html.Button(id='button'),
-    #     dcc.Graph(id='main_graph'),
-    #     html.Div(id='global-data', style={'display': 'none'}),  # Global storage on client side
-    # ]
-    #
-    # _callbacks: list = [
-    #     # Graph
-    #     Callback(
-    #         (Output('main_graph', 'figure'),
-    #          Input('button', 'n_clicks')),
-    #         lambda: None
-    #     ),
-
     _children: list = [
         html.Div([
             html.Label('Selector'),
@@ -117,15 +103,9 @@ class HomeTemplate:
                                   State('lifetime', 'value'),
                                   State('death', 'value'),
                                   State('reproduction', 'value')),
-                                 {'prevent_initial_call': True})]
-
-    # # Graph redrawer
-    # Callback(
-    #     (Output('main_graph', 'figure'),
-    #      Input('global-data', 'children')),
-    #     lambda: None
-    # )
-    # ]
+                                 {'prevent_initial_call': True}),
+                        Callback((Output('reproduction', 'min'),), {'prevent_initial_call': True})
+                        ]
 
     @staticmethod
     def get_children():

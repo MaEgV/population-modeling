@@ -4,10 +4,12 @@ from ui.ui import DashUI
 from src.ui.pages.Home.home_page import HomePage
 from callback_logic import *
 
+def t():
+    return [-100]
 
 class App:
     def __init__(self):
-        tmp = HomePage([update_output, add])
+        tmp = HomePage([update_output, add, t])
         self.ui = DashUI(tmp)
 
     def run(self):
