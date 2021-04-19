@@ -3,11 +3,18 @@ from src.population.populations.simple_population import SimplePopulation
 from src.population import AbstractSelector, AbstractMutator
 import pandas as pd
 from dataclasses import dataclass, field
-from src.research.research_params import ResearchRes, ResearchParams
+from src.research.research_params import IterParams, AddParams
 
 
 @dataclass(frozen=True)
-class PopulationResearch:
+class IterRes:
+    id: int
+    data: pd.DataFrame
+    params: IterParams
+
+
+@dataclass(frozen=True)
+class Researcher:
     """
         Class with some statistical tools for population analysis.
 
@@ -24,38 +31,39 @@ class PopulationResearch:
     """
     _population: SimplePopulation = field(default_factory=SimplePopulation)
 
-    def add_individuals(self, individuals: list):
-        self._population.add(individuals)
+    def add_individuals(self,
+                        params: AddParams):
+        self._population.add(*params.get_params())
 
     def research(self,
                  num_iter: int,
-                 params: ResearchParams) -> ResearchRes:
+                 params: IterParams) -> IterRes:
         """
-        Give data in DataFrame about population size and state on each iteration
+            Give data in DataFrame about population size and state on each iteration
 
-        Attributes
-        ----------
-        num_iter: int: Population
-            Number of supposed iterations
+            Attributes
+            ----------
+            num_iter: int: Population
+                Number of supposed iterations
 
-        selectors: AbstractSelector
-            Chosen selectors for this population
+            selectors: AbstractSelector
+                Chosen selectors for this population
 
-        mutator: AbstractMutator
-                Chosen mutator for this population
+            mutator: AbstractMutator
+                    Chosen mutator for this population
 
-        Returns
-        -------
-        DataFrame
-            Table with state of population on each iteration
+            Returns
+            -------
+            DataFrame
+                Table with state of population on each iteration
         """
         fr = Stats.get_empty_frame()
 
         for _ in range(num_iter):
-            self._population.iterate(*params.iter_params())
+            self._population.iterate(*params.get_params())
             fr = fr.append(Stats.get_stats(self._population), ignore_index=True)
 
-        return ResearchRes(0, fr, params)
+        return IterRes(0, fr, params)
 
 
 class Stats:

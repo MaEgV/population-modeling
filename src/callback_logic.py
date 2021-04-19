@@ -1,9 +1,9 @@
 import functools
 from dataclasses import dataclass, field
 from typing import List
-from research.statistic import PopulationResearch
+from research.population_research import Researcher
 from src.population.species.bacteria.bacteria import create_bacteria
-from src.research.research_params import ResearchParams
+from src.research.research_params import IterParams
 import plotly.express as px
 
 
@@ -18,7 +18,7 @@ def storage(item):
     return real_storage
 
 
-@storage(PopulationResearch())
+@storage(Researcher())
 def research_storage(research, func):
     @functools.wraps(func)
     def inner(*args, **kwargs):
@@ -39,6 +39,6 @@ def add(stats, n_clicks, lifetime, death, reproduction):
 
 @research_storage
 def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutator_value):
-    params = ResearchParams(selector, selector_value, mutator, mutator_value)
+    params = IterParams(selector, selector_value, mutator, mutator_value)
     result = stats.research(iterations, params)
     return [px.line(result.data)]

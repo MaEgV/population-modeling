@@ -4,23 +4,23 @@ from dataclasses import dataclass
 @dataclass()
 class Genome:
     """
-    Dataclass for inherited parameters of bacteria
+        Dataclass for inherited parameters of bacteria
 
-    Attributes
-    ----------
-    max_life_time : int
-        Maximum iterations for bacteria
+        Attributes
+        ----------
+        max_life_time : int
+            Maximum iterations for bacteria
 
-    p_for_death : float
-        Probability of death
+        p_for_death : float
+            Probability of death
 
-    p_for_reproduction : float
-        Probability of reproduction
+        p_for_reproduction : float
+            Probability of reproduction
 
-    Methods
-    -------
-    update(self, **kwargs) -> None
-        Update genome parameters, which indicated in parameter 'params'
+        Methods
+        -------
+        update(self, **kwargs) -> None
+            Update genome parameters, which indicated in parameter 'params'
 
     """
     max_life_time: int
@@ -29,18 +29,16 @@ class Genome:
 
     def update(self, **params: float) -> None:
         """
+            Update genome parameters, which indicated in parameter 'params'
 
-        Update genome parameters, which indicated in parameter 'params'
+            Parameters
+            ----------
+            params: float
+                Dictionary with parameters
 
-        Parameters
-        ----------
-        params: float
-            Dictionary with parameters
-
-        Returns
-        -------
-        None
-
+            Returns
+            -------
+            None
         """
         self.p_for_death = params['p_for_death']
         self.p_for_reproduction = params['p_for_reproduction']

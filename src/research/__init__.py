@@ -1,2 +1,2 @@
-from .research_params import ResearchParams
-from .statistic import PopulationResearch
+from .research_params import IterParams
+from .population_research import Researcher
