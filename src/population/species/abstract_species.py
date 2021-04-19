@@ -7,11 +7,11 @@ from src.population import Genome
 
 
 @dataclass(frozen=True)
-class AbstractIndividual:
+class AbstractSpecies:
     _genome: Genome
 
     @abstractmethod
-    def cycle(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
+    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
         raise NotImplementedError
 
     @abstractmethod

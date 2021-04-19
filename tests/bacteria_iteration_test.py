@@ -1,6 +1,6 @@
 import pytest
 from src.population import ExternalFactors, UniformSelector
-from src.population.individuals import bacteria
+from src.population.species import bacteria
 from src.population.mutations.normal_mutator import NormalMutator
 from src.population.life_cycle import bacteria_cycle
 from src.population.mutations.mutator_parameters import MutatorParams

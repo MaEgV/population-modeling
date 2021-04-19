@@ -61,5 +61,5 @@ class AbstractSelector:
         raise NotImplementedError
 
     @abstractmethod
-    def have_to_reproduct(self, genome: Genome) -> bool:
+    def have_to_reproduce(self, genome: Genome) -> bool:
         raise NotImplementedError

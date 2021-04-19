@@ -19,12 +19,8 @@ class HomeTemplate:
     _children: list = [
         html.Div([
             html.Label('Selector'),
-            dcc.Dropdown(
-                options=[
-                    {'label': 'Default Selector', 'value': 'Default Selector'}
-                ],
-                value='Default Selector',
-                id='selector'),
+            dcc.Dropdown(id='selector'),
+
             html.Label('Mutator'),
             dcc.Dropdown(
                 options=[
@@ -104,7 +100,9 @@ class HomeTemplate:
                                   State('death', 'value'),
                                   State('reproduction', 'value')),
                                  {'prevent_initial_call': True}),
-                        Callback((Output('reproduction', 'min'),), {'prevent_initial_call': True})
+                        Callback((Output('selector', 'options'), Output('selector', 'value'),
+                                  Input('add', 'n_clicks'))
+                                )
                         ]
 
     @staticmethod

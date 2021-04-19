@@ -1,19 +1,17 @@
-from dash.exceptions import PreventUpdate
-
-from research.statistic import Stats
-from src.population.individuals.bacteria import create_bacteria
+from research.statistic import PopulationResearch
+from src.population.species.bacteria.bacteria import create_bacteria
 from src.population import Population
 import plotly.express as px
 
 
-population = Population()
+stats = PopulationResearch()
 
 
 def update_data(click_n):
     print('update_data')
     if click_n:
         print('update_data-1')
-        stats = Stats(bacterias=[create_bacteria()])
+        stats = PopulationResearch(bacterias=[create_bacteria()])
         data = stats.research(click_n)
         print(data.to_json())
         return data.to_json()
@@ -23,7 +21,7 @@ def update_data(click_n):
 
 def update_graph(click_n):
     if click_n:
-        stats = Stats(bacterias=[create_bacteria()])
+        stats = PopulationResearch(bacterias=[create_bacteria()])
         data = stats.research(click_n)
 
         return px.scatter(
@@ -33,7 +31,9 @@ def update_graph(click_n):
     return px.scatter()
 
 
-def update_output(death, reproduction):
+def update_output(n, death, reproduction):
+
+    stats.research(n, statsParams(str, float, str, float)).data
     return "You've selected " + str(death) + " for death probability and " + str(reproduction) + \
            " for reproduction probability"
 
@@ -43,5 +43,5 @@ def add(n_clicks, lifetime, death, reproduction):
     if n_clicks is None:
         raise ["clicks " + str(n_clicks)]
     else:
-        population.add([create_bacteria(lifetime, death, reproduction)])
+        stats.add([create_bacteria(lifetime, death, reproduction)])
         return ["clicks " + str(n_clicks)]
