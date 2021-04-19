@@ -3,7 +3,6 @@ import sys
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_cytoscape as cyto
 from pandas import DataFrame
 import numpy as np
 from dash.dependencies import Output, Input, State

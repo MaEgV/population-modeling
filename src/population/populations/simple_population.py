@@ -1,25 +1,23 @@
 from dataclasses import dataclass, field
-from src.population import AbstractSelector, AbstractMutator
+from src.population import AbstractSelector, AbstractMutator, List, AbstractSpecies
 
 
 @dataclass
-class Population:
+class SimplePopulation:
     """
-    A class containing information about the population. An iterator is implemented using a class Population.Iterator.
-    Bacteria can get information about their population to adjust their behavior
+    A class that organizes the simple storage of individuals and allows them to reproduce and die
 
     Parameters
     ----------
-    genealogical_tree: igraph.Graph
-        Structure of the population
-
-    species: list
-        List with all bacterias
+    _individuals: list
+        List with all individuals of population
 
     Methods
     -------
-    draw(self, filename: str = None) -> None
-        Drawing of population-graph
+    iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> None
+get_all(self)
+get_alive(self)
+get_dead(self)
     """
     _individuals: list = field(default_factory=list)
 
@@ -29,7 +27,7 @@ class Population:
 
         Attributes
         ----------
-        population: Population
+        population: SimplePopulation
             Processed population
 
         new_generation: list
@@ -59,41 +57,56 @@ class Population:
         -------
         None
         """
-        new_generation = self._get_new_generation(selector, mutator)
+        new_generation = _get_new_generation(self.get_alive(), selector, mutator)
 
         self._individuals.extend(new_generation)
 
     def get_all(self):
+        """
+        Returns the complete list of individuals
+
+        Returns
+        -------
+        Full list of individuals
+        """
         return self._individuals
 
     def get_alive(self):
+        """
+        Returns a list of live individuals only
+
+        Returns
+        -------
+        Full list of individuals
+        """
         return list(filter(lambda x: x.is_alive(), self._individuals))
 
     def get_dead(self):
         return list(filter(lambda x: not x.is_alive(), self._individuals))
 
 
+def _get_new_generation(individuals: List[AbstractSpecies],
+                        selector: AbstractSelector,
+                        mutator: AbstractMutator) -> list:
+    """
+    Creates a new generation of individuals
 
-    def _get_new_generation(self,
-                            selector: AbstractSelector,
-                            mutator: AbstractMutator) -> list:
-        """
-        Creates a new generation of individual
+    Parameters
+    ----------
+    individuals: List[AbstractSpecies]
+        List of live individuals
+    selector: AbstractSelector
+        Selection operator
+    mutator: AbstractMutator
+        Mutation operator
 
-        Parameters
-        ----------
-        selector: AbstractSelector
-            Selection operator
-        mutator: AbstractMutator
-            Mutation operator
+    Returns
+    -------
+    list
+    """
+    new_generation = list()
 
-        Returns
-        -------
-        list
-        """
-        new_generation = list()
+    for individual in individuals:
+        new_generation.extend(individual.iterate(selector, mutator))
 
-        for individual in self.get_alive():
-            new_generation.extend(individual.iterate(selector, mutator))
-
-        return new_generation
+    return new_generation

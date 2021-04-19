@@ -45,10 +45,27 @@ class ResearchParams:
         )
 
     @staticmethod
-    def get_modes():
+    def get_selector_info():
         return {
-            'Selector types': list(AvailableTypes.get_selector_types()),
-            'Mutator types': list(AvailableTypes.get_mutator_types())
+            'Types': AvailableTypes.get_selector_types(),
+            'min': 0,  # TODO: move to SelectorParams
+            'max': 2
+        }
+
+    @staticmethod
+    def get_mutator_info():
+        return {
+            'Types': list(AvailableTypes.get_mutator_types()),
+            'min': 0,  # TODO: move to MutatorParams
+            'max': 1
+        }
+
+    @staticmethod
+    def get_species_info():
+        return {
+            'death_interval': (0, 1),  # TODO: move to ...
+            'repr_interval': (0, 1),
+            'lifetime_interval': (1, 20)
         }
 
 

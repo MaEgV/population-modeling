@@ -1,5 +1,5 @@
 from typing import Dict
-from src.population.populations.simple_population import Population
+from src.population.populations.simple_population import SimplePopulation
 from src.population import AbstractSelector, AbstractMutator
 import pandas as pd
 from dataclasses import dataclass, field
@@ -22,7 +22,7 @@ class PopulationResearch:
                            draw_func) -> DataFrame
         Show number of species in population
     """
-    _population: Population = field(default_factory=Population)
+    _population: SimplePopulation = field(default_factory=SimplePopulation)
 
     def add_individuals(self, individuals: list):
         self._population.add(individuals)
@@ -64,7 +64,7 @@ class Stats:
         return pd.DataFrame(columns=['all', 'alive', 'dead'])
 
     @staticmethod
-    def get_stats(population: Population) -> Dict[str, int]:
+    def get_stats(population: SimplePopulation) -> Dict[str, int]:
         all_n, alive_n = len(population.get_all()), len(population.get_alive())
         dead_n = all_n - alive_n
 

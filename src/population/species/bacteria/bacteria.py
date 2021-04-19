@@ -26,8 +26,6 @@ class Bacteria(AbstractSpecies):
 
         Parameters
         ----------
-        bacteria: Bacteria
-            Individual bacteria, witch is iterated
         selector: AbstractSelector
             Selection operator
         mutator: AbstractMutator
@@ -84,9 +82,6 @@ class Bacteria(AbstractSpecies):
         ----------
         mutation_mode: AbstractMutator
             Implementation of mutation mechanisms
-
-        bacteria: Bacteria
-            A bacterium whose descendants may appear
 
         selector: AbstractSelector
             Make decisions about bacteria's future actions

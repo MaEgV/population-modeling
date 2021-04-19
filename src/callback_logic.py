@@ -1,12 +1,30 @@
+import functools
+from dataclasses import dataclass, field
+from typing import List
 from research.statistic import PopulationResearch
 from src.population.species.bacteria.bacteria import create_bacteria
-from src.population import Population
 from src.research.research_params import ResearchParams
-
 import plotly.express as px
 
 
-stats = PopulationResearch()
+def storage(item):
+    def real_storage(func):
+        @functools.wraps(func)
+        def inner(*args, **kwargs):
+            nonlocal item
+            return func(item, *args, **kwargs)
+        return inner
+
+    return real_storage
+
+
+@storage(PopulationResearch())
+def research_storage(research, func):
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        return func(research, *args, **kwargs)
+
+    return inner
 
 
 def update_output(death, reproduction):
@@ -14,15 +32,13 @@ def update_output(death, reproduction):
     return ["You've selected " + str(death) + " for death probability and " + str(reproduction) + \
            " for reproduction probability"]
 
-
-def add(n_clicks, lifetime, death, reproduction):
-    print(n_clicks, lifetime, death, reproduction)
+@research_storage
+def add(stats, n_clicks, lifetime, death, reproduction):
     stats.add_individuals([create_bacteria(lifetime, death, reproduction)])
     return ["added " + str(n_clicks)]
 
-
-def build(n_clicks, iterations, selector, selector_value, mutator, mutator_value):
+@research_storage
+def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutator_value):
     params = ResearchParams(selector, selector_value, mutator, mutator_value)
     result = stats.research(iterations, params)
-    print(result.data)
     return [px.line(result.data)]

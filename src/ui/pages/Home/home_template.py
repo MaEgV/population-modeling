@@ -1,11 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
-from typing import List
-from src.population.mutations.normal_mutator import NormalMutator
 from src.ui.callback import Callback
 from dash.dependencies import Output, Input, State
-from dataclasses import dataclass, field
-import pandas as pd
 import plotly.express as px
 
 
