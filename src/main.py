@@ -5,7 +5,7 @@ from callback_logic import *
 
 class App:
     def __init__(self):
-        tmp = HomePage([update_output, add, t])
+        tmp = HomePage([update_output, add, build])
         self.ui = DashUI(tmp)
 
     def run(self):

@@ -1,33 +1,47 @@
 import dash_core_components as dcc
 import dash_html_components as html
 from typing import List
-
 from src.population.mutations.normal_mutator import NormalMutator
 from src.ui.callback import Callback
 from dash.dependencies import Output, Input, State
 from dataclasses import dataclass, field
 import pandas as pd
-
-df = pd.DataFrame({
-    'a': [1, 2, 3],
-    'b': [4, 1, 4],
-    'c': ['x', 'y', 'z'],
-})
+import plotly.express as px
 
 
 class HomeTemplate:
     _children: list = [
         html.Div([
             html.Label('Selector'),
-            dcc.Dropdown(id='selector'),
-
+            dcc.Dropdown(
+                options=[
+                    {'label': 'Uniform Selector', 'value': 'uniform'}
+                ],
+                value='uniform',
+                id='selector'),
+            dcc.Slider(
+                max=2,
+                min=0,
+                step=0.5,
+                value=1,
+                id='selector_value'
+            ),
             html.Label('Mutator'),
             dcc.Dropdown(
                 options=[
-                    {'label': 'Normal Mutator', 'value': 'NormalMutator()'}
+                    {'label': 'Normal Mutator', 'value': 'normal'}
                 ],
-                value='NormalMutator()',
+                value='normal',
                 id='mutator'),
+            dcc.Slider(
+                max=0.001,
+                min=0,
+                step=0.5,
+                value=0.0001,
+                id='mutator_value'
+            ),
+            html.Label('Iterations: '),
+            dcc.Input(id='iterations', type='number', placeholder='number of iterations')
         ],
             style={'width': '40%'},
         ),
@@ -83,26 +97,34 @@ class HomeTemplate:
                       id='reproduction'
 
                   ),
+                  html.Div(id='void'),
                   ],
                  style={'width': '40%', 'position': 'relative', 'left': '50%'},
                  ),
         html.Button('Add', id='add', n_clicks=0, style={'position': 'relative', 'left': '43%'}),
-        html.Div(id='output', style={'width': '40%', 'position': 'relative', 'left': '50%'}),
-        html.Div(id='graph')]
+        html.Div(id='output', style={'width': '40%', 'position': 'relative', 'left': '50%'},
+                 children='Choose parameters'),
+        html.Div([dcc.Graph(id='graph',figure=px.scatter())])]
 
     _callbacks: list = [Callback((Output('output', 'children'),
-                                 State('reproduction', 'value'),
-                                 State('death', 'value')),
+                                  Input('death', 'value'),
+                                  Input('reproduction', 'value')
+                                  ),
                                  {'prevent_initial_call': True}),
-                        Callback((Output('graph', 'children'),
+                        Callback((Output('void', 'children'),
                                   Input('add', 'n_clicks'),
                                   State('lifetime', 'value'),
                                   State('death', 'value'),
                                   State('reproduction', 'value')),
                                  {'prevent_initial_call': True}),
-                        Callback((Output('selector', 'options'), Output('selector', 'value'),
-                                  Input('add', 'n_clicks'))
-                                )
+                        Callback((Output('graph', 'figure'),
+                                  Input('build', 'n_clicks'),
+                                  State('iterations', 'value'),
+                                  State('selector', 'value'),
+                                  State('selector_value', 'value'),
+                                  State('mutator', 'value'),
+                                  State('mutator_value', 'value')),
+                                 {'prevent_initial_call': True})
                         ]
 
     @staticmethod

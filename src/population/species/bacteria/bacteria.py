@@ -99,9 +99,10 @@ class Bacteria(AbstractSpecies):
         """
 
         children = list()
-        while selector.have_to_reproduce(self._genome):  # the Bernoulli test
-            child_genome = mutation_mode.child_genome(self._genome)
-            children.append(Bacteria(child_genome))
+        if self.is_alive():
+            while selector.have_to_reproduce(self._genome):  # the Bernoulli test
+                child_genome = mutation_mode.child_genome(self._genome)
+                children.append(Bacteria(child_genome))
 
         return children
 
