@@ -64,14 +64,14 @@ class ParamsInfo:
         return {
             'Types': list(AvailableTypes.get_mutator_types()),
             'min': 0,  # TODO: move to MutatorParams
-            'max': 1
+            'max': 0.001
         }
 
     @staticmethod
     def get_species_info():
         return {
             'death_interval': (0, 1),  # TODO: move to ...
-            'repr_interval': (0, 1),
+            'reproduction_interval': (0, 1),
             'lifetime_interval': (1, 20)
         }
 
