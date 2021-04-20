@@ -14,7 +14,7 @@ class IterRes:
 
 
 @dataclass(frozen=True)
-class Researcher:
+class Research:
     """
         Class with some statistical tools for population analysis.
 
@@ -31,9 +31,9 @@ class Researcher:
     """
     _population: SimplePopulation = field(default_factory=SimplePopulation)
 
-    def add_individuals(self,
-                        params: AddParams):
-        self._population.add(*params.get_params())
+    def add_individual(self,
+                       params: AddParams):
+        self._population.add([params.get_params()])
 
     def research(self,
                  num_iter: int,
