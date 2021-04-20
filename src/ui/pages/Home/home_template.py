@@ -19,6 +19,7 @@ class HomeTemplate:
         ],
             style={'width': '40%'},
         ),
+
         html.Button('Build', id='build', n_clicks=0),
         html.Button('Rebuild', id='rebuild', n_clicks=0),
         html.Div([html.Label('Maximum bacteria lifetime'),
@@ -34,8 +35,9 @@ class HomeTemplate:
         html.Button('Add', id='add', n_clicks=0, style={'position': 'relative', 'left': '43%'}),
         html.Div(id='output', style={'width': '40%', 'position': 'relative', 'left': '50%'},
                  children='Choose parameters'),
+
         html.Div([dcc.Graph(id='graph', figure=px.scatter())]),
-        html.Div(id='hidden')]
+        html.Div(id='hidden', children=[], style={'display': 'none'})]
 
     _callbacks: list = [Callback((Output('output', 'children'),
                                   Input('death', 'value'),
@@ -63,7 +65,7 @@ class HomeTemplate:
                                   Output('selector_value', 'step'),
                                   Output('selector_value', 'value'),
                                   Output('selector_value', 'marks'),
-                                  Input('hidden', 'id'))),
+                                  Input('hidden', 'children'))),
                         Callback((Output('mutator', 'options'),
                                   Output('mutator', 'value'),
                                   Output('mutator_value', 'min'),
@@ -87,8 +89,12 @@ class HomeTemplate:
                                   Output('reproduction', 'step'),
                                   Output('reproduction', 'marks'),
                                   Output('reproduction', 'value'),
-                                  Input('hidden', 'id')
-                                  ))
+                                  Input('hidden', 'children')
+                                  )),
+                        Callback((Output('hidden', 'children'),
+                                  Output('build', 'n_clicks'),
+                                  Input('rebuild', 'n_clicks')),
+                                 {'prevent_initial_call': True})
                         ]
 
     @staticmethod

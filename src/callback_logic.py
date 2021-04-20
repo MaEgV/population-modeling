@@ -1,6 +1,5 @@
 import functools
 from research.population_research import Research
-from src.population.species.bacteria.bacteria import create_bacteria
 from src.research.research_params import IterParams, ParamsInfo, AddParams
 import plotly.express as px
 
@@ -40,9 +39,19 @@ def add(stats, n_clicks, lifetime, death, reproduction):
 
 @research_storage
 def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutator_value):
+    if n_clicks == 0:
+        return [px.scatter()]
+    print('build', stats)
     params = IterParams(selector, selector_value, mutator, mutator_value)
     result = stats.research(iterations, params)
     return [px.line(result.data)]
+
+
+@research_storage
+def rebuild(stats, n_clicks):
+    stats.drop()
+    print('rebuild', stats)
+    return [['0'], 0]
 
 
 def selector_type(value):

@@ -65,6 +65,9 @@ class Research:
 
         return IterRes(0, fr, params)
 
+    def drop(self):
+        self._population.drop()
+
 
 class Stats:
     @staticmethod

@@ -84,6 +84,16 @@ get_dead(self)
     def get_dead(self):
         return list(filter(lambda x: not x.is_alive(), self._individuals))
 
+    def drop(self):
+        """
+        The method resets the list of stored individuals
+
+        Returns
+        -------
+        None
+        """
+        self._individuals = list()
+
 
 def _get_new_generation(individuals: List[AbstractSpecies],
                         selector: AbstractSelector,
