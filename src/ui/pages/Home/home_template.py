@@ -9,6 +9,14 @@ class HomeTemplate:
     _children: list = [
         html.Div('Population Modeling', className='header'),
         html.Div([
+            html.Label('Choose type of individual',  className='label'),
+            dcc.Dropdown(
+                options=[
+                    {'label': 'Bacteria', 'value': 'bacteria'}
+                ],
+                value='bacteria',
+                id='individual',
+                className='dd'),
             html.Label('Choose type of selector',  className='label'),
             dcc.Dropdown(
                 options=[
@@ -16,7 +24,7 @@ class HomeTemplate:
                 ],
                 value='uniform',
                 id='selector',
-                className='selector_dd'),
+                className='dd'),
             html.Label('Choose level of aggressiveness of a selector', className='label'),
             dcc.Slider(
                 max=1,
@@ -34,7 +42,7 @@ class HomeTemplate:
                 ],
                 value='normal',
                 id='mutator',
-                className='mutator_dd'),
+                className='dd'),
             html.Label('Choose level of variability of a mutator', className='label'),
             dcc.Slider(
                 max=1,
@@ -145,9 +153,9 @@ class HomeTemplate:
                         }
 
     @staticmethod
-    def get_children():
+    def get_children() -> list:
         return HomeTemplate._children
 
     @staticmethod
-    def get_callbacks():
+    def get_callbacks() -> list:
         return HomeTemplate._callbacks

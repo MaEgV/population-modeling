@@ -15,9 +15,14 @@ class Population:
     Methods
     -------
     iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> None
-get_all(self)
-get_alive(self)
-get_dead(self)
+
+    get_all(self)
+
+    get_alive(self)
+
+    get_dead(self)
+
+    drop(self)
     """
     _individuals: list = field(default_factory=list)
 
@@ -50,8 +55,6 @@ get_dead(self)
             Selection operator
         mutator: AbstractMutator
             Mutation operator
-        draw_func: Callable
-            Population rendering function
 
         Returns
         -------
@@ -61,7 +64,7 @@ get_dead(self)
 
         self._individuals.extend(new_generation)
 
-    def get_all(self):
+    def get_all(self) -> list:
         """
         Returns the complete list of individuals
 
@@ -71,9 +74,9 @@ get_dead(self)
         """
         return self._individuals
 
-    def get_alive(self):
+    def get_alive(self) -> list:
         """
-        Returns a list of live individuals only
+        Returns a list of alive individuals only
 
         Returns
         -------
@@ -81,10 +84,17 @@ get_dead(self)
         """
         return list(filter(lambda x: x.is_alive(), self._individuals))
 
-    def get_dead(self):
+    def get_dead(self) -> list:
+        """
+        Returns a list of dead individuals only
+
+        Returns
+        -------
+        Full list of individuals
+        """
         return list(filter(lambda x: not x.is_alive(), self._individuals))
 
-    def drop(self):
+    def drop(self) -> None:
         """
         The method resets the list of stored individuals
 

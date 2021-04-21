@@ -26,15 +26,15 @@ class AvailableTypes:
     _individual_types: ClassVar[dict] = field(init=False, default={'bacteria': Bacteria})
 
     @staticmethod
-    def get_selector_types():
+    def get_selector_types() -> list:
         return list(AvailableTypes._selector_types.keys())
 
     @staticmethod
-    def get_mutator_types():
+    def get_mutator_types() -> list:
         return list(AvailableTypes._mutator_types.keys())
 
     @staticmethod
-    def get_individual_types():
+    def get_individual_types() -> list:
         return list(AvailableTypes._individual_types.keys())
 
     @staticmethod
@@ -52,7 +52,7 @@ class AvailableTypes:
 
 class ParamsInfo:
     @staticmethod
-    def get_selector_info():
+    def get_selector_info() -> dict:
         return {
             'Types': AvailableTypes.get_selector_types(),
             'min': 0,  # TODO: move to SelectorParams
@@ -60,7 +60,7 @@ class ParamsInfo:
         }
 
     @staticmethod
-    def get_mutator_info():
+    def get_mutator_info() -> dict:
         return {
             'Types': list(AvailableTypes.get_mutator_types()),
             'min': 0,  # TODO: move to MutatorParams
@@ -83,7 +83,7 @@ class IterParams:
     mutator: str
     mutator_mode: float
 
-    def get_params(self):
+    def get_params(self) -> tuple:
         selector_params = SelectorParams(0, self.selector_mode)
         mutator_params = MutatorParams(0, self.mutator_mode)
 
