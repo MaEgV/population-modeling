@@ -43,6 +43,7 @@ def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutato
     #     return [px.scatter()]
     params = IterParams(selector, selector_value, mutator, mutator_value)
     result = stats.research(iterations, params)
+    print(result.data)
     return [px.line(result.data)]
 
 
