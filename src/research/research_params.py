@@ -68,7 +68,7 @@ class ParamsInfo:
         }
 
     @staticmethod
-    def get_species_info():
+    def get_species_info() -> dict:
         return {
             'death_interval': (0, 1),  # TODO: move to ...
             'reproduction_interval': (0, 1),

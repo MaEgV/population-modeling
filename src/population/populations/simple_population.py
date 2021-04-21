@@ -3,7 +3,7 @@ from src.population import AbstractSelector, AbstractMutator, List, AbstractSpec
 
 
 @dataclass
-class SimplePopulation:
+class Population:
     """
     A class that organizes the simple storage of individuals and allows them to reproduce and die
 
@@ -27,7 +27,7 @@ get_dead(self)
 
         Attributes
         ----------
-        population: SimplePopulation
+        population: Population
             Processed population
 
         new_generation: list

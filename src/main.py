@@ -4,8 +4,13 @@ from callback_logic import *
 
 
 class App:
+    """
+        A class that implements the connection between the Dash interface and the Population Research API
+        To do this, you need to connect the outputs and inputs of the page with the functions from the API
+    """
     def __init__(self):
-        tmp = HomePage({'counter': individual_counter,
+        # Create a home page instance and callback implementations link with it
+        page = HomePage({'counter': individual_counter,
                         'add': add,
                         'build': build,
                         'selector_cfg': selector_cfg,
@@ -14,9 +19,16 @@ class App:
                         'rebuild': rebuild
                         })
 
-        self.ui = DashUI(tmp)
+        # Creating a Dash app for a page
+        self.ui = DashUI(page)
 
-    def run(self):
+    def run(self) -> None:
+        """
+        Launch app
+        Returns
+        -------
+        None
+        """
         self.ui.run()
 
 

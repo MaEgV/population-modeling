@@ -1,28 +1,6 @@
-import functools
-from research.population_research import Research
+from src.research.research_storage import research_storage, Research
 from src.research.research_params import IterParams, ParamsInfo, AddParams
 import plotly.express as px
-
-
-def storage(item):
-    def real_storage(func):
-        @functools.wraps(func)
-        def inner(*args, **kwargs):
-            nonlocal item
-            return func(item, *args, **kwargs)
-
-        return inner
-
-    return real_storage
-
-
-@storage(Research())
-def research_storage(research, func):
-    @functools.wraps(func)
-    def inner(*args, **kwargs):
-        return func(research, *args, **kwargs)
-
-    return inner
 
 
 def individual_counter(death, reproduction):
@@ -31,16 +9,14 @@ def individual_counter(death, reproduction):
 
 
 @research_storage
-def add(stats, n_clicks, lifetime, death, reproduction):
-    stats.add_individual(AddParams('bacteria', lifetime, death, reproduction))
+def add(research, n_clicks: int, lifetime: int, death: float, reproduction: float):
+    research.add_individual(AddParams('bacteria', lifetime, death, reproduction))
 
     return ["added " + str(n_clicks)]
 
 
 @research_storage
 def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutator_value):
-    # if n_clicks == 0:
-    #     return [px.scatter()]
     params = IterParams(selector, selector_value, mutator, mutator_value)
     result = stats.research(iterations, params)
     return [px.line(result.data)]

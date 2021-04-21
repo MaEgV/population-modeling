@@ -1,10 +1,16 @@
 import dash_html_components as html
 from ..abstract_page import AbstractPage
-from copy import deepcopy
 from .home_template import HomeTemplate
 
 
-def _init_id():
+def _init_id() -> str:
+    """
+    Function that returns the home page id
+    Returns
+    -------
+        str:
+            id
+    """
     last_id = 0
 
     def get_id():
@@ -16,26 +22,37 @@ def _init_id():
 
 
 class HomePage(AbstractPage):
-    template = HomeTemplate()
+    """
+        Implementation of the AbstractPage class for the home page
 
-    @staticmethod
-    def _init_callbacks(functions):
-        callbacks = deepcopy(HomePage.template.get_callbacks())
+        Attributes
+        ----------
+        _template
+        Methods
+        -------
+        get_layout(self) -> html.Div:
+            Returns the home page template
 
-        for key in callbacks.keys():
-            callbacks[key].set_func(functions[key])
+        get_callbacks(self):
+            Returns the home page callbacks
+    """
+    _template: HomeTemplate = HomeTemplate()
 
-        return callbacks
-
-    def __init__(self, functions):
-        self._callbacks = HomePage._init_callbacks(functions)
+    def __init__(self, functions: dict):
+        super().__init__(functions, HomePage._template.get_callbacks())
         self.id = _init_id()
 
-    def get_layout(self):
+    def get_layout(self) -> html.Div:
+        """
+        Returns the home page template
+        """
         return html.Div(
                 id=self.id,
-                children=HomePage.template.get_children()
+                children=HomePage._template.get_children()
            )
 
     def get_callbacks(self):
+        """
+        Returns the home page callbacks
+        """
         return self._callbacks.values()
