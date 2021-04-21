@@ -25,7 +25,7 @@ def research_storage(research, func):
     return inner
 
 
-def update_output(death, reproduction):
+def individual_counter(death, reproduction):
     return ["You've selected " + str(death) + " for death probability and " + str(reproduction) + \
             " for reproduction probability"]
 
@@ -39,9 +39,8 @@ def add(stats, n_clicks, lifetime, death, reproduction):
 
 @research_storage
 def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutator_value):
-    if n_clicks == 0:
-        return [px.scatter()]
-    print('build', stats)
+    # if n_clicks == 0:
+    #     return [px.scatter()]
     params = IterParams(selector, selector_value, mutator, mutator_value)
     result = stats.research(iterations, params)
     return [px.line(result.data)]
@@ -50,11 +49,10 @@ def build(stats, n_clicks, iterations, selector, selector_value, mutator, mutato
 @research_storage
 def rebuild(stats, n_clicks):
     stats.drop()
-    print('rebuild', stats)
     return [['0'], 0]
 
 
-def selector_type(value):
+def selector_cfg(value):
     params = ParamsInfo.get_selector_info()
     types = params['Types']
     get_options = lambda value: {'label': value, 'value': value}
@@ -63,7 +61,7 @@ def selector_type(value):
     return options, options[0].get('value'), params['min'], params['max'], (params['max'] - params['min']) / 4, 1, marks
 
 
-def mutator_type(value):
+def mutator_cfg(value):
     params = ParamsInfo.get_mutator_info()
     types = params['Types']
     get_options = lambda value: {'label': value, 'value': value}
@@ -73,7 +71,7 @@ def mutator_type(value):
            0.0001, marks
 
 
-def species_parameters(value):
+def ndividual_cfg(value):
     species_info = ParamsInfo.get_species_info()
     get_marks = lambda value: (value, str(value))
 

@@ -22,8 +22,8 @@ class HomePage(AbstractPage):
     def _init_callbacks(functions):
         callbacks = deepcopy(HomePage.template.get_callbacks())
 
-        for callback, function in zip(callbacks, functions):
-            callback.set_func(function)
+        for key in callbacks.keys():
+            callbacks[key].set_func(functions[key])
 
         return callbacks
 
@@ -38,4 +38,4 @@ class HomePage(AbstractPage):
            )
 
     def get_callbacks(self):
-        return self._callbacks
+        return self._callbacks.values()
