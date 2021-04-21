@@ -7,44 +7,54 @@ import plotly.express as px
 
 class HomeTemplate:
     _children: list = [
+        html.Div('Population Modeling', className='header'),
         html.Div([
-            html.Label('Selector'),
+            html.Label('Choose type of selector',  className='label'),
             dcc.Dropdown(
                 options=[
                     {'label': 'Uniform Selector', 'value': 'uniform'}
                 ],
                 value='uniform',
-                id='selector'),
+                id='selector',
+                className='selector_dd'),
+            html.Label('Choose level of aggressiveness of a selector', className='label'),
             dcc.Slider(
                 max=1,
                 min=0,
+                marks={0: 'low', 0.5: 'medium', 1: 'high'},
                 step=0.05,
                 value=1,
-                id='selector_value'
+                id='selector_value',
+                className='slider_selector'
             ),
-            html.Label('Mutator'),
+            html.Label('Choose type of mutator', className='label'),
             dcc.Dropdown(
                 options=[
                     {'label': 'Normal Mutator', 'value': 'normal'}
                 ],
                 value='normal',
-                id='mutator'),
+                id='mutator',
+                className='mutator_dd'),
+            html.Label('Choose level of variability of a mutator', className='label'),
             dcc.Slider(
                 max=1,
                 min=0,
+                marks={0: 'low', 0.5: 'medium', 1: 'high'},
                 step=0.05,
                 value=0.5,
-                id='mutator_value'
+                id='mutator_value',
+                className='slider_mutator'
             ),
-            html.Label('Iterations: '),
-            dcc.Input(id='iterations', type='number', placeholder='number of iterations')
+            html.Label('Iterations: ', className='label'),
+            dcc.Input(id='iterations', type='number', placeholder='number of iterations', value=3,
+                      className='input_iter')
         ],
-            style={'width': '40%'},
+            className='population_params'
         ),
 
-        html.Button('Build', id='build', n_clicks=0),
-        html.Button('Rebuild', id='rebuild', n_clicks=0),
-        html.Div([html.Label('Maximum bacteria lifetime'),
+        html.Button('Build', id='build', n_clicks=0, className='build_button'),
+        html.Button('Rebuild', id='rebuild', n_clicks=0, className='rebuild_button'),
+        html.Div([html.Label('Maximum bacteria lifetime', className='label'),
                   dcc.Slider(
                       min=0,
                       max=15,
@@ -70,7 +80,7 @@ class HomeTemplate:
                       value=5,
                       id='lifetime'
                   ),
-                  html.Label('Death probability'),
+                  html.Label('Death probability', className='label'),
                   dcc.Slider(
                       min=0,
                       max=1,
@@ -82,7 +92,7 @@ class HomeTemplate:
                       value=0.5,
                       id='death'
                   ),
-                  html.Label('Reproduction probability'),
+                  html.Label('Reproduction probability', className='label'),
                   dcc.Slider(
                       min=0,
                       max=1,
@@ -95,13 +105,12 @@ class HomeTemplate:
                       id='reproduction'),
                   html.Div(id='void'),
                   ],
-                 style={'width': '40%', 'position': 'relative', 'left': '50%'},
+                 className='bacteria_params',
                  ),
-        html.Button('Add', id='add', n_clicks=0, style={'position': 'relative', 'left': '43%'}),
-        html.Div(id='output', style={'width': '40%', 'position': 'relative', 'left': '50%'},
-                 children='Choose parameters'),
-
-        html.Div([dcc.Graph(id='graph', figure=px.scatter())]),
+        html.Button('Add', id='add', n_clicks=0, className='add_button'),
+        html.Div(id='output', children='Choose parameters', className='output_params'),
+        html.Div('Population statistics visualization', className='graph_label'),
+        html.Div([dcc.Graph(id='graph', figure=px.scatter(), className='graph')]),
         html.Div(id='hidden', children=[], style={'display': 'none'})]
 
     _callbacks: list = {'counter':
