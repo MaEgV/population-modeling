@@ -186,7 +186,6 @@ class HomeTemplate:
                                       Input('hidden', 'children')),
                                      {'prevent_initial_call': True})}
 
-
     @staticmethod
     def get_children() -> list:
         return HomeTemplate._children
