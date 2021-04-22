@@ -103,14 +103,18 @@ class IterParams:
     Date a class that stores parameters for adding an individual to the research population
     Attributes
     ----------
-    species: str
-        Type of individual from AvailableTypes
-    lifetime: int
+    selector: str
+        Type of selector
+
+    selector_mode: float
         Length of life of an individual
-    p_for_death: float
-        Probability of death of an individual
-    p_for_repr: float
-        Probability of eproduction of an individual
+
+    mutator: str
+        Type of mutator
+
+    mutator_mode: float
+        Probability of reproduction of an individual
+
     Methods
     -------
     get_params(self) -> AbstractSpecies:
