@@ -13,7 +13,7 @@ def _init_id() -> str:
     """
     last_id = 0
 
-    def get_id():
+    def get_id() -> int:
         nonlocal last_id
         last_id += 1
         return last_id - 1
