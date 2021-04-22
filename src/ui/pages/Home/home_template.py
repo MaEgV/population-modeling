@@ -137,7 +137,7 @@ class HomeTemplate:
         html.Div([dcc.Graph(id='graph', figure=px.scatter(), className='graph')]),
         html.Div(id='hidden', style={'display': 'none'})]
 
-    _callbacks: list = {'params_selected':
+    _callbacks: dict = {'params_selected':
                             Callback((Output('output', 'children'),
                                       Input('death', 'value'),
                                       Input('reproduction', 'value')),
@@ -185,5 +185,5 @@ class HomeTemplate:
         return HomeTemplate._children
 
     @staticmethod
-    def get_callbacks() -> list:
+    def get_callbacks() -> dict:
         return HomeTemplate._callbacks

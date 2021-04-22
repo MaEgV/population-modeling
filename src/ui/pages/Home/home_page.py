@@ -51,8 +51,8 @@ class HomePage(AbstractPage):
                 children=HomePage._template.get_children()
            )
 
-    def get_callbacks(self):
+    def get_callbacks(self) -> list:
         """
         Returns the home page callbacks
         """
-        return self._callbacks.values()
+        return list(self._callbacks.values())
