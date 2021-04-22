@@ -47,7 +47,7 @@ class Research:
     _population: Population = field(default_factory=Population)
 
     def add_individual(self,
-                       params: AddParams):
+                       params: AddParams) -> None:
         self._population.add([params.get_params()])
 
     def research(self,
@@ -80,10 +80,10 @@ class Research:
 
         return IterRes(0, fr, params)
 
-    def get_populations_size(self):
+    def get_populations_size(self) -> int:
         return len(self._population.get_all())
 
-    def drop(self):
+    def drop(self) -> None:
         self._population.drop()
 
 

@@ -48,15 +48,15 @@ class AvailableTypes:
         return list(AvailableTypes._individual_types.keys())
 
     @staticmethod
-    def get_selector(key, init_params: SelectorParams) -> AbstractSelector:
+    def get_selector(key: str, init_params: SelectorParams) -> AbstractSelector:
         return AvailableTypes._selector_types[key](init_params)
 
     @staticmethod
-    def get_mutator(key, init_params: MutatorParams) -> AbstractMutator:
+    def get_mutator(key: str, init_params: MutatorParams) -> AbstractMutator:
         return AvailableTypes._mutator_types[key](init_params)
 
     @staticmethod
-    def get_individual(key, init_params: Genome) -> AbstractSpecies:
+    def get_individual(key: str, init_params: Genome) -> AbstractSpecies:
         return AvailableTypes._individual_types[key](init_params)
 
 

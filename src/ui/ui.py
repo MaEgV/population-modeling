@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 import dash  # type: ignore
 from .callback import Callback
 from .pages.abstract_page import AbstractPage
@@ -58,7 +58,7 @@ def register_callbacks(app: dash.Dash, callbacks: List[Callback]) -> None:
         add_callback(app, callback)
 
 
-def add_callback(app, callback: Callback):
+def add_callback(app: dash.Dash, callback: Callback) -> None:
     """
     A function that registers single callback in the Dash app
 
@@ -75,5 +75,5 @@ def add_callback(app, callback: Callback):
     None
     """
     @app.callback(callback.get_args(), **callback.get_kwargs())
-    def inner(*args, **kwargs):
+    def inner(*args: tuple, **kwargs: dict) -> Any:
         return callback.get_func()(*args, **kwargs)

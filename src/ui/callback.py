@@ -11,14 +11,14 @@ class Callback:
     kwargs: dict = field(default_factory=dict)  # named parameters for callback (not required)
     func: Callable = field(init=False, default=lambda x: None)  # function responsible for the return value
 
-    def set_func(self, new_func):
+    def set_func(self, new_func) -> None:
         self.func = new_func
 
-    def get_args(self):
+    def get_args(self) -> tuple:
         return self.args
 
-    def get_kwargs(self):
+    def get_kwargs(self) -> dict:
         return self.kwargs
 
-    def get_func(self):
+    def get_func(self) -> Callable:
         return self.func

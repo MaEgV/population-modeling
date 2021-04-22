@@ -162,7 +162,7 @@ def storage_update(research: Research,
     return [pd.DataFrame.from_dict({'all': [1], 'alive': [1], 'dead': [0]}).to_json(date_format='iso', orient='split')]
 
 
-def figure_update(main_storage: str):
+def figure_update(main_storage: str) -> list:
     """
     Redraws the graph every time the global storage is updated
 
