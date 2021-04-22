@@ -7,7 +7,7 @@ on:
   push:
     branches: 
     - main
-    - population
+    - develop
   pull_request:
     branches: [ main ]
 
