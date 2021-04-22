@@ -52,3 +52,4 @@ def _init_callbacks(functions: dict, callbacks: dict) -> dict:
         callbacks[key].set_func(functions[key])
 
     return callbacks
+

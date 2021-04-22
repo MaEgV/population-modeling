@@ -80,6 +80,9 @@ class Research:
 
         return IterRes(0, fr, params)
 
+    def get_populations_size(self):
+        return len(self._population.get_all())
+
     def drop(self):
         self._population.drop()
 

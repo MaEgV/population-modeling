@@ -5,138 +5,161 @@ from dash.dependencies import Output, Input, State
 import plotly.express as px
 
 
+individual_dropdown_init = {
+    'options': [{'label': 'Bacteria', 'value': 'bacteria'}],
+    'value': 'bacteria',
+    'className': 'dd'
+}
+selector_dropdown_init = {
+    'options': [{'label': 'Uniform Selector', 'value': 'uniform'}],
+    'value': 'uniform',
+    'className': 'dd'
+}
+selector_slider_init = {
+    'max': 1,
+    'min': 0,
+    'marks': {0: 'low', 0.5: 'medium', 1: 'high'},
+    'step': 0.05,
+    'value': 0.5,
+    'className': 'slider_selector'
+}
+mutator_dropdown_init = {
+    'options': [{'label': 'Normal Mutator', 'value': 'normal'}],
+    'value': 'normal',
+    'className': 'dd'
+}
+mutator_slider_init = {
+    'max': 1,
+    'min': 0,
+    'marks': {0: 'low', 0.5: 'medium', 1: 'high'},
+    'step': 0.05,
+    'value': 0.5,
+    'className': 'slider_mutator'
+}
+input_iter_init = {
+    'type': 'number',
+    'placeholder': 'number of iterations',
+    'value': 1,
+    'className': 'input_iter'
+}
+lifetime_slider_init = {
+    'max': 15,
+    'min': 1,
+    'marks': {0: '0',
+              1: '1',
+              2: '2',
+              3: '3',
+              4: '4',
+              5: '5',
+              6: '6',
+              7: '7',
+              8: '8',
+              9: '9',
+              10: '10',
+              11: '11',
+              12: '12',
+              13: '13',
+              14: '14',
+              15: '15'},
+    'step': 1,
+    'value': 5,
+    'className': 'lifetime'
+}
+death_slider_init = {
+    'max': 1,
+    'min': 0,
+    'marks': {0: 'low', 0.5: 'medium', 1: 'high'},
+    'step': 0.05,
+    'value': 0.5,
+}
+repr_slider_init = {
+    'max': 1,
+    'min': 0,
+    'marks': {0: 'low', 0.5: 'medium', 1: 'high'},
+    'step': 0.05,
+    'value': 0.5,
+}
+
+
 class HomeTemplate:
+    """
+
+
+        Attributes
+        ----------
+        _population: Population
+            An instance of the population that the study is being conducted on
+
+        Methods
+        -------
+    """
     _children: list = [
         html.Div('Population Modeling', className='header'),
         html.Div([
-            html.Label('Choose type of individual',  className='label'),
-            dcc.Dropdown(
-                options=[
-                    {'label': 'Bacteria', 'value': 'bacteria'}
-                ],
-                value='bacteria',
-                id='individual',
-                className='dd'),
-            html.Label('Choose type of selector',  className='label'),
-            dcc.Dropdown(
-                options=[
-                    {'label': 'Uniform Selector', 'value': 'uniform'}
-                ],
-                value='uniform',
-                id='selector',
-                className='dd'),
+            html.Label('Choose type of selector', className='label'),
+            dcc.Dropdown(id='selector', **selector_dropdown_init),
+
             html.Label('Choose level of aggressiveness of a selector', className='label'),
-            dcc.Slider(
-                max=1,
-                min=0,
-                marks={0: 'low', 0.5: 'medium', 1: 'high'},
-                step=0.05,
-                value=1,
-                id='selector_value',
-                className='slider_selector'
-            ),
+            dcc.Slider(id='selector_value', **selector_slider_init),
+
             html.Label('Choose type of mutator', className='label'),
-            dcc.Dropdown(
-                options=[
-                    {'label': 'Normal Mutator', 'value': 'normal'}
-                ],
-                value='normal',
-                id='mutator',
-                className='dd'),
+            dcc.Dropdown(id='mutator', **mutator_dropdown_init),
+
             html.Label('Choose level of variability of a mutator', className='label'),
-            dcc.Slider(
-                max=1,
-                min=0,
-                marks={0: 'low', 0.5: 'medium', 1: 'high'},
-                step=0.05,
-                value=0.5,
-                id='mutator_value',
-                className='slider_mutator'
-            ),
+            dcc.Slider(id='mutator_value', **mutator_slider_init),
+
             html.Label('Iterations: ', className='label'),
-            dcc.Input(id='iterations', type='number', placeholder='number of iterations', value=3,
-                      className='input_iter')
+            dcc.Input(id='iterations', **input_iter_init)
         ],
             className='population_params'
         ),
 
         html.Button('Build', id='build', n_clicks=0, className='build_button'),
+        html.Div(id='build_storage', style={'display': 'none'}),
+
         html.Button('Rebuild', id='rebuild', n_clicks=0, className='rebuild_button'),
-        html.Div([html.Label('Maximum bacteria lifetime', className='label'),
-                  dcc.Slider(
-                      min=0,
-                      max=15,
-                      step=1,
-                      marks={
-                          0: '0',
-                          1: '1',
-                          2: '2',
-                          3: '3',
-                          4: '4',
-                          5: '5',
-                          6: '6',
-                          7: '7',
-                          8: '8',
-                          9: '9',
-                          10: '10',
-                          11: '11',
-                          12: '12',
-                          13: '13',
-                          14: '14',
-                          15: '15'
-                      },
-                      value=5,
-                      id='lifetime'
-                  ),
-                  html.Label('Death probability', className='label'),
-                  dcc.Slider(
-                      min=0,
-                      max=1,
-                      step=0.05,
-                      marks={
-                          0: '0',
-                          1: '1'
-                      },
-                      value=0.5,
-                      id='death'
-                  ),
-                  html.Label('Reproduction probability', className='label'),
-                  dcc.Slider(
-                      min=0,
-                      max=1,
-                      step=0.05,
-                      marks={
-                          0: '0',
-                          1: '1'
-                      },
-                      value=0.5,
-                      id='reproduction'),
-                  html.Div(id='void'),
-                  ],
-                 className='bacteria_params',
-                 ),
+        html.Div(id='rebuild_storage', style={'display': 'none'}),
+
+        html.Div([
+            html.Label('Choose type of individual', className='label'),
+            dcc.Dropdown(id='individual', **individual_dropdown_init),
+
+            html.Label('Maximum bacteria lifetime', className='label'),
+            dcc.Slider(id='lifetime', **lifetime_slider_init),
+
+            html.Label('Death probability', className='label'),
+            dcc.Slider(id='death', **death_slider_init),
+
+            html.Label('Reproduction probability', className='label'),
+            dcc.Slider(id='reproduction', **repr_slider_init),
+        ],
+            className='bacteria_params',
+        ),
         html.Button('Add', id='add', n_clicks=0, className='add_button'),
+        html.Div(id='add_storage', style={'display': 'none'}),
+        html.Div(id='counter', children=['0']),
         html.Div(id='output', children='Choose parameters', className='output_params'),
         html.Div('Population statistics visualization', className='graph_label'),
         html.Div([dcc.Graph(id='graph', figure=px.scatter(), className='graph')]),
-        html.Div(id='hidden', children=[], style={'display': 'none'})]
+        html.Div(id='hidden', style={'display': 'none'})]
 
-    _callbacks: list = {'counter':
+    _callbacks: list = {'params_selected':
                             Callback((Output('output', 'children'),
                                       Input('death', 'value'),
                                       Input('reproduction', 'value')),
                                      {'prevent_initial_call': True}),
 
                         'add':
-                            Callback((Output('void', 'children'),
+                            Callback((Output('counter', 'children'),
                                       Input('add', 'n_clicks'),
+                                      Input('build', 'n_clicks'),
                                       State('lifetime', 'value'),
                                       State('death', 'value'),
                                       State('reproduction', 'value')),
                                      {'prevent_initial_call': True}),
 
                         'build':
-                            Callback((Output('graph', 'figure'),
+                            Callback((Output('build_storage', 'children'),
                                       Input('build', 'n_clicks'),
                                       State('iterations', 'value'),
                                       State('selector', 'value'),
@@ -145,12 +168,24 @@ class HomeTemplate:
                                       State('mutator_value', 'value')),
                                      {'prevent_initial_call': True}),
 
-                        'rebuild':
-                            Callback((Output('hidden', 'children'),
-                                      Output('build', 'n_clicks'),
+                        'reset':
+                            Callback((Output('rebuild_storage', 'children'),
                                       Input('rebuild', 'n_clicks')),
-                                     {'prevent_initial_call': True})
-                        }
+                                     {'prevent_initial_call': True}),
+
+                        'storage_update':
+                            Callback((Output('hidden', 'children'),
+                                      Input('add', 'n_clicks'),
+                                      Input('build_storage', 'children'),
+                                      Input('rebuild_storage', 'children'),
+                                      State('hidden', 'children')),
+                                     {'prevent_initial_call': True}),
+
+                        'figure_update':
+                            Callback((Output('graph', 'figure'),
+                                      Input('hidden', 'children')),
+                                     {'prevent_initial_call': True})}
+
 
     @staticmethod
     def get_children() -> list:
