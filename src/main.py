@@ -1,6 +1,6 @@
 from ui.ui import DashUI  # type: ignore
 from src.ui.pages.Home.home_page import HomePage
-from callback_logic import * # type: ignore
+from callback_logic import params_selected,add, build,reset,storage_update,figure_update # type: ignore
 
 
 class App:
@@ -9,7 +9,7 @@ class App:
         To do this, you need to connect the outputs and inputs of the page with the functions from the API
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Create a home page instance and callback implementations link with it
         page = HomePage({'params_selected': params_selected,
                          'add': add,

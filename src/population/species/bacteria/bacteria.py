@@ -20,7 +20,7 @@ class Bacteria(AbstractSpecies):
 
     _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
 
-    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> List[AbstractSpecies]:
+    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
         """
         Life iteration of bacteria
 

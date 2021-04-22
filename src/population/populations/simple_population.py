@@ -105,7 +105,7 @@ class Population:
         self._individuals = list()
 
 
-def _get_new_generation(individuals: List[AbstractSpecies],
+def _get_new_generation(individuals: List,
                         selector: AbstractSelector,
                         mutator: AbstractMutator) -> list:
     """

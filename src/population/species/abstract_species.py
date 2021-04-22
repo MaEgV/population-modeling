@@ -6,7 +6,7 @@ from ..mutations.abstract_mutator import AbstractMutator
 from src.population import Genome
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True)# type: ignore
 class AbstractSpecies:
     """
     Abstract class of an individual with genome that can reproduce and die
