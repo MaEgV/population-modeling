@@ -1,4 +1,4 @@
-import dash_html_components as html
+import dash_html_components as html  # type: ignore
 from ..abstract_page import AbstractPage
 from .home_template import HomeTemplate
 

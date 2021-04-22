@@ -1,9 +1,9 @@
 from typing import List, Tuple
-import dash
+import dash  # type: ignore
 from src.research.research_storage import research_storage, Research
 from src.research.research_params import IterParams, ParamsInfo, AddParams
-import plotly.express as px
-import pandas as pd
+import plotly.express as px  # type: ignore
+import pandas as pd  # type: ignore
 
 
 # TODO: remove magic constants

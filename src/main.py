@@ -1,6 +1,6 @@
-from ui.ui import DashUI
+from ui.ui import DashUI  # type: ignore
 from src.ui.pages.Home.home_page import HomePage
-from callback_logic import *
+from callback_logic import * # type: ignore
 
 
 class App:

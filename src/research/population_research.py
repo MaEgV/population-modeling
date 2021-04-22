@@ -1,7 +1,7 @@
 from typing import Dict
 from src.population.populations.simple_population import Population
 from src.population import AbstractSelector, AbstractMutator
-import pandas as pd
+import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
 from src.research.research_params import IterParams, AddParams
 

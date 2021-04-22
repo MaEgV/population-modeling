@@ -1,5 +1,5 @@
 from typing import List
-import dash
+import dash  # type: ignore
 from .callback import Callback
 from .pages.abstract_page import AbstractPage
 

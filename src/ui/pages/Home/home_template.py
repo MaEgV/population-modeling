@@ -1,8 +1,8 @@
-import dash_core_components as dcc
-import dash_html_components as html
+import dash_core_components as dcc  # type: ignore
+import dash_html_components as html  # type: ignore
 from src.ui.callback import Callback
-from dash.dependencies import Output, Input, State
-import plotly.express as px
+from dash.dependencies import Output, Input, State  # type: ignore
+import plotly.express as px  # type: ignore
 
 
 individual_dropdown_init = {
