@@ -12,35 +12,105 @@ Welcome to Population modeling's documentation!
 
 .. code-block:: python
 
-.. automodule:: population_modeling
+
+.. automodule:: src
    :members:
 
-.. automodule:: population_modeling.bacteria
+.. automodule:: src.callback_logic
    :members:
 
-.. automodule:: population_modeling.life_cycle
+.. automodule:: src.main
    :members:
 
-.. automodule:: population_modeling.genome
+.. automodule:: src.population
    :members:
 
-.. automodule:: population_modeling.population
+.. automodule:: src.population.individuals
    :members:
 
-.. automodule:: population_modeling.selector.selector
+.. automodule:: src.population.mutations
    :members:
 
-.. automodule:: population_modeling.selector.selector_params
+.. automodule:: src.population.mutations.abstract_mutator
    :members:
 
-.. automodule:: population_modeling.mutations.abstract_mutator
+.. automodule:: src.population.mutations.mutator_parameters
    :members:
 
-.. automodule:: population_modeling.mutations.normal_mutator
+.. automodule:: src.population.mutations.normal_mutator
    :members:
 
-.. automodule:: population_modeling.mutations.variation_parameters
+.. automodule:: src.population.populations
    :members:
+
+.. automodule:: src.population.populations.simple_population
+   :members:
+
+.. automodule:: src.population.selectors
+   :members:
+
+.. automodule:: src.population.selectors.abstract_selector
+   :members:
+
+.. automodule:: src.population.selectors.genomic_selector
+   :members:
+
+.. automodule:: src.population.species
+   :members:
+
+.. automodule:: src.population.species.abstract_species
+   :members:
+
+.. automodule:: src.population.species.bacteria
+   :members:
+
+.. automodule:: src.population.species.bacteria.bacteria
+   :members:
+
+.. automodule:: src.population.species.bacteria.bacteria_properties
+   :members:
+
+.. automodule:: src.population.genome
+   :members:
+
+.. automodule:: src.research
+   :members:
+
+.. automodule:: src.research.population_research
+   :members:
+
+.. automodule:: src.research.research_params
+   :members:
+
+.. automodule:: src.research.research_storage
+   :members:
+
+.. automodule:: src.ui
+   :members:
+
+.. automodule:: src.ui.pages
+   :members:
+
+.. automodule:: src.ui.pages.abstract_page
+   :members:
+
+.. automodule:: src.ui.pages.Home
+   :members:
+
+.. automodule:: src.ui.pages.Home.home_page
+   :members:
+
+.. automodule:: src.ui.pages.Home.home_template
+   :members:
+
+
+
+.. automodule:: src.ui.callback
+   :members:
+
+.. automodule:: src.ui.ui
+   :members:
+
 
 
 Indices and tables

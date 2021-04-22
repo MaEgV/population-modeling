@@ -761,7 +761,7 @@ function Sizzle( selector, context, results, seed ) {
 
 	results = results || [];
 
-	// Return early from calls with invalid selectors or context
+	// Return early from calls with invalid selector or context
 	if ( typeof selector !== "string" || !selector ||
 		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
 
@@ -775,11 +775,11 @@ function Sizzle( selector, context, results, seed ) {
 
 		if ( documentIsHTML ) {
 
-			// If the selectors is sufficiently simple, try using a "get*By*" DOM method
+			// If the selector is sufficiently simple, try using a "get*By*" DOM method
 			// (excepting DocumentFragment context, where the methods don't exist)
 			if ( nodeType !== 11 && ( match = rquickExpr.exec( selector ) ) ) {
 
-				// ID selectors
+				// ID selector
 				if ( ( m = match[ 1 ] ) ) {
 
 					// Document context
@@ -812,12 +812,12 @@ function Sizzle( selector, context, results, seed ) {
 						}
 					}
 
-				// Type selectors
+				// Type selector
 				} else if ( match[ 2 ] ) {
 					push.apply( results, context.getElementsByTagName( selector ) );
 					return results;
 
-				// Class selectors
+				// Class selector
 				} else if ( ( m = match[ 3 ] ) && support.getElementsByClassName &&
 					context.getElementsByClassName ) {
 
@@ -840,8 +840,8 @@ function Sizzle( selector, context, results, seed ) {
 
 				// qSA considers elements outside a scoping root when evaluating child or
 				// descendant combinators, which is not what we want.
-				// In such cases, we work around the behavior by prefixing every selectors in the
-				// list with an ID selectors referencing the scope context.
+				// In such cases, we work around the behavior by prefixing every selector in the
+				// list with an ID selector referencing the scope context.
 				// The technique has to be used as well when a leading combinator is used
 				// as such selectors are not recognized by querySelectorAll.
 				// Thanks to Andrew Dupont for this technique.
@@ -864,7 +864,7 @@ function Sizzle( selector, context, results, seed ) {
 						}
 					}
 
-					// Prefix every selectors in the list
+					// Prefix every selector in the list
 					groups = tokenize( selector );
 					i = groups.length;
 					while ( i-- ) {
@@ -1370,7 +1370,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 			// Support: Safari 8+, iOS 8+
 			// https://bugs.webkit.org/show_bug.cgi?id=136851
-			// In-page `selectors#id sibling-combinator selectors` fails
+			// In-page `selector#id sibling-combinator selector` fails
 			if ( !el.querySelectorAll( "a#" + expando + "+*" ).length ) {
 				rbuggyQSA.push( ".#.+[+~]" );
 			}
@@ -1404,7 +1404,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			}
 
 			// Support: IE9-11+
-			// IE's :disabled selectors does not pick up the children of disabled fieldsets
+			// IE's :disabled selector does not pick up the children of disabled fieldsets
 			docElem.appendChild( el ).disabled = true;
 			if ( el.querySelectorAll( ":disabled" ).length !== 2 ) {
 				rbuggyQSA.push( ":enabled", ":disabled" );
@@ -2087,7 +2087,7 @@ Expr = Sizzle.selectors = {
 		// Potentially complex pseudos
 		"not": markFunction( function( selector ) {
 
-			// Trim the selectors passed to compile
+			// Trim the selector passed to compile
 			// to avoid treating leading and trailing
 			// spaces as combinators
 			var input = [],
@@ -2130,7 +2130,7 @@ Expr = Sizzle.selectors = {
 			};
 		} ),
 
-		// "Whether an element is represented by a :lang() selectors
+		// "Whether an element is represented by a :lang() selector
 		// is based solely on the element's language value
 		// being equal to the identifier C,
 		// or beginning with the identifier C immediately followed by "-".
@@ -2817,7 +2817,7 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 			matcherFromGroupMatchers( elementMatchers, setMatchers )
 		);
 
-		// Save selectors and tokenization
+		// Save selector and tokenization
 		cached.selector = selector;
 	}
 	return cached;
@@ -2825,9 +2825,9 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 
 /**
  * A low-level selection function that works with Sizzle's compiled
- *  selectors functions
- * @param {String|Function} selector A selectors or a pre-compiled
- *  selectors function built with Sizzle.compile
+ *  selector functions
+ * @param {String|Function} selector A selector or a pre-compiled
+ *  selector function built with Sizzle.compile
  * @param {Element} context
  * @param {Array} [results]
  * @param {Array} [seed] A set of elements to match against
@@ -2839,11 +2839,11 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 
 	results = results || [];
 
-	// Try to minimize operations if there is only one selectors in the list and no seed
+	// Try to minimize operations if there is only one selector in the list and no seed
 	// (the latter of which guarantees us context)
 	if ( match.length === 1 ) {
 
-		// Reduce context if the leading compound selectors is an ID
+		// Reduce context if the leading compound selector is an ID
 		tokens = match[ 0 ] = match[ 0 ].slice( 0 );
 		if ( tokens.length > 2 && ( token = tokens[ 0 ] ).type === "ID" &&
 			context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[ 1 ].type ] ) {
@@ -2894,7 +2894,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 	}
 
 	// Compile and execute a filtering function if one is not provided
-	// Provide `match` to avoid retokenization if we modified the selectors above
+	// Provide `match` to avoid retokenization if we modified the selector above
 	( compiled || compile( selector, match ) )(
 		seed,
 		context,
@@ -3107,7 +3107,7 @@ jQuery.fn.extend( {
 		return !!winnow(
 			this,
 
-			// If this is a positional/relative selectors, check membership in the returned set
+			// If this is a positional/relative selector, check membership in the returned set
 			// so $("p:first").is("p:last") won't return true for a doc with two "p".
 			typeof selector === "string" && rneedsContext.test( selector ) ?
 				jQuery( selector ) :
@@ -3299,7 +3299,7 @@ jQuery.fn.extend( {
 			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
 		}
 
-		// Index in selectors
+		// Index in selector
 		if ( typeof elem === "string" ) {
 			return indexOf.call( jQuery( elem ), this[ 0 ] );
 		}
@@ -5127,7 +5127,7 @@ function on( elem, types, selector, data, fn, one ) {
 	// Types can be a map of types/handlers
 	if ( typeof types === "object" ) {
 
-		// ( types-Object, selectors, data )
+		// ( types-Object, selector, data )
 		if ( typeof selector !== "string" ) {
 
 			// ( types-Object, data )
@@ -5148,7 +5148,7 @@ function on( elem, types, selector, data, fn, one ) {
 	} else if ( fn == null ) {
 		if ( typeof selector === "string" ) {
 
-			// ( types, selectors, fn )
+			// ( types, selector, fn )
 			fn = data;
 			data = undefined;
 		} else {
@@ -5250,7 +5250,7 @@ jQuery.event = {
 			// If event changes its type, use the special event handlers for the changed type
 			special = jQuery.event.special[ type ] || {};
 
-			// If selectors defined, determine special event api type, otherwise given type
+			// If selector defined, determine special event api type, otherwise given type
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
@@ -5939,7 +5939,7 @@ jQuery.fn.extend( {
 		}
 		if ( typeof types === "object" ) {
 
-			// ( types-object [, selectors] )
+			// ( types-object [, selector] )
 			for ( type in types ) {
 				this.off( type, selector, types[ type ] );
 			}
@@ -7537,7 +7537,7 @@ function Animation( elem, properties, options ) {
 		length = Animation.prefilters.length,
 		deferred = jQuery.Deferred().always( function() {
 
-			// Don't match elem in the :animated selectors
+			// Don't match elem in the :animated selector
 			delete tick.elem;
 		} ),
 		tick = function() {
@@ -10387,7 +10387,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 			self.html( selector ?
 
-				// If a selectors was specified, locate the right elements in a dummy div
+				// If a selector was specified, locate the right elements in a dummy div
 				// Exclude scripts to avoid IE 'Permission Denied' errors
 				jQuery( "<div>" ).append( jQuery.parseHTML( responseText ) ).find( selector ) :
 
@@ -10715,7 +10715,7 @@ jQuery.fn.extend( {
 	},
 	undelegate: function( selector, types, fn ) {
 
-		// ( namespace ) or ( selectors, types [, fn] )
+		// ( namespace ) or ( selector, types [, fn] )
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );
