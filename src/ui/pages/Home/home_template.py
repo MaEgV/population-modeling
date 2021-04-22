@@ -16,9 +16,9 @@ selector_dropdown_init = {
     'className': 'dd'
 }
 selector_slider_init = {
-    'max': 1,
-    'min': 0,
-    'marks': {0: 'low', 0.5: 'medium', 1: 'high'},
+    'max': 0.9,
+    'min': 0.1,
+    'marks': {0.1: 'low', 0.5: 'medium', 0.9: 'high'},
     'step': 0.05,
     'value': 0.5,
     'className': 'slider_selector'
@@ -29,11 +29,11 @@ mutator_dropdown_init = {
     'className': 'dd'
 }
 mutator_slider_init = {
-    'max': 1,
+    'max': 0.2,
     'min': 0,
     'marks': {0: 'low', 0.5: 'medium', 1: 'high'},
-    'step': 0.05,
-    'value': 0.5,
+    'step': 0.01,
+    'value': 0.1,
     'className': 'slider_mutator'
 }
 input_iter_init = {
@@ -43,10 +43,9 @@ input_iter_init = {
     'className': 'input_iter'
 }
 lifetime_slider_init = {
-    'max': 15,
+    'max': 10,
     'min': 1,
-    'marks': {0: '0',
-              1: '1',
+    'marks': {1: '1',
               2: '2',
               3: '3',
               4: '4',
@@ -55,12 +54,7 @@ lifetime_slider_init = {
               7: '7',
               8: '8',
               9: '9',
-              10: '10',
-              11: '11',
-              12: '12',
-              13: '13',
-              14: '14',
-              15: '15'},
+              10: '10'},
     'step': 1,
     'value': 5,
     'className': 'lifetime'

@@ -23,7 +23,7 @@ class UniformSelector(AbstractSelector):
         bool
             Decision: dead (true) or alive (false)
         """
-        return genome.p_for_death > uniform.rvs(self.params.loc, self.params.scale)
+        return genome.p_for_death < uniform.rvs(self.params.loc, self.params.scale)
 
     def have_to_reproduce(self, genome: Genome) -> bool:
         """
