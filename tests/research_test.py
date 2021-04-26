@@ -21,5 +21,5 @@ TEST_CASES_RESEARCH = [Case(name="Research", result=1, mutator_mode=1,
 
 @pytest.mark.parametrize('research_obj', TEST_CASES_RESEARCH, ids=str)
 def test_iterator_population_one(research_obj: Case) -> None:
-    research_result = research_obj.research.build(1, research_obj.iter_params)
-    assert len(research_result.data['alive']) == 1
+    research_result = research_obj.research.build(2, research_obj.iter_params)
+    assert len(research_result.data['alive']) == 2
