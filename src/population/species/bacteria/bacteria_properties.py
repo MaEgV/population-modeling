@@ -14,6 +14,7 @@ class BacteriaProperties:
     age : int
         Current age of bacteria
 
+
     Methods
     -------
     get_is_alive(self) -> bool

@@ -153,13 +153,15 @@ class ResearchUI:
         self._research.drop()
         return [pd.DataFrame.from_dict({'all': [0], 'alive': [0], 'dead': [0]}).to_json(date_format='iso', orient='split')]
 
-    def get_callbacks_dict(self):
+    def get_callbacks_dict(self) -> dict:
         return {'selected_params_info': selected_params_info,
                          'add': lambda *args, **kwargs: self.add_individual(*args, **kwargs),
                          'build': lambda *args, **kwargs: self.build(*args, **kwargs),
                          'reset': lambda *args, **kwargs: self.reset(*args, **kwargs),
                          'storage_update': storage_update,
                          'figure_update': figure_update}
+
+
 def storage_update(add_nclick: int,
                    build_storage: str,
                    rebuild_storage: str,

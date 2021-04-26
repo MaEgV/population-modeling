@@ -14,11 +14,15 @@ class Bacteria(AbstractSpecies):
 
        Attributes
        ----------
-       _properties: BacteriaProperties
+        properties: BacteriaProperties
            Bacteria status about age and life: die or alive
+
+        children_max: int
+            Maximum number of children in one iteration
        """
 
     _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
+    _children_max: int = field(default=5)
 
     def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
         """
@@ -93,9 +97,9 @@ class Bacteria(AbstractSpecies):
 
         """
 
-        children = list()
+        children: List[Bacteria] = list()
         if self.is_alive():
-            while selector.have_to_reproduce(self._genome):  # the Bernoulli test
+            while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli test
                 child_genome = mutation_mode.child_genome(self._genome)
                 children.append(Bacteria(child_genome))
 
