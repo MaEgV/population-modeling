@@ -1,6 +1,6 @@
 from ui.ui import DashUI  # type: ignore
 from src.ui.pages.Home.home_page import HomePage
-from callback_logic import params_selected,add, build,reset,storage_update,figure_update # type: ignore
+from ResearchUI import selected_params_info, ResearchUI,storage_update,figure_update # type: ignore
 
 
 class App:
@@ -11,13 +11,9 @@ class App:
 
     def __init__(self) -> None:
         # Create a home page instance and callback implementations link with it
-        page = HomePage({'params_selected': params_selected,
-                         'add': add,
-                         'build': build,
-                         'reset': reset,
-                         'storage_update': storage_update,
-                         'figure_update': figure_update
-                         })
+        # ResearchUI(... :Research)
+        research_callbacks = ResearchUI()
+        page = HomePage(research_callbacks.get_callbacks_dict())
 
         # Creating a Dash app for a page
         self.ui = DashUI(page)

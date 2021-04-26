@@ -12,5 +12,5 @@ iteration_params = IterParams('uniform', 1, 'normal', 0.0001)  # тут scale д
 # Получить возможные строки(можно пихать эти массивы в выпадающие окошки пока что):
 print(IterParams.get_modes())
 
-print(research.research(4, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params
-print(research.research(4, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params
+print(research.build(4, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params
+print(research.build(4, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params

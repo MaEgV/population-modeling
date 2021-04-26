@@ -136,7 +136,7 @@ class IterParams:
 
 
 @dataclass(frozen=True)
-class AddParams:
+class IndividualParams:
     """
     Date a class that stores parameters for adding an individual to the research population
     Attributes

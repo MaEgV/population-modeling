@@ -4,7 +4,6 @@ from src.ui.callback import Callback
 from dash.dependencies import Output, Input, State  # type: ignore
 import plotly.express as px  # type: ignore
 
-
 individual_dropdown_init = {
     'options': [{'label': 'Bacteria', 'value': 'bacteria'}],
     'value': 'bacteria',
@@ -137,7 +136,7 @@ class HomeTemplate:
         html.Div([dcc.Graph(id='graph', figure=px.scatter(), className='graph')]),
         html.Div(id='hidden', style={'display': 'none'})]
 
-    _callbacks: dict = {'params_selected':
+    _callbacks: dict = {'selected_params_info':
                             Callback((Output('output', 'children'),
                                       Input('death', 'value'),
                                       Input('reproduction', 'value')),
@@ -146,7 +145,6 @@ class HomeTemplate:
                         'add':
                             Callback((Output('counter', 'children'),
                                       Input('add', 'n_clicks'),
-                                      Input('build', 'n_clicks'),
                                       State('lifetime', 'value'),
                                       State('death', 'value'),
                                       State('reproduction', 'value')),

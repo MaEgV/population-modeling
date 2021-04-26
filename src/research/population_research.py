@@ -3,7 +3,7 @@ from src.population.populations.simple_population import Population
 from src.population import AbstractSelector, AbstractMutator
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
-from src.research.research_params import IterParams, AddParams
+from src.research.research_params import IterParams, IndividualParams
 
 
 @dataclass(frozen=True)
@@ -47,12 +47,12 @@ class Research:
     _population: Population = field(default_factory=Population)
 
     def add_individual(self,
-                       params: AddParams) -> None:
+                       params: IndividualParams) -> None:
         self._population.add([params.get_params()])
 
-    def research(self,
-                 num_iter: int,
-                 params: IterParams) -> IterRes:
+    def build(self,
+              num_iter: int,
+              params: IterParams) -> IterRes:
         """
             Give data in DataFrame about population size and state on each iteration
 
