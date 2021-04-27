@@ -106,7 +106,8 @@ class ResearchUI:
                 'build': lambda *args, **kwargs: self.build(*args, **kwargs),
                 'reset': lambda *args, **kwargs: self.reset(*args, **kwargs),
                 'storage_update': storage_update,
-                'figure_update': figure_update}
+                'figure_update': figure_update
+                }
 
 
 # TODO: remove magic constants
