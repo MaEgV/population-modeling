@@ -1,17 +1,17 @@
 import pytest
 
 from src.population.populations.simple_population import Population
-from src.research.population_research import Research, IterParams
-from src.research.research_params import IndividualParams
+from src.research.population_research import Research, IterationParameters
+from src.research.parameters import IndividualParameters
 
 
 class Case:
     def __init__(self, name, selector: str, selector_mode: float, mutator: str, mutator_mode: float, result):
         self.name = name
         self.research = Research(Population())
-        self.research.add_individual(IndividualParams('bacteria', 10, 0.4, 0.6))
+        self.research.add_individual(IndividualParameters('bacteria', 10, 0.4, 0.6))
         self.result = result
-        self.iter_params = IterParams(selector, selector_mode, mutator, mutator_mode)
+        self.iter_params = IterationParameters(selector, selector_mode, mutator, mutator_mode)
 
 
 TEST_CASES_RESEARCH = [Case(name="Research", result=1, mutator_mode=1,

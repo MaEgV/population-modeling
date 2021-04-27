@@ -3,11 +3,11 @@ from src.population.populations.simple_population import Population
 from src.population import AbstractSelector, AbstractMutator
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
-from src.research.research_params import IterParams, IndividualParams
+from src.research.parameters import IterationParameters, IndividualParameters
 
 
 @dataclass(frozen=True)
-class IterRes:
+class IterationResult:
     """
         The result of an evolutionary study of the population
 
@@ -18,12 +18,12 @@ class IterRes:
         data: pd.DataFrame
             Statistics collected at each iteration of the research
             Has columns defined in Stats and the number of rows equal to the number of iterations
-        params: IterParams
+        params: IterationParameters
             Parameters that were received as input
     """
     id: int
     data: pd.DataFrame
-    params: IterParams
+    parameters: IterationParameters
 
 
 @dataclass(frozen=True)
@@ -47,18 +47,18 @@ class Research:
     _population: Population = field(default_factory=Population)
 
     def add_individual(self,
-                       params: IndividualParams) -> None:
-        self._population.add([params.get_params()])
+                       parameters: IndividualParameters) -> None:
+        self._population.add([parameters.get()])
 
     def build(self,
-              num_iter: int,
-              params: IterParams) -> IterRes:
+              iteration_number: int,
+              parameters: IterationParameters) -> IterationResult:
         """
             Give data in DataFrame about population size and state on each iteration
 
             Attributes
             ----------
-            num_iter: int: Population
+            iteration_number: int: Population
                 Number of supposed iterations
 
             selectors: AbstractSelector
@@ -72,13 +72,13 @@ class Research:
             DataFrame
                 Table with state of population on each iteration
         """
-        fr = Stats.get_empty_frame()
+        frame = Stats.get_empty_frame()
 
-        for _ in range(num_iter):
-            self._population.iterate(*params.get_params())
-            fr = fr.append(Stats.get_stats(self._population), ignore_index=True)
+        for _ in range(iteration_number):
+            self._population.iterate(*parameters.get_params())
+            frame = frame.append(Stats.get_statistic(self._population), ignore_index=True)
 
-        return IterRes(0, fr, params)
+        return IterationResult(0, frame, parameters)
 
     def get_populations_size(self) -> int:
         return len(self._population.get_all())
@@ -112,7 +112,7 @@ class Stats:
         return pd.DataFrame(columns=['all', 'alive', 'dead'])
 
     @staticmethod
-    def get_stats(population: Population) -> Dict[str, int]:
+    def get_statistic(population: Population) -> Dict[str, int]:
         """
 
         Parameters

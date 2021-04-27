@@ -1,6 +1,6 @@
 from ui.ui import DashUI  # type: ignore
 from src.ui.pages.Home.home_page import HomePage
-from ResearchUI import selected_params_info, ResearchUI,storage_update,figure_update # type: ignore
+from research_ui import parameters_info, ResearchUI,storage_update,figure_update # type: ignore
 
 
 class App:

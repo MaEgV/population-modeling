@@ -110,7 +110,7 @@ class HomeTemplate:
         html.Button('Build', id='build', n_clicks=0, className='build_button'),
         html.Div(id='build_storage', style={'display': 'none'}),
 
-        html.Button('Rebuild', id='rebuild', n_clicks=0, className='rebuild_button'),
+        html.Button('Reset', id='rebuild', n_clicks=0, className='rebuild_button'),
         html.Div(id='rebuild_storage', style={'display': 'none'}),
 
         html.Div([

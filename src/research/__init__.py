@@ -1,2 +1,2 @@
-from .research_params import IterParams
+from .parameters import IterationParameters
 from .population_research import Research

@@ -60,45 +60,45 @@ class AvailableTypes:
         return AvailableTypes._individual_types[key](init_params)
 
 
-class ParamsInfo:
-    """
-    Contains static methods with information about entities from AvailableTypes
-    Methods
-    -------
-    get_selector_info() -> dict:
-        Dictionary about possible selectors
-    get_mutator_info() -> dict:
-        Dictionary about possible mutators
-    get_species_info() -> dict:
-        Dictionary about possible species
-    """
-    @staticmethod
-    def get_selector_info() -> dict:
-        return {
-            'Types': AvailableTypes.get_selector_types(),
-            'min': 0,  # TODO: move to SelectorParams
-            'max': 2
-        }
-
-    @staticmethod
-    def get_mutator_info() -> dict:
-        return {
-            'Types': list(AvailableTypes.get_mutator_types()),
-            'min': 0,  # TODO: move to MutatorParams
-            'max': 0.001
-        }
-
-    @staticmethod
-    def get_species_info() -> dict:
-        return {
-            'death_interval': (0, 1),  # TODO: move to ...
-            'reproduction_interval': (0, 1),
-            'lifetime_interval': (1, 20)
-        }
+# class ParametersInfo:
+#     """
+#     Contains static methods with information about entities from AvailableTypes
+#     Methods
+#     -------
+#     get_selector_info() -> dict:
+#         Dictionary about possible selectors
+#     get_mutator_info() -> dict:
+#         Dictionary about possible mutators
+#     get_species_info() -> dict:
+#         Dictionary about possible species
+#     """
+#     @staticmethod
+#     def get_selector_info() -> dict:
+#         return {
+#             'Types': AvailableTypes.get_selector_types(),
+#             'min': 0,  # TODO: move to SelectorParams
+#             'max': 2
+#         }
+#
+#     @staticmethod
+#     def get_mutator_info() -> dict:
+#         return {
+#             'Types': list(AvailableTypes.get_mutator_types()),
+#             'min': 0,  # TODO: move to MutatorParams
+#             'max': 0.001
+#         }
+#
+#     @staticmethod
+#     def get_species_info() -> dict:
+#         return {
+#             'death_interval': (0, 1),  # TODO: move to ...
+#             'reproduction_interval': (0, 1),
+#             'lifetime_interval': (1, 20)
+#         }
 
 
 @dataclass(frozen=True)
-class IterParams:
+class IterationParameters:
     """
     Date a class that stores parameters for adding an individual to the research population
     Attributes
@@ -136,7 +136,7 @@ class IterParams:
 
 
 @dataclass(frozen=True)
-class IndividualParams:
+class IndividualParameters:
     """
     Date a class that stores parameters for adding an individual to the research population
     Attributes
@@ -159,5 +159,5 @@ class IndividualParams:
     p_for_death: float
     p_for_repr: float
 
-    def get_params(self) -> AbstractSpecies:
+    def get(self) -> AbstractSpecies:
         return AvailableTypes.get_individual(self.species, Genome(self.lifetime, self.p_for_death, self.p_for_repr))
