@@ -1,8 +1,8 @@
 from src.population import create_bacteria
-from src.population_research.research.population_research import Research, IterationParameters
+from src.population_research.research.population_research import Researcher, IterationParameters
 
 
-research = Research()
+research = Researcher()
 research.add_individual([create_bacteria(5, 0, 0.2) for _ in range(10)])
 
 print(research)

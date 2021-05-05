@@ -1,14 +1,14 @@
 import pytest
 
 from src.population_research.population.populations import Population
-from src.population_research.research.population_research import Research, IterationParameters
+from src.population_research.research.population_research import Researcher, IterationParameters
 from src.population_research.research.parameters import IndividualParameters
 
 
 class Case:
     def __init__(self, name, selector: str, selector_mode: float, mutator: str, mutator_mode: float, result):
         self.name = name
-        self.research = Research(Population())
+        self.research = Researcher(Population())
         self.research.add_individual(IndividualParameters('bacteria', 10, 0.4, 0.6))
         self.result = result
         self.iter_params = IterationParameters(selector, selector_mode, mutator, mutator_mode)

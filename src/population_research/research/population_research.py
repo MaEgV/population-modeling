@@ -26,7 +26,7 @@ class IterationResult:
 
 
 @dataclass(frozen=True)
-class Research:
+class Researcher:
     """
         Class with some statistical tools for population analysis.
 

@@ -8,3 +8,4 @@ pandas~=1.2.3
 numpy~=1.20.1
 plotly~=4.14.3
 Django~=3.2.1
+djangorestframework~=3.12.4
