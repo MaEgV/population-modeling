@@ -1,9 +1,8 @@
 from typing import Dict
-from src.population.populations.simple_population import Population
-from src.population import AbstractSelector, AbstractMutator
+from src.population_research.population.populations import Population
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
-from src.research.parameters import IterationParameters, IndividualParameters
+from src.population_research.research.parameters import IterationParameters, IndividualParameters
 
 
 @dataclass(frozen=True)

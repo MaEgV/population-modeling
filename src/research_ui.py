@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple
+from typing import List
 import dash  # type: ignore
 
-from src.research import Research
-from src.research.parameters import IterationParameters, IndividualParameters
+from src.population_research.research import Research
+from src.population_research.research.parameters import IterationParameters, IndividualParameters
 import plotly.express as px  # type: ignore
 import pandas as pd  # type: ignore
 

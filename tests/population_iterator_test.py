@@ -1,6 +1,6 @@
 import pytest
 
-from src.population.populations.simple_population import Population
+from src.population_research.population.populations import Population
 from src.population.species.bacteria.bacteria import create_bacteria
 from src.population.selectors.genomic_selector import UniformSelector
 from src.population.selectors.genomic_selector import SelectorParams
