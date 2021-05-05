@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List
 import dash  # type: ignore
 
-from src.population_research.research import Research
+from src.population_research.research import Researcher
 from src.population_research.research.parameters import IterationParameters, IndividualParameters
 import plotly.express as px  # type: ignore
 import pandas as pd  # type: ignore
@@ -10,7 +10,7 @@ import pandas as pd  # type: ignore
 
 @dataclass(frozen=True)
 class ResearchUI:
-    _research: Research = field(init=False, default_factory=Research)
+    _research: Researcher = field(init=False, default_factory=Researcher)
 
     def add_individual(self,
                        add_clicks: int,
