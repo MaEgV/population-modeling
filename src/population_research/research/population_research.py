@@ -1,5 +1,5 @@
 from typing import Dict
-from src.population_research.population.populations import Population
+from src.population_research.population.populations.simple_population import Population
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
 from src.population_research.research.parameters import IterationParameters, IndividualParameters
@@ -72,7 +72,7 @@ class Research:
         frame = Stats.get_empty_frame()
 
         for _ in range(iteration_number):
-            self._population.iterate(*parameters.get_params())
+            self._population.produce_new_generation(*parameters.get_params())
             frame = frame.append(Stats.get_statistic(self._population), ignore_index=True)
 
         return IterationResult(0, frame, parameters)

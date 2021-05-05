@@ -1,10 +1,11 @@
 from typing import List
-from src.population.selectors.abstract_selector import AbstractSelector
-from src.population.exceptions import DeadBacteriaException
-from src.population.species.abstract_species import AbstractSpecies
-from src.population import Genome, AbstractMutator
+from src.population_research.population.selectors.abstract_selector import AbstractSelector
+from src.population_research.population.mutations.abstract_mutator import AbstractMutator
+from src.population_research.population.exceptions import DeadBacteriaException
+from src.population_research.population.species.abstract_species import AbstractSpecies, Descendants
+from src.population_research.population import Genome
 from dataclasses import dataclass, field
-from src.population.species.bacteria.bacteria_properties import BacteriaProperties
+from src.population_research.population.species.bacteria.bacteria_properties import BacteriaProperties
 
 
 @dataclass(frozen=True)
@@ -24,7 +25,7 @@ class Bacteria(AbstractSpecies):
     _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
     _children_max: int = field(default=5)
 
-    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
+    def life_move(self, selector: AbstractSelector, mutator: AbstractMutator) -> Descendants:
         """
         Life iteration of bacteria
 
@@ -48,7 +49,7 @@ class Bacteria(AbstractSpecies):
 
         if selector.is_died(self._genome):
             self._die()
-            return []
+            return Descendants([])
 
         return self._get_children(selector, mutator)
 
@@ -78,7 +79,7 @@ class Bacteria(AbstractSpecies):
 
         self._properties.die()
 
-    def _get_children(self, selector: AbstractSelector, mutation_mode: AbstractMutator) -> list:
+    def _get_children(self, selector: AbstractSelector, mutation_mode: AbstractMutator) -> Descendants:
         """
         Generate bacteria's children
 
@@ -92,24 +93,25 @@ class Bacteria(AbstractSpecies):
 
         Returns
         -------
-        list[Bacteria]
+        Descendants
             Bacteria's children (if they are be)
 
         """
 
         children: List[Bacteria] = list()
         if self.is_alive():
-            while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli test
+            while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli
+                # test
                 child_genome = mutation_mode.child_genome(self._genome)
                 children.append(Bacteria(child_genome))
 
-        return children
+        return Descendants(children)
 
 
 def create_bacteria(
-            max_life_time: int = 5,
-            p_for_death: float = 0.5,
-            p_for_reproduction: float = 0.5) -> Bacteria:
+        max_life_time: int = 5,
+        p_for_death: float = 0.5,
+        p_for_reproduction: float = 0.5) -> Bacteria:
     """
     Create bacteria from different parameters
 

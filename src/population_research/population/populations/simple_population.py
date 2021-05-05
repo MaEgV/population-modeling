@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
-from src.population import AbstractSelector, AbstractMutator, List, AbstractSpecies
-
+from src.population_research.population import AbstractSelector, AbstractMutator
 
 @dataclass
 class Population:
@@ -45,7 +44,7 @@ class Population:
         """
         self._individuals.extend(new_generation)
 
-    def iterate(self, selector: AbstractSelector, mutator: AbstractMutator) -> None:
+    def produce_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator) -> None:
         """
         The time unit of evolution for a population. Processes a new generation in the population
 
@@ -105,7 +104,7 @@ class Population:
         self._individuals = list()
 
 
-def _get_new_generation(individuals: List,
+def _get_new_generation(individuals: list,
                         selector: AbstractSelector,
                         mutator: AbstractMutator) -> list:
     """
@@ -127,6 +126,7 @@ def _get_new_generation(individuals: List,
     new_generation = list()
 
     for individual in individuals:
-        new_generation.extend(individual.iterate(selector, mutator))
+        descendants = individual.life_move(selector, mutator)
+        new_generation.extend(descendants.get_species())
 
     return new_generation

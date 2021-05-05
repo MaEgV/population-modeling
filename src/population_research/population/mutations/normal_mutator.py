@@ -1,9 +1,9 @@
 from scipy.stats import norm  # type: ignore
 from math import fabs
 
-from src.population.genome import Genome
-from src.population.mutations.abstract_mutator import AbstractMutator
-from src.population.mutations.mutator_parameters import MutatorParams
+from ..genome import Genome
+from ..mutations.abstract_mutator import AbstractMutator
+from ..mutations.mutator_parameters import MutatorParams
 
 
 class NormalMutator(AbstractMutator):

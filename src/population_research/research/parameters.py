@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
-from src.population import AbstractSelector, AbstractMutator, SelectorParams, Bacteria, Genome, AbstractSpecies
-from src.population import UniformSelector, NormalMutator
-from src.population.mutations.mutator_parameters import MutatorParams
+from src.population_research.population import AbstractSelector, AbstractMutator, SelectorParams, Bacteria, Genome, \
+    AbstractSpecies, UniformSelector, NormalMutator
+from src.population_research.population.mutations.mutator_parameters import MutatorParams
 
 
 @dataclass(frozen=True)

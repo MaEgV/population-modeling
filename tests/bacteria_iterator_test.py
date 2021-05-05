@@ -1,9 +1,8 @@
 import pytest
 
-from src.population.species.bacteria.bacteria import create_bacteria
-from src.population.selectors.genomic_selector import UniformSelector
-from src.population.selectors.genomic_selector import SelectorParams
-from src.population.mutations.normal_mutator import NormalMutator
+from src.population_research.population.species.bacteria.bacteria import create_bacteria
+from src.population_research.population.selectors.genomic_selector import UniformSelector, SelectorParams
+from src.population_research.population.mutations.normal_mutator import NormalMutator
 
 
 class Case:
@@ -23,14 +22,14 @@ TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10,
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_iteration_alive.bacteria.iterate(bacteria_iteration_alive.selector,
-                                                       bacteria_iteration_alive.mutator)
-    assert len(result) >= 0
+    result = bacteria_iteration_alive.bacteria.life_move(bacteria_iteration_alive.selector,
+                                                         bacteria_iteration_alive.mutator)
+    assert len(result.get_species()) >= 0
 
 
 @pytest.mark.parametrize('bacteria_iteration_dead', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
     bacteria_iteration_dead.bacteria._properties.die()
     with pytest.raises(BaseException):
-        bacteria_iteration_dead.bacteria.iterate(bacteria_iteration_dead.selector,
-                                                  bacteria_iteration_dead.mutator)
+        bacteria_iteration_dead.bacteria.life_move(bacteria_iteration_dead.selector,
+                                                   bacteria_iteration_dead.mutator)

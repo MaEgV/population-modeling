@@ -1,10 +1,10 @@
 import pytest
 
-from src.population_research.population.populations import Population
-from src.population.species.bacteria.bacteria import create_bacteria
-from src.population.selectors.genomic_selector import UniformSelector
-from src.population.selectors.genomic_selector import SelectorParams
-from src.population.mutations.normal_mutator import NormalMutator
+from src.population_research.population.populations.simple_population import Population
+from src.population_research.population.species.bacteria.bacteria import create_bacteria
+from src.population_research.population.selectors.genomic_selector import UniformSelector, SelectorParams
+
+from src.population_research.population.mutations.normal_mutator import NormalMutator
 
 
 class Case:
@@ -30,16 +30,16 @@ TEST_CASES_POPULATION_ITERATOR = [Case(name="One offspring", result=1,
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR_ZERO, ids=str)
 def test_iterator_population_one(population_iterator: Case) -> None:
-    population_iterator.population.iterate(population_iterator.selector,
-                                           population_iterator.mutator)
+    population_iterator.population.produce_new_generation(population_iterator.selector,
+                                                          population_iterator.mutator)
 
     all_individuals = len(population_iterator.population.get_all())
     assert all_individuals == population_iterator.result
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR, ids=str)
 def test_iterator_population(population_iterator: Case) -> None:
-    population_iterator.population.iterate(population_iterator.selector,
-                                           population_iterator.mutator)
+    population_iterator.population.produce_new_generation(population_iterator.selector,
+                                                          population_iterator.mutator)
 
     all_individuals = len(population_iterator.population.get_all())
     assert all_individuals >= population_iterator.result
