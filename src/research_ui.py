@@ -23,12 +23,8 @@ class ResearchUI:
 
         Parameters
         ----------
-        research: Research
-            A research instance from the global storage
         add_clicks: int
             Number of clicks on add
-        build_clicks: int
-            Number of clicks on build
         lifetime: int
             Life span of an individual
         death: float
@@ -67,8 +63,6 @@ class ResearchUI:
             Selector aggressiveness
         selector_type: str
             Selector type
-        research: Research
-            A research instance from the global storage
         build_clicks: int
             Number of clicks on build
         Returns

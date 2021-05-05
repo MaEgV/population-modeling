@@ -38,16 +38,14 @@ class Research:
 
         Methods
         -------
-        research(self,
-                 num_iter: int,
-                 params: IterParams) -> IterRes
-
-            Show number of species in population
+        build(self,
+              num_iter: int,
+              params: IterParams) -> IterRes
+        Show number of species in population
     """
     _population: Population = field(default_factory=Population)
 
-    def add_individual(self,
-                       parameters: IndividualParameters) -> None:
+    def add_individual(self, parameters: IndividualParameters) -> None:
         self._population.add([parameters.get()])
 
     def build(self,
