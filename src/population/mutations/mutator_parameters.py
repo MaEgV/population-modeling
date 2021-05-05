@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class MutationParams:
+class MutatorParams:
     """
 
     Dataclass for such mutational parameters as mean(loc) and standard deviation(scale).

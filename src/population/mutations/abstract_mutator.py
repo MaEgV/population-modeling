@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from population_modeling.genome import Genome
+from src.population.genome import Genome
 
 
 class AbstractMutator:
@@ -24,6 +24,16 @@ class AbstractMutator:
     """
     @abstractmethod
     def _child_max_n(self, parent_genome: Genome) -> int:
+        """
+
+        Parameters
+        ----------
+        parent_genome
+
+        Returns
+        -------
+
+        """
         raise NotImplementedError
 
     @abstractmethod
@@ -46,14 +56,13 @@ class AbstractMutator:
         -------
         Genome
             Child's genome
-
         """
 
-        childs_genome = Genome(
+        child_genome = Genome(
             self._child_max_n(parent_genome),
             self._child_p_for_death(parent_genome),
             self._child_p_for_reproduction(parent_genome)
         )
 
-        return childs_genome
+        return child_genome
 

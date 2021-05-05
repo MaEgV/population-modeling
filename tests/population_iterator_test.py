@@ -1,48 +1,45 @@
 import pytest
 
-from population_modeling import create_bacteria
-from population_modeling.life_cycle import LifeCycle
-from population_modeling.mutations.normal_mutator import NormalMutator
-from population_modeling.mutations.variation_parameters import MutationParams
-from population_modeling.population import create_population
-from population_modeling.selector.selector import DefaultSelector, ExternalFactors
-from population_modeling.selector.selector_params import SelectorParams
+from src.population.populations.simple_population import Population
+from src.population.species.bacteria.bacteria import create_bacteria
+from src.population.selectors.genomic_selector import UniformSelector
+from src.population.selectors.genomic_selector import SelectorParams
+from src.population.mutations.normal_mutator import NormalMutator
+
 
 class Case:
-    def __init__(self, name,  max_life_time, antagonism, overpopulation, p_for_death,
-                 p_for_reproduction, result, mutation_mode):
+    def __init__(self, name, result, selector, mutator, p_for_reproduction):
         self.name = name
-        self.bacteria = create_bacteria(max_life_time, p_for_death, p_for_reproduction)
-        self.population = create_population(self.bacteria)
+        self.bacteria = create_bacteria(p_for_reproduction=p_for_reproduction)
         self.result = result
-        self.mutation_mode = mutation_mode
-        self.selector = DefaultSelector(SelectorParams(0, 1), ExternalFactors(antagonism, overpopulation))
+        self.mutator = mutator
+        self.selector = selector
+        self.population = Population()
+        self.population.add([self.bacteria])
 
 
-TEST_CASES_POPULATION_ITERATOR_ZERO = [Case(name="Zero iterations", antagonism=0, overpopulation=0, max_life_time=0,
-                                            p_for_death=1, p_for_reproduction=0, result=1,
-                                            mutation_mode=NormalMutator(MutationParams(0, 0.001),
-                                                                        MutationParams(0, 3),
-                                                                        MutationParams(0, 0.01)))]
+TEST_CASES_POPULATION_ITERATOR_ZERO = [Case(name="Zero iterations", result=1,
+                                            mutator=NormalMutator(),
+                                            selector=UniformSelector(SelectorParams(0, 1)), p_for_reproduction=0)
+                                       ]
 
-TEST_CASES_POPULATION_ITERATOR = [Case(name="One offspring", antagonism=0, overpopulation=0, max_life_time=5,
-                                       p_for_death=0.3, p_for_reproduction=0.7, result=1,
-                                       mutation_mode=NormalMutator(MutationParams(0, 0.001),
-                                                                   MutationParams(0, 3),
-                                                                   MutationParams(0, 0.01)))]
+TEST_CASES_POPULATION_ITERATOR = [Case(name="One offspring", result=1,
+                                       mutator=NormalMutator(),
+                                       selector=UniformSelector(SelectorParams(0, 1)), p_for_reproduction=0.8)]
 
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR_ZERO, ids=str)
 def test_iterator_population_one(population_iterator: Case) -> None:
-    LifeCycle(population_iterator.population).iterate(population_iterator.selector,
-                                                      population_iterator.mutation_mode)
+    population_iterator.population.iterate(population_iterator.selector,
+                                           population_iterator.mutator)
 
-    graph = population_iterator.population.genealogical_tree
-    assert graph.vcount() == population_iterator.result
-
+    all_individuals = len(population_iterator.population.get_all())
+    assert all_individuals == population_iterator.result
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR, ids=str)
 def test_iterator_population(population_iterator: Case) -> None:
-    LifeCycle(population_iterator.population).iterate(population_iterator.selector, population_iterator.mutation_mode)
-    graph = population_iterator.population.genealogical_tree
-    assert graph.vcount() >= population_iterator.result
+    population_iterator.population.iterate(population_iterator.selector,
+                                           population_iterator.mutator)
+
+    all_individuals = len(population_iterator.population.get_all())
+    assert all_individuals >= population_iterator.result

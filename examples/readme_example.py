@@ -1,14 +1,16 @@
-from population_modeling import *
-
-first_bacteria = create_bacteria(p_for_death=0.1, p_for_reproduction=0.5)  # creating first bacteria to start a population
-population = create_population(first_bacteria)  # creating population
+from src.population import create_bacteria
+from src.research.population_research import Research, IterationParameters
 
 
-selector_params = SelectorParams(0, 1)  # choose parameters for selection
-selector = DefaultSelector(selector_params, ExternalFactors())  # creating the initial parameters of the population and selector
-mutation_mode = NormalMutator()  # mutation mode for bacterias iterations
+research = Research()
+research.add_individual([create_bacteria(5, 0, 0.2) for _ in range(10)])
 
-cycle = LifeCycle(population)  # main cycle
+print(research)
 
-for _ in range(10):
-    cycle.iterate(selector, mutation_mode, draw_func=draw)  # drawing a population without saving
+iteration_params = IterationParameters('uniform', 1, 'normal', 0.0001)  # тут scale для мутатора и селектора и их тип
+
+# Получить возможные строки(можно пихать эти массивы в выпадающие окошки пока что):
+print(IterationParameters.get_modes())
+
+print(research.build(4, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params
+print(research.build(4, iteration_params).data) # -> фрейм с 10-ю строками, можно сделать не 10, а 1 и на каждой итерации менять params

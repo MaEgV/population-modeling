@@ -30,7 +30,7 @@ author = 'Egor Marin, Elizaveta Grishina'
 extensions = ['sphinx.ext.autodoc',
 ]
 
-# Add any paths that contain templates here, relative to this directory.
+# Add any paths that contain pages here, relative to this directory.
 templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
