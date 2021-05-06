@@ -8,17 +8,17 @@ from dataclasses import dataclass, field
 from src.population_research.population.species.bacteria.bacteria_properties import BacteriaProperties
 
 
-@dataclass(frozen=True)
+@dataclass
 class Bacteria(AbstractSpecies):
     """
        Represents bacteria with its parameters
 
        Attributes
        ----------
-        properties: BacteriaProperties
+        _properties: BacteriaProperties
            Bacteria status about age and life: die or alive
 
-        children_max: int
+        _children_max: int
             Maximum number of children in one iteration
        """
 

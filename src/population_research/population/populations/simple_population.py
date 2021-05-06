@@ -24,6 +24,7 @@ class Population:
     drop(self)
     """
     _individuals: list = field(default_factory=list)
+    __id: int = field(default=0)
 
     def add(self, new_generation: list) -> None:
         """
@@ -102,6 +103,20 @@ class Population:
         None
         """
         self._individuals = list()
+
+    def get_id(self) -> int:
+        return self.__id
+
+    def set_id(self, new_id) -> None:
+        self.__id = new_id
+
+    def get_generations_ids(self) -> list:
+        ids = set()
+        for individual in self._individuals:
+            ids.add(individual.get_id)
+
+        return list(ids)
+
 
 
 def _get_new_generation(individuals: list,

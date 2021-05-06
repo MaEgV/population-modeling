@@ -134,6 +134,10 @@ class IterationParameters:
             AvailableTypes.get_mutator(self.mutator, mutator_params)
         )
 
+    def get_dict(self) -> dict:
+        return {'selector': self.selector, 'selector_mode': self.selector_mode, 'mutator': self.mutator,
+                'mutator_mode': self.mutator_mode}
+
 
 @dataclass(frozen=True)
 class IndividualParameters:
@@ -157,7 +161,11 @@ class IndividualParameters:
     species: str
     lifetime: int
     p_for_death: float
-    p_for_repr: float
+    p_for_reproduction: float
 
     def get(self) -> AbstractSpecies:
-        return AvailableTypes.get_individual(self.species, Genome(self.lifetime, self.p_for_death, self.p_for_repr))
+        return AvailableTypes.get_individual(self.species, Genome(self.lifetime, self.p_for_death, self.p_for_reproduction))
+
+    def get_dict(self) -> dict:
+        return {'species': self.species, 'lifetime': self.lifetime, 'p_for_death': self.p_for_death,
+                'p_for_reproduction': self.p_for_reproduction}
