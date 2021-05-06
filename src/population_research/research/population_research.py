@@ -46,6 +46,7 @@ class Researcher:
 
     def add_individual(self, parameters: IndividualParameters) -> None:
         self._population.add([parameters.get()])
+        print(self)
 
     def build(self,
               iteration_number: int,

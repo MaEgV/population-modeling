@@ -1,7 +1,7 @@
 from typing import List, Any
 import dash  # type: ignore
-from .callback import Callback
-from .pages.abstract_page import AbstractPage
+from callback import Callback
+from pages.abstract_page import AbstractPage
 
 
 class DashUI:
