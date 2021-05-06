@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from src.population_research.research.population_research import Researcher
+# from src.population_research.research.population_research import Researcher
 
 class Storage:
     _storage = dict()
