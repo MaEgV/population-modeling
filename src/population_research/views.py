@@ -1,42 +1,76 @@
+import json
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
-# from src.population_research.research.population_research import Researcher
+from ast import literal_eval as str_to_dict
+from .research.parameters import IndividualParameters, IterationParameters
+from .research.population_research import Research
+
 
 class Storage:
     _storage = dict()
     _last_id = 0
 
     @staticmethod
-    def create_research():
-        Storage._storage[Storage._last_id] = Researcher()
+    def create_research(research: Research = None):
+        new_research = research if research else Research()
+        Storage._storage[str(Storage._last_id)] = new_research
         Storage._last_id += 1
         print(Storage._storage)
-        return Storage._last_id
+        return Storage._last_id - 1
 
     @staticmethod
-    def __getitem__(self, item):
-        return Storage[item]
+    def get(key):
+        return Storage._storage[key]
+
+    @staticmethod
+    def delete(key):
+        del Storage._storage[key]
 
 
-class Research(APIView):
-    def get(self, request):
+class CreateResearch(APIView):
+    def get(self, request, id=None):
         """
-        wqwqeqw
+        Load
         Parameters
         ----------
         request
+        id
 
         Returns
         -------
 
         """
-        token = Storage.create_research()
-        return Response(token)
+        print(request)
 
-    def update(self, request, token):
+        return Response(Storage.create_research())
+
+
+class ResearchManage(APIView):
+    def post(self, request, token: str):
+        """
+        Save
+
+        Parameters
+        ----------
+        request
+        token
+
+        Returns
+        -------
+
+        """
+
         pass
 
-    def post(self, request):
-        return Response('321')
+    def delete(self, request, token):
+        Storage.delete(token)
+        print(token)
+        return Response('ok')
 
 
+class ResearchAddIndividual(APIView):
+    def post(self, request, token: str):
+        request.data

@@ -1,14 +1,14 @@
 from dataclasses import dataclass, field
 from typing import List
 import dash  # type: ignore
-
+import requests
 import plotly.express as px  # type: ignore
 import pandas as pd  # type: ignore
 
 
 @dataclass(frozen=True)
 class ResearchApiUi:
-    _research_url: Researcher = field(init=False, default=Researcher)
+    _research_url: str
 
     def add_individual(self,
                        add_clicks: int,
@@ -35,9 +35,16 @@ class ResearchApiUi:
             Inscription
         """
 
-        self._research.add_individual(IndividualParameters('bacteria', lifetime, death, reproduction))
+        # self._research.add_individual(IndividualParameters('bacteria', lifetime, death, reproduction))
+        print(requests.post(
+            self._research_url,
+            json={"s": "bacteria",
+                  "l": lifetime,
+                  "p1": death,
+                  "p2": reproduction}
+        ))
 
-        return [f"current population size: {self._research.get_populations_size()}"]
+        return [f"current population size:"]
 
     def build(self,
               build_clicks: int,
@@ -70,7 +77,7 @@ class ResearchApiUi:
 
         """
         parameters = IterationParameters(selector_type, selector_value, mutator_type, mutator_value)
-        result = self._research.build(n_iterations, parameters)
+        result = self._research.do_research(n_iterations, parameters)
         return [result.data.to_json(date_format='iso', orient='split')]
 
     # dataBase[addResearch, getResearch]
@@ -141,7 +148,8 @@ def storage_update(add_click: int,
     -------
         Updated value of the storage
     """
-    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0].split('.')[0]  # TODO: replace with timestamp check
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0].split('.')[
+        0]  # TODO: replace with timestamp check
     if main_storage:  # TODO: отдельная функция
         main_frame = pd.read_json(main_storage, orient='split')
         if 'add' == changed_id:

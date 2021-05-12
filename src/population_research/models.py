@@ -2,15 +2,19 @@ from django.db import models
 import jsonfield
 
 
-# Create your models here.
-class Population(models.Model):
-    generations = jsonfield.JSONField()
-
-
-class Generation(models.Model):
-    bacterias = jsonfield.JSONField()
+class Input(models.Model):
+    population_id = models.IntegerField()
     parameters = jsonfield.JSONField()
 
 
-class Bacteria(models.Model):
+class Output(models.Model):
+    input_id = models.IntegerField()
+    result = jsonfield.JSONField()
+
+
+class Population(models.Model):
+    individuals = jsonfield.JSONField()
+
+
+class Individual(models.Model):
     parameters = jsonfield.JSONField()

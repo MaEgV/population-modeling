@@ -3,5 +3,6 @@ from. import views
 
 urlpatterns = [
     path(r'research/', views.CreateResearch.as_view()),
-    path(r'research/<str:token>/<str:action>', views.ManageResearch.as_view())
+    path(r'research/<str:token>/build/', views.ResearchManage.as_view()),
+    path(r'research/<str:token>/add/', views.ResearchManage.as_view())
 ]

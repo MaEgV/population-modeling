@@ -26,7 +26,7 @@ class IterationResult:
 
 
 @dataclass(frozen=True)
-class Researcher:
+class Research:
     """
         Class with some statistical tools for population analysis.
 
@@ -48,9 +48,10 @@ class Researcher:
         self._population.add([parameters.get()])
         print(self)
 
-    def build(self,
-              iteration_number: int,
-              parameters: IterationParameters) -> IterationResult:
+    def do_research(self,
+                    population,
+                    iteration_number: int,
+                    parameters: IterationParameters) -> IterationResult:
         """
             Give data in DataFrame about population size and state on each iteration
 
