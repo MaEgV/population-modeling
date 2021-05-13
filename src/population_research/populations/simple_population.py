@@ -118,6 +118,12 @@ class Population:
 
         return list(ids)
 
+    def get_individual_ids(self) -> list:
+        ids = list()
+        for individual in self._individuals:
+            ids.append(individual.get_id)
+        return ids
+
 
 def _get_new_generation(individuals: list,
                         selector: AbstractSelector,

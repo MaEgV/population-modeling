@@ -1,9 +1,8 @@
-from typing import Any
-
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from src.population_research.research import Research
-from src.population_research.populations.simple_population import Population
+from django.http import HttpResponse
+from .models import Output, Population, Individual
 
 
 class Storage:
@@ -11,9 +10,10 @@ class Storage:
     _last_id = 0
 
     @staticmethod
-    def put(item: Any):
+    def create_research(research: Research = None):
+        new_research = research if research else Research()
+        Storage._storage[str(Storage._last_id)] = new_research
         Storage._last_id += 1
-        Storage._storage[str(Storage._last_id)] = item
         print(Storage._storage)
         return Storage._last_id - 1
 
@@ -41,13 +41,14 @@ class CreateResearch(APIView):
         """
         print(request)
 
-        return Response(Storage.put())
+        return Response(Storage.create_research())
 
 
 class ResearchManage(APIView):
+
     def post(self, request, token: str):
         """
-        Save
+        Save population
 
         Parameters
         ----------
@@ -58,8 +59,15 @@ class ResearchManage(APIView):
         -------
 
         """
+        if request.method == 'POST':
+            population_token = request['token']
+            population = Storage.get(population_token)
+            population_data = Population(individuals=population.get_individual_ids)
+            population_data.save()
+            for individual in population.get_all():
+                individual_data = Individual(individual.get_genome_dict)
+                individual_data.save()
 
-        pass
 
     def delete(self, request, token):
         Storage.delete(token)
@@ -69,4 +77,4 @@ class ResearchManage(APIView):
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
-        request.data['1']
+        request.data
