@@ -125,7 +125,6 @@ class Population:
         return ids
 
 
-
 def _get_new_generation(individuals: list,
                         selector: AbstractSelector,
                         mutator: AbstractMutator) -> list:
