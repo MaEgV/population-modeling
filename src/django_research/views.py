@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from src.population_research.research import Research
+from django.http import HttpResponse
+from models import Input, Output, Population, Individual
 
 
 class Storage:
@@ -43,9 +45,10 @@ class CreateResearch(APIView):
 
 
 class ResearchManage(APIView):
+
     def post(self, request, token: str):
         """
-        Save
+        Save population
 
         Parameters
         ----------
@@ -56,8 +59,15 @@ class ResearchManage(APIView):
         -------
 
         """
+        if request.method == 'POST':
+            population_token = request['token']
+            population = Storage.get(population_token)
+            population_data = Population(individuals=population.get_individual_ids)
+            population_data.save()
+            for individual in population.get_all():
+                individual_data = Individual(individual.get_genome_dict)
+                individual_data.save()
 
-        pass
 
     def delete(self, request, token):
         Storage.delete(token)
