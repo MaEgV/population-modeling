@@ -15,7 +15,7 @@ class Storage:
     def put(item: Any):
         Storage._storage[str(Storage._last_id)] = item
         Storage._last_id += 1
-        print(Storage._storage)
+
         return Storage._last_id - 1
 
     @staticmethod
