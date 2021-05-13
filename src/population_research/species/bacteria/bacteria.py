@@ -107,6 +107,10 @@ class Bacteria(AbstractSpecies):
 
         return Descendants(children)
 
+    def get_parameters_dict(self):
+        genome = self.get_genome_dict()
+        genome |= {'age': self._properties.get_age()}
+
 
 def create_bacteria(
         max_life_time: int = 5,
