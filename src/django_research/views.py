@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from src.population_research.research import Research
 from django.http import HttpResponse
-from models import Input, Output, Population, Individual
+from .models import Output, Population, Individual
 
 
 class Storage:
