@@ -31,7 +31,7 @@ class BacteriaProperties:
 
     """
     _is_alive: bool = field(init=False, default=True)
-    _age: int = field(init=False, default=0)
+    _age: int = field(default=0)
 
     def get_is_alive(self) -> bool:
         """
@@ -56,7 +56,7 @@ class BacteriaProperties:
         None
         """
 
-        self._age += 1
+        self.age += 1
 
     def get_age(self) -> int:
         """
@@ -67,7 +67,7 @@ class BacteriaProperties:
         int
             age property
         """
-        return self._age
+        return self.age
 
     def die(self) -> None:
         """

@@ -118,10 +118,10 @@ class Population:
 
         return list(ids)
 
-    def get_individual_ids(self) -> list:
-        ids = list()
+    def get_individual_ids(self) -> dict:
+        ids = dict()
         for individual in self._individuals:
-            ids.append(individual.get_id)
+            ids[str(individual.get_id)] = individual.get_id
         return ids
 
 
