@@ -1,6 +1,9 @@
+from typing import Any
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from src.population_research.research import Research
+from src.population_research.populations.simple_population import Population
 
 
 class Storage:
@@ -8,10 +11,9 @@ class Storage:
     _last_id = 0
 
     @staticmethod
-    def create_research(research: Research = None):
-        new_research = research if research else Research()
-        Storage._storage[str(Storage._last_id)] = new_research
+    def put(item: Any):
         Storage._last_id += 1
+        Storage._storage[str(Storage._last_id)] = item
         print(Storage._storage)
         return Storage._last_id - 1
 
@@ -39,7 +41,7 @@ class CreateResearch(APIView):
         """
         print(request)
 
-        return Response(Storage.create_research())
+        return Response(Storage.put())
 
 
 class ResearchManage(APIView):
@@ -67,4 +69,4 @@ class ResearchManage(APIView):
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
-        request.data
+        request.data['1']
