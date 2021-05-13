@@ -4,7 +4,7 @@ from ..genome import Genome
 
 
 @dataclass
-class SelectorParams:
+class SelectorParameters:
     """
     Dataclass for such mutational parameters as mean(loc) and standard deviation(scale).
 

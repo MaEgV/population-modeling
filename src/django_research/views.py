@@ -1,12 +1,6 @@
-import json
-
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ast import literal_eval as str_to_dict
-from .research.parameters import IndividualParameters, IterationParameters
-from .research.population_research import Research
+from src.population_research.research import Research
 
 
 class Storage:

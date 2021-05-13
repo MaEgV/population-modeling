@@ -1,9 +1,13 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
-from ..population import AbstractSelector, AbstractMutator, SelectorParams, Bacteria, Genome, \
-    AbstractSpecies, UniformSelector, NormalMutator
-from ..population.mutations.mutator_parameters import MutatorParams
-
+from src.population_research.selectors.abstract_selector import AbstractSelector, SelectorParameters
+from src.population_research.mutations.abstract_mutator import AbstractMutator
+from src.population_research.species.bacteria.bacteria import Bacteria
+from src.population_research.species.abstract_species import AbstractSpecies
+from src.population_research.selectors.genomic_selector import UniformSelector
+from src.population_research.mutations.normal_mutator import  NormalMutator
+from src.population_research.mutations.mutator_parameters import MutatorParams
+from src.population_research.genome import Genome
 
 @dataclass(frozen=True)
 class AvailableTypes:
@@ -48,7 +52,7 @@ class AvailableTypes:
         return list(AvailableTypes._individual_types.keys())
 
     @staticmethod
-    def get_selector(key: str, init_params: SelectorParams) -> AbstractSelector:
+    def get_selector(key: str, init_params: SelectorParameters) -> AbstractSelector:
         return AvailableTypes._selector_types[key](init_params)
 
     @staticmethod
@@ -100,7 +104,7 @@ class AvailableTypes:
 @dataclass(frozen=True)
 class IterationParameters:
     """
-    Date a class that stores parameters for adding an individual to the research population
+    Date a class that stores parameters for adding an individual to the research population_research
     Attributes
     ----------
     selector: str
@@ -126,7 +130,7 @@ class IterationParameters:
     mutator_mode: float
 
     def get_params(self) -> tuple:
-        selector_params = SelectorParams(0, self.selector_mode)
+        selector_params = SelectorParameters(0, self.selector_mode)
         mutator_params = MutatorParams(0, self.mutator_mode)
 
         return (
@@ -142,7 +146,7 @@ class IterationParameters:
 @dataclass(frozen=True)
 class IndividualParameters:
     """
-    Date a class that stores parameters for adding an individual to the research population
+    Date a class that stores parameters for adding an individual to the research population_research
     Attributes
     ----------
     species: str

@@ -1,11 +1,11 @@
 from typing import List
-from src.population_research.population.selectors.abstract_selector import AbstractSelector
-from src.population_research.population.mutations.abstract_mutator import AbstractMutator
-from src.population_research.population.exceptions import DeadBacteriaException
-from src.population_research.population.species.abstract_species import AbstractSpecies, Descendants
-from src.population_research.population import Genome
+from src.population_research.selectors.abstract_selector import AbstractSelector
+from src.population_research.mutations.abstract_mutator import AbstractMutator
+from src.population_research.exceptions import DeadBacteriaException
+from src.population_research.species.abstract_species import AbstractSpecies, Descendants
+from src.population_research import Genome
 from dataclasses import dataclass, field
-from src.population_research.population.species.bacteria.bacteria_properties import BacteriaProperties
+from .bacteria_properties import BacteriaProperties
 
 
 @dataclass

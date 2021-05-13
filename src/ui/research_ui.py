@@ -18,8 +18,8 @@ class ResearchUI:
                        death: float,
                        reproduction: float) -> List[str]:
         """
-        Adds an individual with the specified parameters to the population
-        and returns the count of bacteria in the population
+        Adds an individual with the specified parameters to the population_research
+        and returns the count of bacteria in the population_research
 
         Parameters
         ----------
@@ -39,7 +39,7 @@ class ResearchUI:
 
         self._research.add_individual(IndividualParameters('bacteria', lifetime, death, reproduction))
 
-        return [f"current population size: {self._research.get_populations_size()}"]
+        return [f"current population_research size: {self._research.get_populations_size()}"]
 
     def build(self,
               build_clicks: int,
@@ -49,7 +49,7 @@ class ResearchUI:
               mutator_type: str,
               mutator_value: float) -> list:
         """
-        Conducts a statistical study of the evolution of the population
+        Conducts a statistical study of the evolution of the population_research
 
         Parameters
         ----------

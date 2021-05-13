@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from src.population_research.population import AbstractSelector, AbstractMutator
+from src.population_research.selectors.abstract_selector import AbstractSelector
+from src.population_research.mutations.abstract_mutator import AbstractMutator
 
 @dataclass
 class Population:
@@ -9,7 +10,7 @@ class Population:
     Parameters
     ----------
     _individuals: list
-        List with all individuals of population
+        List with all individuals of population_research
 
     Methods
     -------
@@ -32,8 +33,8 @@ class Population:
 
         Attributes
         ----------
-        population: Population
-            Processed population
+        population_research: Population
+            Processed population_research
 
         new_generation: list
             Contain pairs parent-children
@@ -47,7 +48,7 @@ class Population:
 
     def produce_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator) -> None:
         """
-        The time unit of evolution for a population. Processes a new generation in the population
+        The time unit of evolution for a population_research. Processes a new generation in the population_research
 
         Parameters
         ----------

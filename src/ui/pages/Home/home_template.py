@@ -81,7 +81,7 @@ class HomeTemplate:
         Attributes
         ----------
         _population: Population
-            An instance of the population that the study is being conducted on
+            An instance of the population_research that the study is being conducted on
 
         Methods
         -------

@@ -1,8 +1,8 @@
 import pytest
 
-from src.population_research.population.species.bacteria.bacteria import create_bacteria
-from src.population_research.population.selectors.genomic_selector import UniformSelector, SelectorParams
-from src.population_research.population.mutations.normal_mutator import NormalMutator
+from src.population_research import create_bacteria
+from src.population_research import UniformSelector, SelectorParams
+from src.population_research import NormalMutator
 
 
 class Case:

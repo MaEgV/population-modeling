@@ -1,11 +1,11 @@
-from .abstract_selector import AbstractSelector, SelectorParams
+from .abstract_selector import AbstractSelector, SelectorParameters
 from ..genome import Genome
 from scipy.stats import uniform  # type: ignore
 
 
 class UniformSelector(AbstractSelector):
     def __init__(self,
-                 params: SelectorParams):
+                 params: SelectorParameters):
         self.params = params
 
     def is_died(self, genome: Genome) -> bool:

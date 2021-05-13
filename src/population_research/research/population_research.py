@@ -1,5 +1,5 @@
 from typing import Dict
-from src.population_research.population.populations.simple_population import Population
+from src.population_research import Population
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
 from src.population_research.research.parameters import IterationParameters, IndividualParameters
@@ -8,7 +8,7 @@ from src.population_research.research.parameters import IterationParameters, Ind
 @dataclass(frozen=True)
 class IterationResult:
     """
-        The result of an evolutionary study of the population
+        The result of an evolutionary study of the population_research
 
         Attributes
         ----------
@@ -28,19 +28,19 @@ class IterationResult:
 @dataclass(frozen=True)
 class Research:
     """
-        Class with some statistical tools for population analysis.
+        Class with some statistical tools for population_research analysis.
 
         Attributes
         ----------
         _population: Population
-            An instance of the population that the study is being conducted on
+            An instance of the population_research that the study is being conducted on
 
         Methods
         -------
         build(self,
               num_iter: int,
               params: IterParams) -> IterRes
-        Show number of species in population
+        Show number of species in population_research
     """
     _population: Population = field(default_factory=Population)
 
@@ -53,7 +53,7 @@ class Research:
                     iteration_number: int,
                     parameters: IterationParameters) -> IterationResult:
         """
-            Give data in DataFrame about population size and state on each iteration
+            Give data in DataFrame about population_research size and state on each iteration
 
             Attributes
             ----------
@@ -61,15 +61,15 @@ class Research:
                 Number of supposed iterations
 
             selectors: AbstractSelector
-                Chosen selectors for this population
+                Chosen selectors for this population_research
 
             mutator: AbstractMutator
-                    Chosen mutator for this population
+                    Chosen mutator for this population_research
 
             Returns
             -------
             DataFrame
-                Table with state of population on each iteration
+                Table with state of population_research on each iteration
         """
         frame = Stats.get_empty_frame()
 
@@ -88,7 +88,7 @@ class Research:
 
 class Stats:
     """
-        A static class that collects statistics on a population instance
+        A static class that collects statistics on a population_research instance
 
         Methods
         -------
@@ -96,7 +96,7 @@ class Stats:
             Returns an empty frame that can be filled with this class
             Can be used to define headers
 
-        def get_stats(population: Population) -> Dict[str, int]:
+        def get_stats(population_research: Population) -> Dict[str, int]:
             Collects statistics and returns a dictionary of results
     """
     @staticmethod
@@ -117,7 +117,7 @@ class Stats:
         Parameters
         ----------
         population
-            Instance of the population to be statistically examined
+            Instance of the population_research to be statistically examined
 
         Returns
         -------
