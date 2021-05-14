@@ -30,83 +30,91 @@ class Storage:
 
 
 class CreateResearch(APIView):
-    def get_population(self, request, id=None):
+
+    @staticmethod
+    def put_population(new_population: Population) -> int:
+        return Storage.put(new_population)
+
+    def get_individuals(self, individuals_ids: dict) -> list:
+        new_individuals = list()
+        for id in individuals_ids.values():
+            individual = Individual.objects.get(pk=int(id))
+            individual_data = json.loads(individual['parameters'])
+            individual_max_lifetime = individual_data['max_lifetime']
+            individual_p_for_death = individual_data['p_for_death']
+            individual_p_for_reproduction = individual_data['p_for_reproduction']
+            individual_age = individual_data['age']
+            new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
+                                            _genome=Genome(individual_max_lifetime, individual_p_for_death,
+                                                           individual_p_for_reproduction)))
+            return new_individuals
+
+    def get(self, request, population_id=None):
         """
         Load
         Parameters
         ----------
         request
-        id
+        population_id:
+
 
         Returns
         -------
 
         """
+        print(population_id)
+        print(request.data)
         if request.method == 'GET':
-            if id:
-                new_individuals = list()
-                population_token = request['token']
-                population_data = Population.objects.get(pk=population_token)
+
+            if population_id:
+                population_data = Population.objects.get(pk=population_id)
                 individuals_ids = json.loads(population_data['individuals'])
-                for id in individuals_ids.values():
-                    individual = Individual.objects.get(pk=id)
-                    individual_data = json.loads(individual['parameters'])
-                    individual_max_lifetime = individual_data['max_lifetime']
-                    individual_p_for_death = individual_data['p_for_death']
-                    individual_p_for_reproduction = individual_data['p_for_reproduction']
-                    individual_age = individual_data['age']
-                    new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
-                                                    _genome=Genome(individual_max_lifetime, individual_p_for_death,
-                                                                   individual_p_for_reproduction)))
-                    new_population = Population(new_individuals, population_token)
-                return new_population
+                new_individuals = self.get_individuals(individuals_ids)
+                new_population = Population(new_individuals, population_id)
+                return Response(self.put_population(new_population))
             else:
-                new_population = simple_population.Population()
-                token = Storage.put(new_population)
-                return Response(token)
-        # print(request)
-        #
-        # return Response(Storage.create_research())
+                return Response(self.put_population(simple_population.Population()))
 
-    def get_results(self, request):
-        """
 
-        :param request:
-        :return:
-        """
-        if request.method == 'GET':
-            token = request['token']
-            research_data = Output.objects.get(pk=token)
-            return research_data['result']
+    # def get(self, request, token):
+    #     """
+    #
+    #     :param request:
+    #     :return:
+    #     """
+    #     if request.method == 'GET':
+    #         research_data = Output.objects.get(pk=token)
+    #         print(research_data['result'])
+    #         return Response(research_data['result'])
 
 
 
 class ResearchManage(APIView):
 
-    def post_population(self, request, token: str):
-        """
-        Save population
+    # def post(self, request, token: str):
+    #     """
+    #     Save population
+    #
+    #     Parameters
+    #     ----------
+    #     request
+    #     token
+    #
+    #     Returns
+    #     -------
+    #
+    #     """
+    #     if request.method == 'POST':
+    #         name = request.data['name']
+    #         population = Storage.get(token)
+    #         population_data = Population(individuals=population.get_individual_ids, name=name)
+    #         population_data.save()
+    #         for individual in population.get_all():
+    #             individual_data = Individual(individual.get_parameters_dict)
+    #             individual_data.save()
+    #     return Response()
 
-        Parameters
-        ----------
-        request
-        token
-
-        Returns
-        -------
-
-        """
-        if request.method == 'POST':
-            population_token = request['token']
-            name = request['name']
-            population = Storage.get(population_token)
-            population_data = Population(individuals=population.get_individual_ids, name=name)
-            population_data.save()
-            for individual in population.get_all():
-                individual_data = Individual(individual.get_parameters_dict)
-                individual_data.save()
-
-    def post_research(self, request, token: str):
+    def post(self, request, token: str):
         """
         Save research
 
@@ -120,17 +128,17 @@ class ResearchManage(APIView):
 
         """
         if request.method == 'POST':
-            population_token = request['token']
-            name = request['name']
-            population = Storage.get(population_token)
+            name = request.data['name']
+            population = Storage.get(token)
             population_data = Population(individuals=population.get_individual_ids, name=name)
             population_data.save()
             for individual in population.get_all():
                 individual_data = Individual(individual.get_parameters_dict)
                 individual_data.save()
-            output_data = Output(name=name, population_id=population_token, parameters=request['parameters'],
+            output_data = Output(name=name, population_id=token, parameters=request['parameters'],
                                  result=request['result'])
             output_data.save()
+        return Response()
 
 
     def delete(self, request, token):
