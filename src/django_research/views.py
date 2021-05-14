@@ -46,8 +46,8 @@ class CreateResearch(APIView):
         if request.method == 'GET':
             new_individuals = list()
             population_token = request['token']
-            poplation_data = Population.objects.get(pk=population_token)
-            individuals_ids = json.loads(poplation_data['individuals'])
+            population_data = Population.objects.get(pk=population_token)
+            individuals_ids = json.loads(population_data['individuals'])
             for id in individuals_ids.values():
                 individual = Individual.objects.get(pk=id)
                 individual_data = json.loads(individual['parameters'])
