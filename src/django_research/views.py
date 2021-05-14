@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,7 +7,7 @@ from src.population_research.research import Research
 from django.http import HttpResponse
 from .models import Output, Population, Individual
 from src.population_research.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
-from src.population_research.populations.simple_population import Population
+from src.population_research.populations import simple_population
 
 
 class Storage:
@@ -14,11 +15,9 @@ class Storage:
     _last_id = 0
 
     @staticmethod
-    def create_research(research: Research = None):
-        new_research = research if research else Research()
-        Storage._storage[str(Storage._last_id)] = new_research
+    def put(item: Any):
+        Storage._storage[str(Storage._last_id)] = item
         Storage._last_id += 1
-
         return Storage._last_id - 1
 
     @staticmethod
@@ -44,22 +43,27 @@ class CreateResearch(APIView):
 
         """
         if request.method == 'GET':
-            new_individuals = list()
-            population_token = request['token']
-            population_data = Population.objects.get(pk=population_token)
-            individuals_ids = json.loads(population_data['individuals'])
-            for id in individuals_ids.values():
-                individual = Individual.objects.get(pk=id)
-                individual_data = json.loads(individual['parameters'])
-                individual_max_lifetime = individual_data['max_lifetime']
-                individual_p_for_death = individual_data['p_for_death']
-                individual_p_for_reproduction = individual_data['p_for_reproduction']
-                individual_age = individual_data['age']
-                new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
-                                                _genome=Genome(individual_max_lifetime, individual_p_for_death,
-                                                               individual_p_for_reproduction)))
-                new_population = Population(new_individuals, population_token)
-        return new_population
+            if id:
+                new_individuals = list()
+                population_token = request['token']
+                population_data = Population.objects.get(pk=population_token)
+                individuals_ids = json.loads(population_data['individuals'])
+                for id in individuals_ids.values():
+                    individual = Individual.objects.get(pk=id)
+                    individual_data = json.loads(individual['parameters'])
+                    individual_max_lifetime = individual_data['max_lifetime']
+                    individual_p_for_death = individual_data['p_for_death']
+                    individual_p_for_reproduction = individual_data['p_for_reproduction']
+                    individual_age = individual_data['age']
+                    new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
+                                                    _genome=Genome(individual_max_lifetime, individual_p_for_death,
+                                                                   individual_p_for_reproduction)))
+                    new_population = Population(new_individuals, population_token)
+                return new_population
+            else:
+                new_population = simple_population.Population()
+                token = Storage.put(new_population)
+                return Response(token)
         # print(request)
         #
         # return Response(Storage.create_research())
