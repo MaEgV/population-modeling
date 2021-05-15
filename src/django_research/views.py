@@ -15,7 +15,6 @@ class Storage:
     @staticmethod
     def put(item: Any):
         Storage._storage[str(Storage._last_id)] = item
-        print(Storage._storage)
         Storage._last_id += 1
         return Storage._last_id - 1
 
@@ -62,6 +61,7 @@ class CreateResearch(APIView):
 
         """
         print(population_id)
+        print(request.data)
         if request.method == 'GET':
 
             if population_id:
@@ -101,7 +101,7 @@ class ResearchManage(APIView):
 
     def post(self, request, token: str):
         """
-        Save researcher
+        Save research
 
         Parameters
         ----------
@@ -115,9 +115,13 @@ class ResearchManage(APIView):
         if request.method == 'POST':
             name = request.data['name']
             population = Storage.get(token)
+            for individual in population.get_all():
+                individual_data = Individual(individual.get_parameters_dict)
+                individual_data.save()
+                individual.set_id(individual_data.id)
             population_data = Population(individuals=population.get_individual_ids, name=name)
             population_data.save()
-            for individual in population.get_individuals():
+            for individual in population.get_all():
                 individual_data = Individual(individual.get_parameters_dict)
                 individual_data.save()
             output_data = Output(name=name, population_id=token, parameters=request['parameters'],
