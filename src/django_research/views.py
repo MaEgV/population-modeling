@@ -91,28 +91,30 @@ class CreateResearch(APIView):
 
 class ResearchManage(APIView):
 
-    # def post(self, request, token: str):
-    #     """
-    #     Save population
-    #
-    #     Parameters
-    #     ----------
-    #     request
-    #     token
-    #
-    #     Returns
-    #     -------
-    #
-    #     """
-    #     if request.method == 'POST':
-    #         name = request.data['name']
-    #         population = Storage.get(token)
-    #         population_data = Population(individuals=population.get_individual_ids, name=name)
-    #         population_data.save()
-    #         for individual in population.get_all():
-    #             individual_data = Individual(individual.get_parameters_dict)
-    #             individual_data.save()
-    #     return Response()
+    def post(self, request, token: str):
+        """
+        Save population
+
+        Parameters
+        ----------
+        request
+        token
+
+        Returns
+        -------
+
+        """
+        if request.method == 'POST':
+            name = request.data['name']
+            population = Storage.get(token)
+            for individual in population.get_all():
+                individual_data = Individual(individual.get_parameters_dict)
+                individual_data.save()
+                individual.set_id(individual_data.id)
+            population_data = Population(individuals=population.get_individual_ids, name=name)
+            population_data.save()
+            population.set_id(population_data.id)
+        return Response()
 
     def post(self, request, token: str):
         """
@@ -130,12 +132,14 @@ class ResearchManage(APIView):
         if request.method == 'POST':
             name = request.data['name']
             population = Storage.get(token)
-            population_data = Population(individuals=population.get_individual_ids, name=name)
-            population_data.save()
             for individual in population.get_all():
                 individual_data = Individual(individual.get_parameters_dict)
                 individual_data.save()
-            output_data = Output(name=name, population_id=token, parameters=request['parameters'],
+                individual.set_id(individual_data.id)
+            population_data = Population(individuals=population.get_individual_ids, name=name)
+            population_data.save()
+            population.set_id(population_data.id)
+            output_data = Output(name=name, population_id=population.get_id(), parameters=request['parameters'],
                                  result=request['result'])
             output_data.save()
         return Response()
