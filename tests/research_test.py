@@ -1,8 +1,8 @@
 import pytest
 
-from src.population_research import Population
-from src.population_research.research import Research, IterationParameters
-from src.population_research.research import IndividualParameters
+from src.population_research.researcher.population_research import Population
+from src.population_research.researcher import Research, IterationParameters
+from src.population_research.researcher.parameters import IndividualParameters
 
 
 class Case:

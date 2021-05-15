@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from typing import List
 import dash  # type: ignore
 
-from src.population_research.research import Research
-from src.population_research.research.parameters import IterationParameters, IndividualParameters
+from src.population_research.researcher import Research
+from src.population_research.researcher.parameters import IterationParameters, IndividualParameters
 import plotly.express as px  # type: ignore
 import pandas as pd  # type: ignore
 
@@ -79,11 +79,11 @@ class ResearchUI:
 
     def reset(self, n_clicks: int) -> list:
         """
-        Erase data in the research
+        Erase data in the researcher
         Parameters
         ----------
-        research
-            A research instance from the global storage
+        researcher
+            A researcher instance from the global storage
         n_clicks
             ---
         Returns

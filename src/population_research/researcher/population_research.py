@@ -1,8 +1,8 @@
 from typing import Dict
-from src.population_research import Population
+from src.population_research.simulator import Population
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
-from src.population_research.research.parameters import IterationParameters, IndividualParameters
+from src.population_research.researcher.parameters import IterationParameters, IndividualParameters
 
 
 @dataclass(frozen=True)
@@ -15,7 +15,7 @@ class IterationResult:
         id: int
             Research id
         data: pd.DataFrame
-            Statistics collected at each iteration of the research
+            Statistics collected at each iteration of the researcher
             Has columns defined in Stats and the number of rows equal to the number of iterations
         params: IterationParameters
             Parameters that were received as input
@@ -45,7 +45,7 @@ class Research:
     _population: Population = field(default_factory=Population)
 
     def add_individual(self, parameters: IndividualParameters) -> None:
-        self._population.add([parameters.get()])
+        self._population.add_generation([parameters.get()])
         print(self)
 
     def do_research(self,
@@ -80,7 +80,7 @@ class Research:
         return IterationResult(0, frame, parameters)
 
     def get_populations_size(self) -> int:
-        return len(self._population.get_all())
+        return len(self._population.get_individuals())
 
     def drop(self) -> None:
         self._population.drop()
@@ -122,10 +122,10 @@ class Stats:
         Returns
         -------
         dict
-            Results of stats research
+            Results of stats researcher
 
         """
-        all_n, alive_n = len(population.get_all()), len(population.get_alive())
+        all_n, alive_n = len(population.get_individuals()), len(population.get_alive())
         dead_n = all_n - alive_n
 
         return {'all': all_n, 'alive': alive_n, 'dead': dead_n}

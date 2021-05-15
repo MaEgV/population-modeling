@@ -3,11 +3,9 @@ from typing import Any
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from src.population_research.research import Research
-from django.http import HttpResponse
 from .models import Output, Population, Individual
-from src.population_research.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
-from src.population_research.populations import simple_population
+from src.population_research.simulator.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
+from src.population_research.simulator.populations import population
 
 
 class Storage:
@@ -17,6 +15,7 @@ class Storage:
     @staticmethod
     def put(item: Any):
         Storage._storage[str(Storage._last_id)] = item
+        print(Storage._storage)
         Storage._last_id += 1
         return Storage._last_id - 1
 
@@ -63,7 +62,6 @@ class CreateResearch(APIView):
 
         """
         print(population_id)
-        print(request.data)
         if request.method == 'GET':
 
             if population_id:
@@ -73,20 +71,7 @@ class CreateResearch(APIView):
                 new_population = Population(new_individuals, population_id)
                 return Response(self.put_population(new_population))
             else:
-                return Response(self.put_population(simple_population.Population()))
-
-
-    # def get(self, request, token):
-    #     """
-    #
-    #     :param request:
-    #     :return:
-    #     """
-    #     if request.method == 'GET':
-    #         research_data = Output.objects.get(pk=token)
-    #         print(research_data['result'])
-    #         return Response(research_data['result'])
-
+                return Response(self.put_population(population.Population()))
 
 
 class ResearchManage(APIView):
@@ -116,7 +101,7 @@ class ResearchManage(APIView):
 
     def post(self, request, token: str):
         """
-        Save research
+        Save researcher
 
         Parameters
         ----------
@@ -132,7 +117,7 @@ class ResearchManage(APIView):
             population = Storage.get(token)
             population_data = Population(individuals=population.get_individual_ids, name=name)
             population_data.save()
-            for individual in population.get_all():
+            for individual in population.get_individuals():
                 individual_data = Individual(individual.get_parameters_dict)
                 individual_data.save()
             output_data = Output(name=name, population_id=token, parameters=request['parameters'],
@@ -149,4 +134,12 @@ class ResearchManage(APIView):
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
-        request.data
+        print(request.data)
+        return Response()
+
+
+class ResearchRun(APIView):
+    def get(self, request, token: str):
+        print(request)
+        print(request.GET)
+        return Response()

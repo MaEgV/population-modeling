@@ -1,18 +1,19 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
-from src.population_research.selectors.abstract_selector import AbstractSelector, SelectorParameters
-from src.population_research.mutations.abstract_mutator import AbstractMutator
-from src.population_research.species.bacteria.bacteria import Bacteria
-from src.population_research.species.abstract_species import AbstractSpecies
-from src.population_research.selectors.genomic_selector import UniformSelector
-from src.population_research.mutations.normal_mutator import  NormalMutator
-from src.population_research.mutations.mutator_parameters import MutatorParams
-from src.population_research.genome import Genome
+from src.population_research.simulator.selectors.abstract_selector import AbstractSelector, SelectorParameters
+from src.population_research.simulator.mutations.abstract_mutator import AbstractMutator
+from src.population_research.simulator import Bacteria
+from src.population_research.simulator import AbstractSpecies
+from src.population_research.simulator.selectors.genomic_selector import UniformSelector
+from src.population_research.simulator.mutations.normal_mutator import NormalMutator
+from src.population_research.simulator.mutations.mutator_parameters import MutatorParams
+from src.population_research.simulator.genome import Genome
+
 
 @dataclass(frozen=True)
 class AvailableTypes:
     """
-        The class contains an enumeration of all the types that can be used in the research
+        The class contains an enumeration of all the types that can be used in the researcher
 
         Attributes
         ----------
@@ -104,7 +105,7 @@ class AvailableTypes:
 @dataclass(frozen=True)
 class IterationParameters:
     """
-    Date a class that stores parameters for adding an individual to the research population_research
+    Date a class that stores parameters for adding an individual to the researcher population_research
     Attributes
     ----------
     selector: str
@@ -146,7 +147,7 @@ class IterationParameters:
 @dataclass(frozen=True)
 class IndividualParameters:
     """
-    Date a class that stores parameters for adding an individual to the research population_research
+    Date a class that stores parameters for adding an individual to the researcher population_research
     Attributes
     ----------
     species: str

@@ -84,11 +84,11 @@ class ResearchApiUi:
 
     def reset(self, n_clicks: int) -> list:
         """
-        Erase data in the research
+        Erase data in the researcher
         Parameters
         ----------
-        research
-            A research instance from the global storage
+        researcher
+            A researcher instance from the global storage
         n_clicks
             ---
         Returns

@@ -56,7 +56,7 @@ class BacteriaProperties:
         None
         """
 
-        self.age += 1
+        self._age += 1
 
     def get_age(self) -> int:
         """
@@ -67,7 +67,7 @@ class BacteriaProperties:
         int
             age property
         """
-        return self.age
+        return self._age
 
     def die(self) -> None:
         """
@@ -77,5 +77,4 @@ class BacteriaProperties:
         -------
         None
         """
-
         self._is_alive = False

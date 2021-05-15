@@ -1,9 +1,9 @@
 from typing import List
-from src.population_research.selectors.abstract_selector import AbstractSelector
-from src.population_research.mutations.abstract_mutator import AbstractMutator
+from src.population_research.simulator.selectors.abstract_selector import AbstractSelector
+from src.population_research.simulator.mutations.abstract_mutator import AbstractMutator
+from src.population_research.simulator.species.abstract_species import AbstractSpecies
+from src.population_research.simulator.genome import Genome
 from src.population_research.exceptions import DeadBacteriaException
-from src.population_research.species.abstract_species import AbstractSpecies, Descendants
-from src.population_research import Genome
 from dataclasses import dataclass, field
 from .bacteria_properties import BacteriaProperties
 
@@ -21,11 +21,10 @@ class Bacteria(AbstractSpecies):
         _children_max: int
             Maximum number of children in one iteration
        """
-
     _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
     _children_max: int = field(default=5)
 
-    def life_move(self, selector: AbstractSelector, mutator: AbstractMutator) -> Descendants:
+    def produce_children(self, selector: AbstractSelector, mutator: AbstractMutator) -> list:
         """
         Life iteration of bacteria
 
@@ -40,6 +39,25 @@ class Bacteria(AbstractSpecies):
         -------
         list
         """
+
+        return self._get_children(selector, mutator)
+
+    def evolve(self, selector: AbstractSelector, mutator: AbstractMutator) -> bool:
+        """
+        One life iteration. An individual change its state within this method
+
+        Parameters
+        ----------
+        selector: AbstractSelector
+            Implementation of the selector that performs the evolution selection
+
+        mutator: AbstractMutator
+            Implementation of a mutator that determines genome variability and offspring
+
+        Returns
+        -------
+            Is alive
+        """
         if not self._properties.get_is_alive():
             raise DeadBacteriaException(str(self))
 
@@ -49,9 +67,9 @@ class Bacteria(AbstractSpecies):
 
         if selector.is_died(self._genome):
             self._die()
-            return Descendants([])
 
-        return self._get_children(selector, mutator)
+        return self.is_alive()
+
 
     def is_alive(self) -> bool:
         """
@@ -79,7 +97,7 @@ class Bacteria(AbstractSpecies):
 
         self._properties.die()
 
-    def _get_children(self, selector: AbstractSelector, mutation_mode: AbstractMutator) -> Descendants:
+    def _get_children(self, selector: AbstractSelector, mutation_mode: AbstractMutator) -> list:
         """
         Generate bacteria's children
 
@@ -105,7 +123,7 @@ class Bacteria(AbstractSpecies):
                 child_genome = mutation_mode.child_genome(self._genome)
                 children.append(Bacteria(child_genome))
 
-        return Descendants(children)
+        return children
 
     def get_parameters_dict(self):
         genome = self.get_genome_dict()
