@@ -153,4 +153,12 @@ class ResearchManage(APIView):
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
-        request.data
+        if request.method == "POST":
+            lifetime = request.data['lifetime']
+            p_for_death = request.data['p_for_death']
+            p_for_reproduction = request.data['p_for_reproduction']
+            cur_population = Storage.get(token)
+            cur_population.add([Bacteria(_genome=Genome(max_life_time=lifetime, p_for_death=p_for_death,
+                                                           p_for_reproduction=p_for_reproduction))])
+            return Response()
+
