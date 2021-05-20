@@ -8,12 +8,12 @@ shinyUI(fluidPage(
   fluidRow(
     column(6, selectInput("selector_type", 
                        "Choose type of selector", 
-                       c("Uniform Selector" = "uni")),
+                       c("Uniform Selector" = "uniform")),
            sliderInput("selector_mode", "Choose level of aggressiveness of a selector",
                        min = 0.1, max = 0.9, value = 0.45, step = 0.05), 
            selectInput("mutator_type", 
                        "Choose type of mutator", 
-                       c("Normal Mutator" = "norm")),
+                       c("Normal Mutator" = "normal")),
            sliderInput("mutator_mode", "Choose level of variability of a mutator",
                        min = 0, max = 0.2, value = 0.1, step = 0.01), 
            numericInput("iter", "Number of iterartions", value = 3),
@@ -35,8 +35,8 @@ shinyUI(fluidPage(
     textOutput('text'),
     tableOutput('table'),
     plotOutput('plot'),
-    actionButton('save_pop', "Save population"),
-    actionButton('save_res', "Save research")
+    # actionButton('save_pop', "Save population"),
+    # actionButton('save_res', "Save research")
     )
   )
 )

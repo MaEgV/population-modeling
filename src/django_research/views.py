@@ -72,9 +72,11 @@ class CreateResearch(APIView):
                 new_individuals = self.get_individuals(individuals_ids)
                 new_population = Population(new_individuals, population_id)
                 print(f'id {population_id}', new_population)
-                return Response(Storage.put(new_population))
+                Storage.put(new_population)
+                return Response()
             else:
-                return Response(Storage.put(Population()))
+                Storage.put(Population())
+                return Response(json.dumps({'id': Storage._last_id - 1}))
 
 
 class ResearchManage(APIView):
@@ -126,15 +128,12 @@ class ResearchManage(APIView):
                 individual.set_id(individual_data.id)
             population_data = md.Population(individuals=population.get_individual_ids(), name=name)
             population_data.save()
-            # for individual in population.get_all():
-            #     individual_data = md.Individual(individual.get_parameters_dict)
-            #     individual_data.save()
-            # output_data = md.Output(name=name, population_id=token, parameters=request['parameters'],
-            #                      result=request['result'])
-            # output_data.save()
+            output_data = md.Output(name=name, population_id=token, parameters=request['parameters'],
+                                 result=request['result'])
+            output_data.save()
         return Response()
 
-    def delete(self, request, token):
+    def get(self, request, token):
         Storage.delete(token)
         print(token)
         return Response('ok')
@@ -145,16 +144,14 @@ class ResearchAddIndividual(APIView):
         print(request)
         print(request.data)
         lifetime = request.data[0]['lifetime']
-        print(lifetime)
         death = request.data[1]['p_for_death']
-        print(death)
         reproduct = request.data[2]['p_for_reproduction']
-        print(reproduct)
         genome = Genome(lifetime, death, reproduct)
         individual_type = request.data[3]['type']
         print(individual_type)
+        print(Storage._storage)
         Storage.get(token).add_individuals([AvailableTypes.get_individual(individual_type, genome)])
-        return Response()
+        return Response(json.dumps({'id': Storage._last_id - 1}))
 
 
 class ResearchRun(APIView):
