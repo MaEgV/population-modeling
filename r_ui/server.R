@@ -2,6 +2,11 @@ library(shiny)
 library(jsonlite)
 library(httr)
 
+server <- function() {
+  path <- 'http://127.0.0.1:8000/population_research/research/'
+  r <-GET(url = path)
+}
+
 server <- function(input, output) {
   
   click <- eventReactive(input$add, {
@@ -10,15 +15,15 @@ server <- function(input, output) {
   
   output$text <- reactive({
     click()
-    data <- structure(list(list(name = "lifetime", value = input$lifetime),
-                          list( name = "p_for_death", value = input$death),
-                          list(name = "p_for_reproduction",
-                               value = input$reproduct)))
+    data_ <- structure(list(list("lifetime" = input$lifetime),
+                          list( "p_for_death" = input$death),
+                          list("p_for_reproduction" = input$reproduct),
+                          list("type" = input$indiv_type)))
     
-    json_data <- toJSON(data, pretty = TRUE, auto_unbox = TRUE)
-    path <- 'url bla bla bla'
-    res <- httr::POST(url = path, body = json_data, encode = "json")
-    paste("Cock", input$death)
+    json_data <- toJSON(data_, pretty = TRUE, auto_unbox = TRUE)
+    path <- 'http://127.0.0.1:8000/population_research/research/0/add/'
+    res <- httr::POST(url = path, content_type_json(), body = json_data)
+    paste("death ", input$death)
   })
 
 }

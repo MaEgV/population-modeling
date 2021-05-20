@@ -21,7 +21,7 @@ shinyUI(fluidPage(
            actionButton('reset', "Reset")), 
     column(6, selectInput("indiv_type", 
                        "Choose type of individual", 
-                       c("Bacteria" = "bact")),
+                       c("Bacteria" = "bacteria")),
            sliderInput("lifetime", "Maximum bacteria lifetime",
                        min = 0, max = 10, value = 3, step = 1),
            sliderInput("death", "Death probability",
