@@ -40,15 +40,17 @@ class CreateResearch(APIView):
         new_individuals = list()
         for id in individuals_ids.values():
             individual = md.Individual.objects.get(pk=int(id))
-            individual_data = json.loads(individual['parameters'])
-            individual_max_lifetime = individual_data['max_lifetime']
+            # individual_data = json.loads(individual.parameters)
+            individual_data = individual.parameters
+            print(individual_data)
+            individual_max_lifetime = individual_data['max_life_time']
             individual_p_for_death = individual_data['p_for_death']
             individual_p_for_reproduction = individual_data['p_for_reproduction']
             individual_age = individual_data['age']
             new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
                                             _genome=Genome(individual_max_lifetime, individual_p_for_death,
                                                            individual_p_for_reproduction)))
-            return new_individuals
+        return new_individuals
 
     def get(self, request, population_id=None):
         """
@@ -64,19 +66,17 @@ class CreateResearch(APIView):
 
         """
         print(population_id)
-        print(request.data)
-        if request.method == 'GET':
-            if population_id is not None:
-                population_data = md.Population.objects.get(pk=population_id)
-                individuals_ids = json.loads(population_data['individuals'])
-                new_individuals = self.get_individuals(individuals_ids)
-                new_population = Population(new_individuals, population_id)
-                print(f'id {population_id}', new_population)
-                Storage.put(new_population)
-                return Response()
-            else:
-                Storage.put(Population())
-                return Response(json.dumps({'id': Storage._last_id - 1}))
+        if population_id is not None:
+            population_data = md.Population.objects.get(pk=int(population_id))
+            # individuals_ids = json.loads(population_data.individuals)
+            new_individuals = self.get_individuals(population_data.individuals)
+            new_population = Population(new_individuals, population_id)
+            print(f'id {population_id}', new_population)
+            Storage.put(new_population)
+            return Response()
+        else:
+            Storage.put(Population())
+            return Response(json.dumps({'id': Storage._last_id - 1}))
 
 
 class ResearchManage(APIView):
@@ -98,10 +98,10 @@ class ResearchManage(APIView):
             name = request.data['name']
             population = Storage.get(token)
             for individual in population.get_all():
-                individual_data = Individual(individual.get_parameters_dict)
+                individual_data = md.Individual(individual.get_parameters_dict)
                 individual_data.save()
                 individual.set_id(individual_data.id)
-            population_data = Population(individuals=population.get_individual_ids, name=name)
+            population_data = md.Population(individuals=population.get_individual_ids, name=name)
             population_data.save()
             population.set_id(population_data.id)
         return Response()
@@ -123,7 +123,7 @@ class ResearchManage(APIView):
             name = str(request.data['name'])
             population = Storage.get(token)
             for individual in population.get_individuals():
-                individual_data = md.Individual(individual.get_parameters_dict())
+                individual_data = md.Individual(parameters=individual.get_parameters_dict())
                 individual_data.save()
                 individual.set_id(individual_data.id)
             population_data = md.Population(individuals=population.get_individual_ids(), name=name)
