@@ -27,9 +27,9 @@ class AbstractSpecies:
     __id: int = field(default=0)
 
     @abstractmethod
-    def life_move(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
+    def produce_children(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
         """
-        One life iteration. An individual can change its state within this method. As a result-the offspring of an individual
+        Randomly produces offspring. As a result-the offspring of an individual
 
         Parameters
         ----------
@@ -42,6 +42,25 @@ class AbstractSpecies:
         Returns
         -------
             Children list
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def evolve(self, selector: AbstractSelector, mutator: AbstractMutator) -> bool:
+        """
+        One life iteration. An individual change its state within this method
+
+        Parameters
+        ----------
+        selector: AbstractSelector
+            Implementation of the selector that performs the evolution selection
+
+        mutator: AbstractMutator
+            Implementation of a mutator that determines genome variability and offspring
+
+        Returns
+        -------
+            Is alive
         """
         raise NotImplementedError
 
@@ -65,46 +84,3 @@ class AbstractSpecies:
     def get_genome_dict(self) -> dict:
         return {'type': (type(self)), 'max_life_time': self._genome.max_life_time, 'p_for_death': self._genome.p_for_death,
                 'p_for_reproduction': self._genome.p_for_reproduction}
-
-
-class Descendants:
-
-    def __init__(self, child_species: list):
-        self.__descendants: list = child_species
-
-    def get_species(self) -> list:
-        return self.__descendants
-
-    def merge(self, new_descendants: list) -> list:
-        few_descendants = self.__descendants
-        for list_ in new_descendants:
-            few_descendants += list_
-        return few_descendants
-
-    def get_bacterias_id(self):
-        ids = list()
-        for child in self.__descendants:
-            ids.append(child.get_id())
-        return ids
-
-
-class Generation:
-
-    def __init__(self, id: int, descendants: list):
-        self.__id: int = id
-        self.__generation: list = descendants
-
-    def get_generation(self) -> list:
-        return self.__generation
-
-    def get_id(self) -> int:
-        return self.__id
-
-    def set_id(self, new_id):
-        self.__id = new_id
-
-    def get_bacterias_ids(self):
-        ids = list()
-        for descendants in self.__generation:
-            ids.extend(descendants.get_bacterias_id())
-        return ids

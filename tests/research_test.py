@@ -1,8 +1,8 @@
 import pytest
 
-from src.population_research import Population
-from src.population_research.research import Research, IterationParameters
-from src.population_research.research import IndividualParameters
+from src.population_research.research.population_research import Population
+from src.population_research.research import Research, ResearchParameters
+from src.population_research.research.parameters import IndividualParameters
 
 
 class Case:
@@ -11,7 +11,7 @@ class Case:
         self.research = Research(Population())
         self.research.add_individual(IndividualParameters('bacteria', 10, 0.4, 0.6))
         self.result = result
-        self.iter_params = IterationParameters(selector, selector_mode, mutator, mutator_mode)
+        self.iter_params = ResearchParameters(selector, selector_mode, mutator, mutator_mode)
 
 
 TEST_CASES_RESEARCH = [Case(name="Research", result=1, mutator_mode=1,
@@ -21,5 +21,5 @@ TEST_CASES_RESEARCH = [Case(name="Research", result=1, mutator_mode=1,
 
 @pytest.mark.parametrize('research_obj', TEST_CASES_RESEARCH, ids=str)
 def test_iterator_population_one(research_obj: Case) -> None:
-    research_result = research_obj.research.do_research(2, research_obj.iter_params)
+    research_result = research_obj.research.run(2, research_obj.iter_params)
     assert len(research_result.data['alive']) == 2

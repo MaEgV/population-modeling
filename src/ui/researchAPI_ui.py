@@ -77,7 +77,7 @@ class ResearchApiUi:
 
         """
         parameters = IterationParameters(selector_type, selector_value, mutator_type, mutator_value)
-        result = self._research.do_research(n_iterations, parameters)
+        result = self._research.run(n_iterations, parameters)
         return [result.data.to_json(date_format='iso', orient='split')]
 
     # dataBase[addResearch, getResearch]

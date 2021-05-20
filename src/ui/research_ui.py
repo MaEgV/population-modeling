@@ -3,7 +3,7 @@ from typing import List
 import dash  # type: ignore
 
 from src.population_research.research import Research
-from src.population_research.research.parameters import IterationParameters, IndividualParameters
+from src.population_research.research.parameters import ResearchParameters, IndividualParameters
 import plotly.express as px  # type: ignore
 import pandas as pd  # type: ignore
 
@@ -71,8 +71,8 @@ class ResearchUI:
             I    print('BUILD', result.data)
 
         """
-        parameters = IterationParameters(selector_type, selector_value, mutator_type, mutator_value)
-        result = self._research.do_research(n_iterations, parameters)
+        parameters = ResearchParameters(selector_type, selector_value, mutator_type, mutator_value)
+        result = self._research.run(n_iterations, parameters)
         return [result.data.to_json(date_format='iso', orient='split')]
 
     # dataBase[addResearch, getResearch]

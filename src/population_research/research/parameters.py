@@ -1,13 +1,14 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
-from src.population_research.selectors.abstract_selector import AbstractSelector, SelectorParameters
-from src.population_research.mutations.abstract_mutator import AbstractMutator
-from src.population_research.species.bacteria.bacteria import Bacteria
-from src.population_research.species.abstract_species import AbstractSpecies
-from src.population_research.selectors.genomic_selector import UniformSelector
-from src.population_research.mutations.normal_mutator import  NormalMutator
-from src.population_research.mutations.mutator_parameters import MutatorParams
-from src.population_research.genome import Genome
+from src.population_research.simulator.selectors.abstract_selector import AbstractSelector, SelectorParameters
+from src.population_research.simulator.mutations.abstract_mutator import AbstractMutator
+from src.population_research.simulator import Bacteria
+from src.population_research.simulator import AbstractSpecies
+from src.population_research.simulator.selectors.genomic_selector import UniformSelector
+from src.population_research.simulator.mutations.normal_mutator import NormalMutator
+from src.population_research.simulator.mutations.mutator_parameters import MutatorParams
+from src.population_research.simulator.genome import Genome
+
 
 @dataclass(frozen=True)
 class AvailableTypes:
@@ -102,7 +103,7 @@ class AvailableTypes:
 
 
 @dataclass(frozen=True)
-class IterationParameters:
+class ResearchParameters:
     """
     Date a class that stores parameters for adding an individual to the research population_research
     Attributes
@@ -128,6 +129,7 @@ class IterationParameters:
     selector_mode: float
     mutator: str
     mutator_mode: float
+    iteration_number: int
 
     def get_params(self) -> tuple:
         selector_params = SelectorParameters(0, self.selector_mode)
@@ -140,7 +142,7 @@ class IterationParameters:
 
     def get_dict(self) -> dict:
         return {'selector': self.selector, 'selector_mode': self.selector_mode, 'mutator': self.mutator,
-                'mutator_mode': self.mutator_mode}
+                'mutator_mode': self.mutator_mode, 'number': self.iteration_number}
 
 
 @dataclass(frozen=True)

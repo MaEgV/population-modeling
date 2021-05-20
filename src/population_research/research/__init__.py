@@ -1,2 +1,2 @@
-from .parameters import IterationParameters
+from .parameters import ResearchParameters, AvailableTypes
 from .population_research import Research

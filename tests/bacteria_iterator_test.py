@@ -1,8 +1,9 @@
 import pytest
 
-from src.population_research import create_bacteria
-from src.population_research import UniformSelector, SelectorParams
-from src.population_research import NormalMutator
+from src.population_research.simulator import create_bacteria
+from src.population_research.simulator.selectors.genomic_selector import UniformSelector
+from src.population_research.simulator.selectors.abstract_selector import SelectorParameters
+from src.population_research.simulator.mutations.normal_mutator import NormalMutator
 
 
 class Case:
@@ -17,13 +18,13 @@ class Case:
 
 TEST_CASES_BACTERIA_ITERATION = [Case(name="Simple case", population_max=10,
                                       max_life_time=5, p_for_death=0.1, p_for_reproduction=0.1,
-                                      mutator=NormalMutator(), selector=UniformSelector(SelectorParams(0, 1)))]
+                                      mutator=NormalMutator(), selector=UniformSelector(SelectorParameters(0, 1)))]
 
 
 @pytest.mark.parametrize('bacteria_iteration_alive', TEST_CASES_BACTERIA_ITERATION, ids=str)
 def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
-    result = bacteria_iteration_alive.bacteria.life_move(bacteria_iteration_alive.selector,
-                                                         bacteria_iteration_alive.mutator)
+    result = bacteria_iteration_alive.bacteria.produce_children(bacteria_iteration_alive.selector,
+                                                                bacteria_iteration_alive.mutator)
     assert len(result.get_species()) >= 0
 
 
@@ -31,5 +32,5 @@ def test_iterator_alive(bacteria_iteration_alive: Case) -> None:
 def test_iterator_dead(bacteria_iteration_dead: Case) -> None:
     bacteria_iteration_dead.bacteria._properties.die()
     with pytest.raises(BaseException):
-        bacteria_iteration_dead.bacteria.life_move(bacteria_iteration_dead.selector,
-                                                   bacteria_iteration_dead.mutator)
+        bacteria_iteration_dead.bacteria.produce_children(bacteria_iteration_dead.selector,
+                                                          bacteria_iteration_dead.mutator)

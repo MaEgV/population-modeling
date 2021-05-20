@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from ..genome import Genome
+from src.population_research.simulator.genome import Genome
 
 
 @dataclass
