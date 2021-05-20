@@ -82,5 +82,5 @@ class AbstractSpecies:
         self.__id = new_id
 
     def get_genome_dict(self) -> dict:
-        return {'type': (type(self)), 'max_life_time': self._genome.max_life_time, 'p_for_death': self._genome.p_for_death,
+        return {'type': str(type(self)), 'max_life_time': self._genome.max_life_time, 'p_for_death': self._genome.p_for_death,
                 'p_for_reproduction': self._genome.p_for_reproduction}
