@@ -1,5 +1,6 @@
 import json
 from typing import Any
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from . import models as md
@@ -29,6 +30,11 @@ class Storage:
 
 
 class CreateResearch(APIView):
+
+    @staticmethod
+    def put_population(new_population: Population) -> int:
+        return Storage.put(new_population)
+
     def get_individuals(self, individuals_ids: dict) -> list:
         new_individuals = list()
         for id in individuals_ids.values():
@@ -50,6 +56,8 @@ class CreateResearch(APIView):
         ----------
         request
         population_id:
+
+
         Returns
         -------
 
@@ -69,6 +77,32 @@ class CreateResearch(APIView):
 
 
 class ResearchManage(APIView):
+
+    def post(self, request, token: str):
+        """
+        Save population
+
+        Parameters
+        ----------
+        request
+        token
+
+        Returns
+        -------
+
+        """
+        if request.method == 'POST':
+            name = request.data['name']
+            population = Storage.get(token)
+            for individual in population.get_all():
+                individual_data = Individual(individual.get_parameters_dict)
+                individual_data.save()
+                individual.set_id(individual_data.id)
+            population_data = Population(individuals=population.get_individual_ids, name=name)
+            population_data.save()
+            population.set_id(population_data.id)
+        return Response()
+
     def post(self, request, token: str):
         """
         Save research
