@@ -2,7 +2,7 @@ from typing import Dict
 from src.population_research.simulator import Population
 import pandas as pd  # type: ignore
 from dataclasses import dataclass, field
-from src.population_research.researcher.parameters import IterationParameters, IndividualParameters
+from src.population_research.research.parameters import ResearchParameters, IndividualParameters
 
 
 @dataclass(frozen=True)
@@ -15,14 +15,14 @@ class IterationResult:
         id: int
             Research id
         data: pd.DataFrame
-            Statistics collected at each iteration of the researcher
+            Statistics collected at each iteration of the research
             Has columns defined in Stats and the number of rows equal to the number of iterations
-        params: IterationParameters
+        params: ResearchParameters
             Parameters that were received as input
     """
     id: int
     data: pd.DataFrame
-    parameters: IterationParameters
+    parameters: ResearchParameters
 
 
 @dataclass(frozen=True)
@@ -42,24 +42,14 @@ class Research:
               params: IterParams) -> IterRes
         Show number of species in population_research
     """
-    _population: Population = field(default_factory=Population)
-
-    def add_individual(self, parameters: IndividualParameters) -> None:
-        self._population.add_generation([parameters.get()])
-        print(self)
-
-    def do_research(self,
-                    population,
-                    iteration_number: int,
-                    parameters: IterationParameters) -> IterationResult:
+    @staticmethod
+    def run(population,
+            parameters: ResearchParameters) -> IterationResult:
         """
             Give data in DataFrame about population_research size and state on each iteration
 
             Attributes
             ----------
-            iteration_number: int: Population
-                Number of supposed iterations
-
             selectors: AbstractSelector
                 Chosen selectors for this population_research
 
@@ -71,19 +61,13 @@ class Research:
             DataFrame
                 Table with state of population_research on each iteration
         """
-        frame = Stats.get_empty_frame()
+        df = Stats.get_empty_frame()
 
-        for _ in range(iteration_number):
-            self._population.produce_new_generation(*parameters.get_params())
-            frame = frame.append(Stats.get_statistic(self._population), ignore_index=True)
+        for _ in range(parameters.iteration_number):
+            population.add_individuals(population.produce_new_generation(*parameters.get_params()).get_species())
+            df = df.append(Stats.get_statistic(population), ignore_index=True)
 
-        return IterationResult(0, frame, parameters)
-
-    def get_populations_size(self) -> int:
-        return len(self._population.get_individuals())
-
-    def drop(self) -> None:
-        self._population.drop()
+        return IterationResult(0, df, parameters)
 
 
 class Stats:
@@ -122,10 +106,10 @@ class Stats:
         Returns
         -------
         dict
-            Results of stats researcher
+            Results of stats research
 
         """
-        all_n, alive_n = len(population.get_individuals()), len(population.get_alive())
-        dead_n = all_n - alive_n
+        all_n = len(population.get_individuals())
+        dead_n = all_n - 0
 
-        return {'all': all_n, 'alive': alive_n, 'dead': dead_n}
+        return {'all': all_n, 'alive': 0, 'dead': dead_n}

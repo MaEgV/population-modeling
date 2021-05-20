@@ -1,6 +1,6 @@
 import pytest
 
-from src.population_research.researcher.population_research import Population
+from src.population_research.research.population_research import Population
 from src.population_research.simulator import create_bacteria
 from src.population_research.simulator.selectors.genomic_selector import UniformSelector, SelectorParameters
 
@@ -15,7 +15,7 @@ class Case:
         self.mutator = mutator
         self.selector = selector
         self.population = Population()
-        self.population.add_generation([self.bacteria])
+        self.population.add_individuals([self.bacteria])
 
 
 TEST_CASES_POPULATION_ITERATOR_ZERO = [Case(name="Zero iterations", result=1,
@@ -35,6 +35,7 @@ def test_iterator_population_one(population_iterator: Case) -> None:
 
     all_individuals = len(population_iterator.population.get_individuals())
     assert all_individuals == population_iterator.result
+
 
 @pytest.mark.parametrize('population_iterator', TEST_CASES_POPULATION_ITERATOR, ids=str)
 def test_iterator_population(population_iterator: Case) -> None:

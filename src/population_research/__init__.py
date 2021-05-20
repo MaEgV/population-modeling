@@ -1,1 +1,1 @@
-from .researcher import parameters, population_research
+from .research import parameters, population_research

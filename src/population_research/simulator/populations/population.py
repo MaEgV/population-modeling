@@ -52,7 +52,7 @@ class Population:
     _individuals: list = field(default_factory=list)
     __id: int = field(default=0)
 
-    def add_generation(self, new_generation: list) -> None:
+    def add_individuals(self, new_individuals: list) -> None:
         """
         Wrapper for processing parent-child pairs.
 
@@ -61,7 +61,7 @@ class Population:
         population_research: Population
             Processed population_research
 
-        new_generation: list
+        new_individuals: list
             Contain pairs parent-children
 
         Returns
@@ -69,9 +69,9 @@ class Population:
         None
 
         """
-        self._individuals.extend(new_generation)
+        self._individuals.extend(new_individuals)
 
-    def produce_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator, evolve: bool) -> Generation:
+    def produce_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator, evolve: bool = True) -> Generation:
         """
         The time unit of evolution for a population_research. Processes a new generation in the population_research
 
@@ -90,7 +90,8 @@ class Population:
         """
         if evolve:
             for individual in self._individuals:
-                individual.evolve(selector, mutator)
+                if individual.is_alive():
+                    individual.evolve(selector, mutator)
 
         new_generation = Generation()
 
@@ -119,8 +120,6 @@ class Population:
         """
         return self._individuals
 
-
-
     def get_id(self) -> int:
         return self.__id
 
@@ -130,5 +129,5 @@ class Population:
     def get_individual_ids(self) -> dict:
         ids = dict()
         for individual in self._individuals:
-            ids[str(individual.get_id)] = individual.get_id
+            ids[str(individual.get_id())] = individual.get_id()
         return ids

@@ -70,7 +70,6 @@ class Bacteria(AbstractSpecies):
 
         return self.is_alive()
 
-
     def is_alive(self) -> bool:
         """
         True if bacteria is alive, else - False
@@ -116,7 +115,7 @@ class Bacteria(AbstractSpecies):
 
         """
 
-        children: List[Bacteria] = list()
+        children = list()
         if self.is_alive():
             while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli
                 # test
@@ -127,7 +126,7 @@ class Bacteria(AbstractSpecies):
 
     def get_parameters_dict(self):
         genome = self.get_genome_dict()
-        genome |= {'age': self._properties.get_age()}
+        genome['age'] = self._properties.get_age()
 
 
 def create_bacteria(

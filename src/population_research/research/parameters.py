@@ -13,7 +13,7 @@ from src.population_research.simulator.genome import Genome
 @dataclass(frozen=True)
 class AvailableTypes:
     """
-        The class contains an enumeration of all the types that can be used in the researcher
+        The class contains an enumeration of all the types that can be used in the research
 
         Attributes
         ----------
@@ -103,9 +103,9 @@ class AvailableTypes:
 
 
 @dataclass(frozen=True)
-class IterationParameters:
+class ResearchParameters:
     """
-    Date a class that stores parameters for adding an individual to the researcher population_research
+    Date a class that stores parameters for adding an individual to the research population_research
     Attributes
     ----------
     selector: str
@@ -129,6 +129,7 @@ class IterationParameters:
     selector_mode: float
     mutator: str
     mutator_mode: float
+    iteration_number: int
 
     def get_params(self) -> tuple:
         selector_params = SelectorParameters(0, self.selector_mode)
@@ -141,13 +142,13 @@ class IterationParameters:
 
     def get_dict(self) -> dict:
         return {'selector': self.selector, 'selector_mode': self.selector_mode, 'mutator': self.mutator,
-                'mutator_mode': self.mutator_mode}
+                'mutator_mode': self.mutator_mode, 'number': self.iteration_number}
 
 
 @dataclass(frozen=True)
 class IndividualParameters:
     """
-    Date a class that stores parameters for adding an individual to the researcher population_research
+    Date a class that stores parameters for adding an individual to the research population_research
     Attributes
     ----------
     species: str

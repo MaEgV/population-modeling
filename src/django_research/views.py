@@ -1,11 +1,11 @@
 import json
 from typing import Any
-
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Output, Population, Individual
+from . import models as md
 from src.population_research.simulator.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
-from src.population_research.simulator.populations import population
+from src.population_research.simulator.populations.population import Population
+from src.population_research.research import AvailableTypes, Research, ResearchParameters
 
 
 class Storage:
@@ -14,6 +14,7 @@ class Storage:
 
     @staticmethod
     def put(item: Any):
+        print(Storage._storage)
         Storage._storage[str(Storage._last_id)] = item
         Storage._last_id += 1
         return Storage._last_id - 1
@@ -28,15 +29,10 @@ class Storage:
 
 
 class CreateResearch(APIView):
-
-    @staticmethod
-    def put_population(new_population: Population) -> int:
-        return Storage.put(new_population)
-
     def get_individuals(self, individuals_ids: dict) -> list:
         new_individuals = list()
         for id in individuals_ids.values():
-            individual = Individual.objects.get(pk=int(id))
+            individual = md.Individual.objects.get(pk=int(id))
             individual_data = json.loads(individual['parameters'])
             individual_max_lifetime = individual_data['max_lifetime']
             individual_p_for_death = individual_data['p_for_death']
@@ -54,8 +50,6 @@ class CreateResearch(APIView):
         ----------
         request
         population_id:
-
-
         Returns
         -------
 
@@ -63,42 +57,18 @@ class CreateResearch(APIView):
         print(population_id)
         print(request.data)
         if request.method == 'GET':
-
-            if population_id:
-                population_data = Population.objects.get(pk=population_id)
+            if population_id is not None:
+                population_data = md.Population.objects.get(pk=population_id)
                 individuals_ids = json.loads(population_data['individuals'])
                 new_individuals = self.get_individuals(individuals_ids)
                 new_population = Population(new_individuals, population_id)
-                return Response(self.put_population(new_population))
+                print(f'id {population_id}', new_population)
+                return Response(Storage.put(new_population))
             else:
-                return Response(self.put_population(population.Population()))
+                return Response(Storage.put(Population()))
 
 
 class ResearchManage(APIView):
-
-    # def post(self, request, token: str):
-    #     """
-    #     Save population
-    #
-    #     Parameters
-    #     ----------
-    #     request
-    #     token
-    #
-    #     Returns
-    #     -------
-    #
-    #     """
-    #     if request.method == 'POST':
-    #         name = request.data['name']
-    #         population = Storage.get(token)
-    #         population_data = Population(individuals=population.get_individual_ids, name=name)
-    #         population_data.save()
-    #         for individual in population.get_all():
-    #             individual_data = Individual(individual.get_parameters_dict)
-    #             individual_data.save()
-    #     return Response()
-
     def post(self, request, token: str):
         """
         Save research
@@ -113,22 +83,21 @@ class ResearchManage(APIView):
 
         """
         if request.method == 'POST':
-            name = request.data['name']
+            name = str(request.data['name'])
             population = Storage.get(token)
-            for individual in population.get_all():
-                individual_data = Individual(individual.get_parameters_dict)
+            for individual in population.get_individuals():
+                individual_data = md.Individual(individual.get_parameters_dict())
                 individual_data.save()
                 individual.set_id(individual_data.id)
-            population_data = Population(individuals=population.get_individual_ids, name=name)
+            population_data = md.Population(individuals=population.get_individual_ids(), name=name)
             population_data.save()
-            for individual in population.get_all():
-                individual_data = Individual(individual.get_parameters_dict)
-                individual_data.save()
-            output_data = Output(name=name, population_id=token, parameters=request['parameters'],
-                                 result=request['result'])
-            output_data.save()
+            # for individual in population.get_all():
+            #     individual_data = md.Individual(individual.get_parameters_dict)
+            #     individual_data.save()
+            # output_data = md.Output(name=name, population_id=token, parameters=request['parameters'],
+            #                      result=request['result'])
+            # output_data.save()
         return Response()
-
 
     def delete(self, request, token):
         Storage.delete(token)
@@ -139,11 +108,20 @@ class ResearchManage(APIView):
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
         print(request.data)
+        genome = Genome(request.data['lt'], request.data['p_d'], request.data['p_r'])
+        individual_type = request.data['type']
+        Storage.get(token).add_individuals([AvailableTypes.get_individual(individual_type, genome)])
         return Response()
 
 
 class ResearchRun(APIView):
     def get(self, request, token: str):
-        print(request)
         print(request.GET)
-        return Response()
+        population = Storage.get(token)
+        res = Research.run(population,
+                           ResearchParameters(request.GET['s_t'],
+                                              float(request.GET['s_m']),
+                                              request.GET['m_t'],
+                                              float(request.GET['m_m']),
+                                              int(request.GET['n'])))
+        return Response(res.data)

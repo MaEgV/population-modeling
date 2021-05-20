@@ -77,18 +77,18 @@ class ResearchApiUi:
 
         """
         parameters = IterationParameters(selector_type, selector_value, mutator_type, mutator_value)
-        result = self._research.do_research(n_iterations, parameters)
+        result = self._research.run(n_iterations, parameters)
         return [result.data.to_json(date_format='iso', orient='split')]
 
     # dataBase[addResearch, getResearch]
 
     def reset(self, n_clicks: int) -> list:
         """
-        Erase data in the researcher
+        Erase data in the research
         Parameters
         ----------
-        researcher
-            A researcher instance from the global storage
+        research
+            A research instance from the global storage
         n_clicks
             ---
         Returns
