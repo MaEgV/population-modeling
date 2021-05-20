@@ -7,6 +7,7 @@ from . import models as md
 from src.population_research.simulator.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
 from src.population_research.simulator.populations.population import Population
 from src.population_research.research import AvailableTypes, Research, ResearchParameters
+from .models import Individual
 
 
 class Storage:
@@ -141,9 +142,17 @@ class ResearchManage(APIView):
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
+        print(request)
         print(request.data)
-        genome = Genome(request.data['lt'], request.data['p_d'], request.data['p_r'])
-        individual_type = request.data['type']
+        lifetime = request.data[0]['lifetime']
+        print(lifetime)
+        death = request.data[1]['p_for_death']
+        print(death)
+        reproduct = request.data[2]['p_for_reproduction']
+        print(reproduct)
+        genome = Genome(lifetime, death, reproduct)
+        individual_type = request.data[3]['type']
+        print(individual_type)
         Storage.get(token).add_individuals([AvailableTypes.get_individual(individual_type, genome)])
         return Response()
 
