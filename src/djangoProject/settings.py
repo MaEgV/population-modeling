@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-*)td%hca^weqx=u-jtx-^0-n@d+=-tyk7n1lye%@-spmc7!aer
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+HEROKU = True
+ALLOWED_HOSTS = ['population-modeling.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -76,6 +76,8 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -83,6 +85,25 @@ DATABASES = {
     }
 }
 
+if HEROKU:
+    import dj_database_url
+
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
+if HEROKU:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'unix:/tmp/memcached.sock',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -108,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

@@ -29,78 +29,55 @@ class Storage:
         del Storage._storage[key]
 
 
+def get_individuals(individuals_ids: dict) -> list:
+    new_individuals = list()
+    for id in individuals_ids.values():
+        individual = md.Individual.objects.get(pk=int(id))
+        individual_data = individual.parameters
+        individual_max_lifetime = individual_data['max_life_time']
+        individual_p_for_death = individual_data['p_for_death']
+        individual_p_for_reproduction = individual_data['p_for_reproduction']
+        individual_age = individual_data['age']
+        new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
+                                        _genome=Genome(individual_max_lifetime, individual_p_for_death,
+                                                       individual_p_for_reproduction)))
+    return new_individuals
+
+
 class CreateResearch(APIView):
-    @staticmethod
-    def put_population(new_population: Population) -> int:
-        return Storage.put(new_population)
-
-    def get_individuals(self, individuals_ids: dict) -> list:
-        new_individuals = list()
-        for id in individuals_ids.values():
-            individual = md.Individual.objects.get(pk=int(id))
-            individual_data = individual.parameters
-            individual_max_lifetime = individual_data['max_life_time']
-            individual_p_for_death = individual_data['p_for_death']
-            individual_p_for_reproduction = individual_data['p_for_reproduction']
-            individual_age = individual_data['age']
-            new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
-                                            _genome=Genome(individual_max_lifetime, individual_p_for_death,
-                                                           individual_p_for_reproduction)))
-        return new_individuals
-
     def get(self, request, population_id=None):
-        """
-        Load
-        Parameters
-        ----------
-        request
-        population_id:
-
-
-        Returns
-        -------
-
-        """
-        print(population_id)
         if population_id is not None:
             population_data = md.Population.objects.get(pk=int(population_id))
-            new_individuals = self.get_individuals(population_data.individuals)
+            new_individuals = get_individuals(population_data.individuals)
             new_population = Population(new_individuals, population_id)
-            print(f'id {population_id}', new_population)
-            return Response(Storage.put(new_population))
+            return Response(data=Storage.put(new_population), status=200)
         else:
-            return Response(Storage.put(Population()))
+            return Response(data=Storage.put(Population()), status=200)
 
 
 class ResearchManage(APIView):
     def post(self, request, token: str):
-        """
-        Save research
-
-        Parameters
-        ----------
-        request
-        token
-
-        Returns
-        -------
-
-        """
-        if request.method == 'POST':
-            name = str(request.data['name'])
+        try:
             population = Storage.get(token)
-            for individual in population.get_individuals():
-                individual_data = md.Individual(parameters=individual.get_parameters_dict())
-                individual_data.save()
-                individual.set_id(individual_data.id)
-            md.Population.objects.create(name=name, individuals=population.get_individual_ids())
+        except KeyError:
+            return Response(status=404)
 
-        return Response()
+        name = str(request.data['name'])
+        for individual in population.get_individuals():
+            individual_data = md.Individual(parameters=individual.get_parameters_dict())
+            individual_data.save()
+            individual.set_id(individual_data.id)
+        md.Population.objects.create(name=name, individuals=population.get_individual_ids())
+
+        return Response(status=200)
 
     def delete(self, request, token):
-        Storage.delete(token)
-        print(token)
-        return Response('ok')
+        try:
+            Storage.delete(token)
+            return Response('Population was deleted', status=200)
+        except KeyError:
+            return Response('No such token', status=404)
+
 
 
 class ResearchAddIndividual(APIView):
