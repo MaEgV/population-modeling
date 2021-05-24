@@ -1,13 +1,12 @@
 import json
 from typing import Any
-
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from . import models as md
 from src.population_research.simulator.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
 from src.population_research.simulator.populations.population import Population
 from src.population_research.research import AvailableTypes, Research, ResearchParameters
-from .models import Individual
+import pandas as pd
 
 
 class Storage:
@@ -31,7 +30,6 @@ class Storage:
 
 
 class CreateResearch(APIView):
-
     @staticmethod
     def put_population(new_population: Population) -> int:
         return Storage.put(new_population)
@@ -40,9 +38,7 @@ class CreateResearch(APIView):
         new_individuals = list()
         for id in individuals_ids.values():
             individual = md.Individual.objects.get(pk=int(id))
-            # individual_data = json.loads(individual.parameters)
             individual_data = individual.parameters
-            print(individual_data)
             individual_max_lifetime = individual_data['max_life_time']
             individual_p_for_death = individual_data['p_for_death']
             individual_p_for_reproduction = individual_data['p_for_reproduction']
@@ -68,7 +64,6 @@ class CreateResearch(APIView):
         print(population_id)
         if population_id is not None:
             population_data = md.Population.objects.get(pk=int(population_id))
-            # individuals_ids = json.loads(population_data.individuals)
             new_individuals = self.get_individuals(population_data.individuals)
             new_population = Population(new_individuals, population_id)
             print(f'id {population_id}', new_population)
@@ -78,32 +73,6 @@ class CreateResearch(APIView):
 
 
 class ResearchManage(APIView):
-
-    def post(self, request, token: str):
-        """
-        Save population
-
-        Parameters
-        ----------
-        request
-        token
-
-        Returns
-        -------
-
-        """
-        if request.method == 'POST':
-            name = request.data['name']
-            population = Storage.get(token)
-            for individual in population.get_all():
-                individual_data = md.Individual(individual.get_parameters_dict)
-                individual_data.save()
-                individual.set_id(individual_data.id)
-            population_data = md.Population(individuals=population.get_individual_ids, name=name)
-            population_data.save()
-            population.set_id(population_data.id)
-        return Response()
-
     def post(self, request, token: str):
         """
         Save research
@@ -124,14 +93,8 @@ class ResearchManage(APIView):
                 individual_data = md.Individual(parameters=individual.get_parameters_dict())
                 individual_data.save()
                 individual.set_id(individual_data.id)
-            population_data = md.Population(individuals=population.get_individual_ids(), name=name)
-            population_data.save()
-            # for individual in population.get_all():
-            #     individual_data = md.Individual(individual.get_parameters_dict)
-            #     individual_data.save()
-            # output_data = md.Output(name=name, population_id=token, parameters=request['parameters'],
-            #                      result=request['result'])
-            # output_data.save()
+            md.Population.objects.create(name=name, individuals=population.get_individual_ids())
+
         return Response()
 
     def delete(self, request, token):
@@ -142,17 +105,11 @@ class ResearchManage(APIView):
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
-        print(request)
-        print(request.data)
-        lifetime = request.data[0]['lifetime']
-        print(lifetime)
-        death = request.data[1]['p_for_death']
-        print(death)
-        reproduct = request.data[2]['p_for_reproduction']
-        print(reproduct)
+        lifetime = request.data['lifetime']
+        death = request.data['p_for_death']
+        reproduct = request.data['p_for_reproduction']
         genome = Genome(lifetime, death, reproduct)
-        individual_type = request.data[3]['type']
-        print(individual_type)
+        individual_type = request.data['type']
         Storage.get(token).add_individuals([AvailableTypes.get_individual(individual_type, genome)])
         return Response()
 
@@ -168,3 +125,32 @@ class ResearchRun(APIView):
                                               float(request.GET['m_m']),
                                               int(request.GET['n'])))
         return Response(res.data)
+
+
+def get_model_table(model):
+    table = pd.DataFrame()
+    for entity in model.objects.all():
+        table = table.append(entity.get_data(), ignore_index=True)
+
+    return table
+
+
+def get_model_from_string(model_key):
+    if model_key == 'populations':
+        return md.Population
+    elif model_key == 'results':
+        return md.Output
+
+
+class DbManage(APIView):
+    def get(self, request, model_key):
+        response = Response()
+        model = get_model_from_string(model_key)
+
+        if model:
+            response.data = get_model_table(model)
+            response.status = 200
+        else:
+            response.status = 404
+
+        return response

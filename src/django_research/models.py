@@ -10,12 +10,21 @@ class Output(models.Model):
     result = jsonfield.JSONField()
     time = models.DateTimeField(default=timezone.now)
 
+    def get_data(self):
+        return {"name": self.name,
+                "time": self.time,
+                "population_id": self.population_id,
+                "parameters": self.parameters,
+                "result": self.result}
+
 
 class Population(models.Model):
     name = models.CharField(max_length=20)
     individuals = jsonfield.JSONField()
     time = models.DateTimeField(default=timezone.now)
 
+    def get_data(self):
+        return {"name": self.name, "time": self.time, "info": len(self.individuals)}
 
 class Individual(models.Model):
     parameters = jsonfield.JSONField()
