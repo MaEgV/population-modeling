@@ -23,7 +23,7 @@ shinyUI(fluidPage(
                        "Choose type of individual", 
                        c("Bacteria" = "bacteria")),
            sliderInput("lifetime", "Maximum bacteria lifetime",
-                       min = 0, max = 10, value = 3, step = 1),
+                      min = 0, max = 10, value = 3, step = 1),
            sliderInput("death", "Death probability",
                        min = 0, max = 1, value = 0.3, step = 0.1),
            sliderInput("reproduct", "Reproduction probability",
@@ -31,12 +31,18 @@ shinyUI(fluidPage(
            actionButton('add', "Add")),
     column(12,
            actionButton('load_pop', "Load population"),
-           actionButton('load_res', "Load research")),
+           numericInput("load_pop_num", "Number of iterartions", value = 0),
+           actionButton('load_res', "Load research"),
+           numericInput("load_res_num", "Number of iterartions", value = 0),
+           actionButton('save_pop', "Save population"),
+           textInput('save_pop_name', 'Populaton name'),
+           actionButton('save_res', "Save research"),
+           textInput('save_res_name', 'Research name')),
+    column(12, 
     textOutput('text'),
     tableOutput('table'),
-    plotOutput('plot'),
-    # actionButton('save_pop', "Save population"),
-    # actionButton('save_res', "Save research")
+    plotOutput('plot'))
+
     )
   )
 )

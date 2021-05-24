@@ -59,5 +59,50 @@ server <- function(input, output) {
   observeEvent(input$reset, {
     path <- paste0('http://127.0.0.1:8000/population_research/research/', id, '/delete/')
     res <- GET(url = path)
+    
+  })
+  
+  observeEvent(input$load_pop{
+      path <- paste0('http://127.0.0.1:8000/population_research/research/', input$load_pop_num)
+      res <- GET(url = path)
+      new_data = jsonlite::fromJSON(content(res, 'text'))
+      new_data = jsonlite::fromJSON(new_data)
+      id <<- new_data
+      print(id)      
+  })
+  
+  observeEvent(input$load_res {
+    path <- paste0('http://127.0.0.1:8000/population_research/research/', input$load_res_num)
+    res <- GET(url = path)
+    new_data = jsonlite::fromJSON(content(res, 'text'))
+    new_data = jsonlite::fromJSON(new_data)
+    id <<- new_data
+    print(id)    
+  })
+  
+  observeEvent(input$save_pop {
+    data_ <- structure(list(list("name" = input$save_pop_name)))
+    
+    json_data <- toJSON(data_, pretty = TRUE, auto_unbox = TRUE)
+    path <- paste0('http://127.0.0.1:8000/population_research/research/', id, '/add/')
+    res <- httr::POST(url = path, content_type_json(), body = json_data)
+    
+    new_data = jsonlite::fromJSON(content(res, 'text'))
+    new_data = jsonlite::fromJSON(new_data)
+    id <<- new_data
+    print(id) 
+  })
+  
+  observeEvent(input$save_res {
+    data_ <- structure(list(list("name" = input$save_res_name)))
+    
+    json_data <- toJSON(data_, pretty = TRUE, auto_unbox = TRUE)
+    path <- paste0('http://127.0.0.1:8000/population_research/research/', id, '/add/')
+    res <- httr::POST(url = path, content_type_json(), body = json_data)
+    
+    new_data = jsonlite::fromJSON(content(res, 'text'))
+    new_data = jsonlite::fromJSON(new_data)
+    id <<- new_data
+    print(id) 
   })
 }

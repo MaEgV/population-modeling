@@ -73,7 +73,7 @@ class CreateResearch(APIView):
             new_population = Population(new_individuals, population_id)
             print(f'id {population_id}', new_population)
             Storage.put(new_population)
-            return Response()
+            return Response(json.dumps({'id': Storage._last_id - 1}))
         else:
             Storage.put(Population())
             return Response(json.dumps({'id': Storage._last_id - 1}))
@@ -104,7 +104,7 @@ class ResearchManage(APIView):
             population_data = md.Population(individuals=population.get_individual_ids, name=name)
             population_data.save()
             population.set_id(population_data.id)
-        return Response()
+        return Response(json.dumps({'id': Storage._last_id - 1}))
 
     def post(self, request, token: str):
         """
@@ -131,7 +131,7 @@ class ResearchManage(APIView):
             output_data = md.Output(name=name, population_id=token, parameters=request['parameters'],
                                  result=request['result'])
             output_data.save()
-        return Response()
+        return Response(json.dumps({'id': Storage._last_id - 1}))
 
     def get(self, request, token):
         Storage.delete(token)
