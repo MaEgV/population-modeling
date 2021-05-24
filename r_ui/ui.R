@@ -31,16 +31,22 @@ shinyUI(fluidPage(
            actionButton('add', "Add")),
     column(12,
            actionButton('load_pop', "Load population"),
-           numericInput("load_pop_num", "Number of iterartions", value = 0),
+           DT::dataTableOutput('table_1'),
+           numericInput("load_pop_num", "Population number", value = 0),
+           actionButton('get_pop', "Get population")),
+    column(12, 
            actionButton('load_res', "Load research"),
-           numericInput("load_res_num", "Number of iterartions", value = 0),
-           actionButton('save_pop', "Save population"),
+           tableOutput('table_2'),
+           numericInput("load_res_num", "Research number", value = 0),
+           actionButton('get_res', "Get research")),
+
+    column(12,
            textInput('save_pop_name', 'Populaton name'),
-           actionButton('save_res', "Save research"),
-           textInput('save_res_name', 'Research name')),
+           actionButton('save_pop', "Save population"),
+           textInput('save_res_name', 'Research name'),
+           actionButton('save_res', "Save research")),
     column(12, 
     textOutput('text'),
-    tableOutput('table'),
     plotOutput('plot'))
 
     )
