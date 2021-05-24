@@ -1,1 +1,1 @@
-web: gunicorn population-modeling.wsgi --log-file -
+web: gunicorn population-modeling.wsgi
