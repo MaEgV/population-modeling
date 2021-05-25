@@ -1,5 +1,5 @@
-from src.population_research import create_bacteria
-from src.population_research.research import Research, ResearchParameters
+from src.research import create_bacteria
+from src.research.research import Research, ResearchParameters
 
 
 research = Research()

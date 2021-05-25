@@ -16,8 +16,8 @@ class ResearchApiUi:
                        death: float,
                        reproduction: float) -> List[str]:
         """
-        Adds an individual with the specified parameters to the population_research
-        and returns the count of bacteria in the population_research
+        Adds an individual with the specified parameters to the research
+        and returns the count of bacteria in the research
 
         Parameters
         ----------
@@ -44,7 +44,7 @@ class ResearchApiUi:
                   "p2": reproduction}
         ))
 
-        return [f"current population_research size:"]
+        return [f"current research size:"]
 
     def build(self,
               build_clicks: int,
@@ -54,7 +54,7 @@ class ResearchApiUi:
               mutator_type: str,
               mutator_value: float) -> list:
         """
-        Conducts a statistical study of the evolution of the population_research
+        Conducts a statistical study of the evolution of the research
 
         Parameters
         ----------

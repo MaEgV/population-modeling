@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from src.population_research.simulator.genome import Genome
+from src.research.simulator.genome import Genome
 
 
 class AbstractMutator:
