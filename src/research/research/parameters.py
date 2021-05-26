@@ -1,13 +1,13 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
-from src.population_research.simulator.selectors.abstract_selector import AbstractSelector, SelectorParameters
-from src.population_research.simulator.mutations.abstract_mutator import AbstractMutator
-from src.population_research.simulator import Bacteria
-from src.population_research.simulator import AbstractSpecies
-from src.population_research.simulator.selectors.genomic_selector import UniformSelector
-from src.population_research.simulator.mutations.normal_mutator import NormalMutator
-from src.population_research.simulator.mutations.mutator_parameters import MutatorParams
-from src.population_research.simulator.genome import Genome
+from src.research.simulator.selectors.abstract_selector import AbstractSelector, SelectorParameters
+from src.research.simulator.mutations.abstract_mutator import AbstractMutator
+from src.research.simulator import Bacteria
+from src.research.simulator import AbstractSpecies
+from src.research.simulator.selectors.genomic_selector import UniformSelector
+from src.research.simulator.mutations.normal_mutator import NormalMutator
+from src.research.simulator.mutations.mutator_parameters import MutatorParams
+from src.research.simulator.genome import Genome
 
 
 @dataclass(frozen=True)
@@ -105,7 +105,7 @@ class AvailableTypes:
 @dataclass(frozen=True)
 class ResearchParameters:
     """
-    Date a class that stores parameters for adding an individual to the research population_research
+    Date a class that stores parameters for adding an individual to the research research
     Attributes
     ----------
     selector: str
@@ -148,7 +148,7 @@ class ResearchParameters:
 @dataclass(frozen=True)
 class IndividualParameters:
     """
-    Date a class that stores parameters for adding an individual to the research population_research
+    Date a class that stores parameters for adding an individual to the research research
     Attributes
     ----------
     species: str

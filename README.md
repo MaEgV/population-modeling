@@ -22,7 +22,7 @@ This package is based on the following classes and the logic of working with the
 ### Population
 This class stores a graph of the bacteria in the population. The graph forms a tree, so the only attribute of the class is the genealogical tree field. It is also passed to initialize an instance of the class when it is created:  
 ```Python
-genealogical_tree = igraph.Graph(directed=True)  # create population_research-graph
+genealogical_tree = igraph.Graph(directed=True)  # create research-graph
 first_bacteria = create_bacteria()  # create bacteria by suggested function
 genealogical_tree.add_vertex(
 		bacteria=first_bacteria, 
@@ -38,10 +38,10 @@ Draw and iterate are responsible for this, respectively.
 
 #### Draw
 ```Python
-population.draw("filename.png")  # Draw a population_research as a tree and save pitcure at file
+population.draw("filename.png")  # Draw a research as a tree and save pitcure at file
 ```
 ```Python
-population.draw()  # Draw a population_research without saving
+population.draw()  # Draw a research without saving
 ```
 Implements the tree graph rendering mechanism.  
 
@@ -50,10 +50,10 @@ Implements the tree graph rendering mechanism.
 
 #### Iterate
 ```Python
-selector = Selector(ExternalFactors())  # creating the initial parameters of the population_research and selectors
+selector = Selector(ExternalFactors())  # creating the initial parameters of the research and selectors
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
-iterate(population, selector, mutation_mode)  # Iterate all bacterias in population_research
+iterate(population, selector, mutation_mode)  # Iterate all bacterias in research
 ```
 Function that implements a single time cycle of a population. This cycle consists in the sequential updating of the state of each bacterium, according to the mechanisms of selection and mutation.  
 
@@ -86,10 +86,10 @@ iterate(selector: Selector, mutation_mode: MutationalProcesses, bacteria: Bacter
 #### Genome
 Storage of the genetic parameters of the bacterium that will change and be inherited by descendants.
 ```Python
-selector = Selector(ExternalFactors())  # creating the initial parameters of the population_research and selectors
+selector = Selector(ExternalFactors())  # creating the initial parameters of the research and selectors
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
-  iterate(bacteria, selector, mutation_mode)  # Iterate all bacterias in population_research
+  iterate(bacteria, selector, mutation_mode)  # Iterate all bacterias in research
 ```
 `max_life_time` - parameter that marks the maximum number of iterations that a bacterium can survive.
 `p_for_death` - internal probability of dying during the next iteration. The selection operator can affect the resulting probability.
@@ -102,7 +102,7 @@ external_factors = ExternalFactors()
 have_to_die_func = default_have_to_die  # Callable[ext_factors: ExternalFactors, genome: Genome]
 have_to_reproduct = default_have_to_reproduct
 
-selector = Selector(external_factors, have_to_die_func, have_to_reproduct)  # creating the initial parameters of the population_research and selectors
+selector = Selector(external_factors, have_to_die_func, have_to_reproduct)  # creating the initial parameters of the research and selectors
 ```
 `external_factors` - a set of initial external environmental factors.  
 `have_to_die_func` - a function that determines whether the bacteria should die based on the genome and external factors.  
@@ -126,14 +126,14 @@ from src.population_modeling import create_bacteria, create_population, NormalMu
 
 iterate
 
-first_bacteria = create_bacteria(p_for_death=0.1)  # creating first bacteria to start a population_research
-population = create_population(first_bacteria)  # creating population_research
+first_bacteria = create_bacteria(p_for_death=0.1)  # creating first bacteria to start a research
+population = create_population(first_bacteria)  # creating research
 
-selector = Selector(ExternalFactors())  # creating the initial parameters of the population_research and selectors
+selector = Selector(ExternalFactors())  # creating the initial parameters of the research and selectors
 mutation_mode = NormalMutations()  # mutation mode for bacterias iterations
 
 for _ in range(10):
-    iterate(population, selector, mutation_mode).draw()  # drawing a population_research without saving
+    iterate(population, selector, mutation_mode).draw()  # drawing a research without saving
 
 ```
 ![alt text](https://github.com/MaEgV/population-modeling/blob/develop/examples/population_image_example_res.gif)

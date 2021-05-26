@@ -1,9 +1,9 @@
 from typing import List
-from src.population_research.simulator.selectors.abstract_selector import AbstractSelector
-from src.population_research.simulator.mutations.abstract_mutator import AbstractMutator
-from src.population_research.simulator.species.abstract_species import AbstractSpecies
-from src.population_research.simulator.genome import Genome
-from src.population_research.exceptions import DeadBacteriaException
+from src.research.simulator.selectors.abstract_selector import AbstractSelector
+from src.research.simulator.mutations.abstract_mutator import AbstractMutator
+from src.research.simulator.species.abstract_species import AbstractSpecies
+from src.research.simulator.genome import Genome
+from src.research.exceptions import DeadBacteriaException
 from dataclasses import dataclass, field
 from .bacteria_properties import BacteriaProperties
 
