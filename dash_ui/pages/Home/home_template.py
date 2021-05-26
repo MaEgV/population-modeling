@@ -1,6 +1,6 @@
 import dash_core_components as dcc  # type: ignore
 import dash_html_components as html  # type: ignore
-from src.ui.callback import Callback
+from dash_ui import Callback
 from dash.dependencies import Output, Input, State  # type: ignore
 import plotly.express as px  # type: ignore
 
@@ -81,7 +81,7 @@ class HomeTemplate:
         Attributes
         ----------
         _population: Population
-            An instance of the population_research that the study is being conducted on
+            An instance of the research that the study is being conducted on
 
         Methods
         -------

@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import List
 import dash_html_components as html  # type: ignore
-from src.ui.callback import Callback
+from dash_ui import Callback
 
 
 class AbstractPage:
