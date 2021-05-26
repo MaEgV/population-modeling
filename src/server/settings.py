@@ -13,8 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -24,9 +23,8 @@ SECRET_KEY = 'django-insecure-*)td%hca^weqx=u-jtx-^0-n@d+=-tyk7n1lye%@-spmc7!aer
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-HEROKU = True
+HEROKU = False
 ALLOWED_HOSTS = ['population-modeling.herokuapp.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -72,10 +70,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 
 
 DATABASES = {
@@ -89,7 +85,6 @@ if HEROKU:
     import dj_database_url
 
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -109,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -122,7 +116,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

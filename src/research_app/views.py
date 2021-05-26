@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from . import models as md
 from src.research.simulator.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
 from src.research.simulator.populations.population import Population
-from src.research.research import AvailableTypes, Research, ResearchParameters
+from src.research.research import AvailableTypes, Research, ResearchParameters, ResearchResult
 import pandas as pd
 
 
@@ -67,11 +67,23 @@ class CreateResearch(APIView):
             new_individuals = self.get_individuals(population_data.individuals)
             new_population = Population(new_individuals, population_id)
             print(f'id {population_id}', new_population)
-            Storage.put(new_population)
-            return Response(json.dumps({'id': Storage._last_id - 1}))
+
+            return Response(json.dumps({'id': Storage.put(new_population)}))
         else:
-            Storage.put(Population())
-            return Response(json.dumps({'id': Storage._last_id - 1}))
+
+            return Response(json.dumps({'id': Storage.put(Population())}))
+
+
+def save_population(population, name):
+    for individual in population.get_individuals():
+        individual_data = md.Individual(parameters=individual.get_parameters_dict())
+        individual_data.save()
+        individual.set_id(individual_data.id)
+
+    population_data = md.Population(name=name, individuals=population.get_individual_ids())
+    population_data.save()
+
+    return population_data.id
 
 
 class ResearchManage(APIView):
@@ -88,16 +100,16 @@ class ResearchManage(APIView):
         -------
 
         """
-        if request.method == 'POST':
-            name = str(request.data[0]['name'])
-            population = Storage.get(token)
-            for individual in population.get_individuals():
-                individual_data = md.Individual(parameters=individual.get_parameters_dict())
-                individual_data.save()
-                individual.set_id(individual_data.id)
-            md.Population.objects.create(name=name, individuals=population.get_individual_ids())
+        population = Storage.get(token)
+        name = request.data[0].get('name', False)
 
-        return Response()
+        if not name:
+            return Response('Please, send a name', status=404)
+
+        if save_population(population, name):
+            return Response(status=200)
+
+        return Response('Some problems with DB', status=404)
 
     def delete(self, request, token):
         Storage.delete(token)
@@ -108,32 +120,46 @@ class ResearchManage(APIView):
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
         print(request.data)
-        lifetime = request.data[0]['lifetime']
-        death = request.data[1]['p_for_death']
-        reproduct = request.data[2]['p_for_reproduction']
+        lifetime = request.data['lifetime']
+        death = request.data['p_for_death']
+        reproduct = request.data['p_for_reproduction']
         genome = Genome(lifetime, death, reproduct)
-        individual_type = request.data[3]['type']
-        print(individual_type)
-        print(Storage._storage)
+
+        individual_type = request.data['type']
+
         Storage.get(token).add_individuals([AvailableTypes.get_individual(individual_type, genome)])
-        if Storage._last_id != 0:
-            print(Storage._storage[str(Storage._last_id - 1)]._individuals)
-        return Response(json.dumps({'id': Storage._last_id - 1}))
+
+        return Response(json.dumps({'id': token}))
+
+
+def save_output(population: Population, parameters: dict, output: ResearchResult, name: str):
+    population_id = save_population(population, name=name)
+    md.Output.objects.create(name=name,
+                             population_id=population_id,
+                             result=output.data.to_json(),
+                             parameters=parameters)
 
 
 class ResearchRun(APIView):
-    def get(self, request, token: str):
-        print(request.GET)
+    def post(self, request, token: str):
+        print(request.data)
         population = Storage.get(token)
-        res = Research.run(population,
-                           ResearchParameters(request.GET['s_t'],
-                                              float(request.GET['s_m']),
-                                              request.GET['m_t'],
-                                              float(request.GET['m_m']),
-                                              int(request.GET['n'])))
-        if Storage._last_id != 0:
-            print(Storage._storage[str(Storage._last_id - 1)]._individuals)
-        return Response(res.data)
+
+        try:
+            res = Research.run(population,
+                               ResearchParameters(request.data['s_t'],
+                                                  float(request.data['s_m']),
+                                                  request.data['m_t'],
+                                                  float(request.data['m_m']),
+                                                  int(request.data['n'])))
+        except KeyError:
+            return Response('Required parameter is missed', status=404)
+
+        name = request.data.get('name', None)
+        if name:
+            save_output(population, request.data, res, name)
+
+        return Response(res.data, status=200)
 
 
 def get_model_table(model):
@@ -153,14 +179,10 @@ def get_model_from_string(model_key):
 
 class DbManage(APIView):
     def get(self, request, model_key):
-        response = Response()
         model = get_model_from_string(model_key)
 
         if model:
-            response.data = get_model_table(model)
-            print(response.data)
-            response.status = 200
+            return Response(get_model_table(model), status=200)
         else:
-            response.status = 404
+            return Response(status=404)
 
-        return response

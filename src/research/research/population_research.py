@@ -6,7 +6,7 @@ from src.research.research.parameters import ResearchParameters, IndividualParam
 
 
 @dataclass(frozen=True)
-class IterationResult:
+class ResearchResult:
     """
         The result of an evolutionary study of the research
 
@@ -44,7 +44,7 @@ class Research:
     """
     @staticmethod
     def run(population,
-            parameters: ResearchParameters) -> IterationResult:
+            parameters: ResearchParameters) -> ResearchResult:
         """
             Give data in DataFrame about research size and state on each iteration
 
@@ -67,7 +67,7 @@ class Research:
             population.add_individuals(population.produce_new_generation(*parameters.get_params()).get_species())
             df = df.append(Stats.get_statistic(population), ignore_index=True)
 
-        return IterationResult(0, df, parameters)
+        return ResearchResult(0, df, parameters)
 
 
 class Stats:
