@@ -18,7 +18,8 @@ shinyUI(fluidPage(
                        min = 0, max = 0.2, value = 0.1, step = 0.01), 
            numericInput("iter", "Number of iterartions", value = 3),
            actionButton("build", "Build"),
-           actionButton('reset', "Reset")), 
+           actionButton('reset', "Reset"),
+           textInput('save_res_name', 'Research name')), 
     column(6, selectInput("indiv_type", 
                        "Choose type of individual", 
                        c("Bacteria" = "bacteria")),
@@ -42,9 +43,7 @@ shinyUI(fluidPage(
 
     column(12,
            textInput('save_pop_name', 'Populaton name'),
-           actionButton('save_pop', "Save population"),
-           textInput('save_res_name', 'Research name'),
-           actionButton('save_res', "Save research")),
+           actionButton('save_pop', "Save population")),
     column(12, 
     textOutput('text'),
     plotOutput('plot'))
