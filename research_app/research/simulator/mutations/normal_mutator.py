@@ -1,7 +1,7 @@
 from scipy.stats import norm  # type: ignore
 from math import fabs
 
-from src.research.simulator.genome import Genome
+from research_app.research.simulator import Genome
 from ..mutations.abstract_mutator import AbstractMutator
 from ..mutations.mutator_parameters import MutatorParams
 

@@ -1,5 +1,5 @@
 from .abstract_selector import AbstractSelector, SelectorParameters
-from src.research.simulator.genome import Genome
+from research_app.research.simulator import Genome
 from scipy.stats import uniform  # type: ignore
 
 

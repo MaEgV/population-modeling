@@ -1,9 +1,8 @@
-from typing import List
-from src.research.simulator.selectors.abstract_selector import AbstractSelector
-from src.research.simulator.mutations.abstract_mutator import AbstractMutator
-from src.research.simulator.species.abstract_species import AbstractSpecies
-from src.research.simulator.genome import Genome
-from src.research.exceptions import DeadBacteriaException
+from research_app.research.simulator import AbstractSelector
+from research_app.research.simulator import AbstractMutator
+from research_app.research.simulator import AbstractSpecies
+from research_app.research.simulator import Genome
+from research_app.research.exceptions import DeadBacteriaException
 from dataclasses import dataclass, field
 from .bacteria_properties import BacteriaProperties
 

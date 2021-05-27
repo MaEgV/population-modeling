@@ -1,8 +1,8 @@
 from typing import Dict
-from src.research.simulator import Population
+from research_app.research.simulator import Population
 import pandas as pd  # type: ignore
-from dataclasses import dataclass, field
-from src.research.research.parameters import ResearchParameters, IndividualParameters
+from dataclasses import dataclass
+from research_app.research.research import ResearchParameters
 
 
 @dataclass(frozen=True)

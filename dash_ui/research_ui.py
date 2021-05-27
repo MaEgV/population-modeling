@@ -2,8 +2,8 @@ from dataclasses import dataclass, field
 from typing import List
 import dash  # type: ignore
 
-from src.research.research import Research
-from src.research.research.parameters import ResearchParameters, IndividualParameters
+from research_app import Research
+from research_app import ResearchParameters, IndividualParameters
 import plotly.express as px  # type: ignore
 import pandas as pd  # type: ignore
 

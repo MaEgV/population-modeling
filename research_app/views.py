@@ -3,9 +3,9 @@ from typing import Any
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from . import models as md
-from src.research.simulator.species.bacteria.bacteria import Bacteria, BacteriaProperties, Genome
-from src.research.simulator.populations.population import Population
-from src.research.research import AvailableTypes, Research, ResearchParameters, ResearchResult
+from .research import Bacteria, BacteriaProperties, Genome
+from .research.simulator import Population
+from .research.research import AvailableTypes, Research, ResearchParameters, ResearchResult
 import pandas as pd
 
 

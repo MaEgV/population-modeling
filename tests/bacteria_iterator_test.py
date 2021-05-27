@@ -1,9 +1,9 @@
 import pytest
 
-from src.research.simulator import create_bacteria
-from src.research.simulator.selectors.genomic_selector import UniformSelector
-from src.research.simulator.selectors.abstract_selector import SelectorParameters
-from src.research.simulator.mutations.normal_mutator import NormalMutator
+from research_app.research.simulator import create_bacteria
+from research_app.research.simulator import UniformSelector
+from research_app.research.simulator import SelectorParameters
+from research_app.research.simulator import NormalMutator
 
 
 class Case:
