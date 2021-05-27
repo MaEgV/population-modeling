@@ -12,3 +12,4 @@ dj_database_url
 gunicorn
 django_heroku
 jsonfield
+psycopg2
