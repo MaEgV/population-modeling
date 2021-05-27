@@ -101,15 +101,14 @@ class ResearchManage(APIView):
 
         """
         population = Storage.get(token)
-        name = request.data[0].get('name', False)
-
+        name = request.data.get('name', False)
+        print(name)
         if not name:
             return Response('Please, send a name', status=404)
 
-        if save_population(population, name):
-            return Response(status=200)
+        save_population(population, name)
 
-        return Response('Some problems with DB', status=404)
+        return Response("Population was saved", status=200)
 
     def delete(self, request, token):
         Storage.delete(token)

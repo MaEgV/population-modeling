@@ -26,5 +26,6 @@ class Population(models.Model):
     def get_data(self):
         return {"name": self.name, "time": self.time, "info": len(self.individuals)}
 
+
 class Individual(models.Model):
     parameters = jsonfield.JSONField()
