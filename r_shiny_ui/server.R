@@ -9,16 +9,18 @@ results <<- data.frame(all=c(0, 0, 0), alive=c(0, 0, 0), dead=c(0, 0, 0))
 host <<- 'http://127.0.0.1:8000/population_research/research/'
 
 
-shinyServer(function(input, output) {
+# shinyServer(function(input, output) {
+#   
+# })
+
+server <- function(input, output) {
+  
   path <- host
   res <- GET(url = path)
   new_data = jsonlite::fromJSON(content(res, 'text'))
   new_data = jsonlite::fromJSON(new_data)
   id <<- new_data
   print(id)
-})
-
-server <- function(input, output) {
   
   observeEvent(input$add, {
     data_ <- structure(list(list("lifetime" = input$lifetime),

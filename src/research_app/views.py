@@ -120,12 +120,18 @@ class ResearchManage(APIView):
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
         print(request.data)
-        lifetime = request.data['lifetime']
-        death = request.data['p_for_death']
-        reproduct = request.data['p_for_reproduction']
-        genome = Genome(lifetime, death, reproduct)
+        if type(request.data) == list:
+            lifetime = request.data[0]['lifetime']
+            death = request.data[1]['p_for_death']
+            reproduct = request.data[2]['p_for_reproduction']
+            individual_type = request.data[3]['type']
+        else:
+            lifetime = request.data['lifetime']
+            death = request.data['p_for_death']
+            reproduct = request.data['p_for_reproduction']
+            individual_type = request.data['type']
 
-        individual_type = request.data['type']
+        genome = Genome(lifetime, death, reproduct)
 
         Storage.get(token).add_individuals([AvailableTypes.get_individual(individual_type, genome)])
 
