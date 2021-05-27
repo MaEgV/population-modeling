@@ -1,1 +1,1 @@
-web: gunicorn population-modeling.wsgi
+web: gunicorn server.wsgi
