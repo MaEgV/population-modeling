@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-*)td%hca^weqx=u-jtx-^0-n@d+=-tyk7n1lye%@-spmc7!aer
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-HEROKU = True
+HEROKU = False
+
 ALLOWED_HOSTS = ['population-modeling.herokuapp.com', '127.0.0.1']
 
 
@@ -90,6 +91,7 @@ if HEROKU:
     import dj_database_url
 
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 # if HEROKU:
 #     CACHES = {
