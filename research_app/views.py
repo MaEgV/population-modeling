@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from . import models as md
 from .research import Bacteria, BacteriaProperties, Genome
-from .research.simulator import Population
+from .research.simulator import Population, AbstractSpecies
 from .research.research import AvailableTypes, Research, ResearchParameters, ResearchResult
 import pandas as pd
 
@@ -74,55 +74,54 @@ class CreateResearch(APIView):
             return Response(json.dumps({'id': Storage.put(Population())}))
 
 
-def save_population(population, name):
-    for individual in population.get_individuals():
-        individual_data = md.Individual(parameters=individual.get_parameters_dict())
-        individual_data.save()
-        individual.set_id(individual_data.id)
+def save_genome(genome_dict):
+    genome_data = md.Genome(p_for_die=genome_dict['p_for_death'],
+                            p_for_reproduction=genome_dict['p_for_reproduction'],
+                            max_lifetime=genome_dict['max_life_time'])
+    genome_data.save()
+    return genome_data
 
-    population_data = md.Population(name=name, individuals=population.get_individual_ids())
+
+def save_individual(individual: AbstractSpecies):
+    individual_data = md.Individual(**(individual.get_state_dict()),
+                                    genome=save_genome(individual.get_genome_dict()),
+                                    type=md.Individual.type_to_str(individual))
+    individual_data.save()
+    return individual_data
+
+
+def save_population(population, name):
+    population_data = md.Population(name=name)
     population_data.save()
+
+    for individual in population.get_individuals():
+        population_data.individuals.add(save_individual(individual))
 
     return population_data.id
 
 
 class ResearchManage(APIView):
     def post(self, request, token: str):
-        """
-        Save research
-
-        Parameters
-        ----------
-        request
-        token
-
-        Returns
-        -------
-
-        """
         population = Storage.get(token)
+        print(population)
         name = request.data.get('name', False)
-        print(name)
+
         if not name:
             return Response('Please, send a name', status=404)
-
-        save_population(population, name)
-
-        return Response("Population was saved", status=200)
+        else:
+            key = save_population(population, name)
+            return Response(f"Population was saved with id:{key}", status=200)
 
     def delete(self, request, token):
         Storage.delete(token)
-        print(token)
         return Response('ok')
 
 
 class ResearchAddIndividual(APIView):
     def post(self, request, token: str):
-        print(request.data)
-        lifetime = request.data['lifetime']
-        death = request.data['p_for_death']
-        reproduct = request.data['p_for_reproduction']
-        genome = Genome(lifetime, death, reproduct)
+        genome = Genome(request.data['lifetime'],
+                        request.data['p_for_death'],
+                        request.data['p_for_reproduction'])
 
         individual_type = request.data['type']
 

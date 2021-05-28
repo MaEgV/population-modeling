@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from research_app.research.simulator import AbstractSelector
 from research_app.research.simulator import AbstractMutator
 from research_app.research.simulator import AbstractSpecies
@@ -10,18 +12,18 @@ from .bacteria_properties import BacteriaProperties
 @dataclass
 class Bacteria(AbstractSpecies):
     """
-       Represents bacteria with its parameters
+    Represents bacteria with its parameters
 
-       Attributes
-       ----------
-        _properties: BacteriaProperties
-           Bacteria status about age and life: die or alive
+    Attributes
+    ----------
+    _properties: BacteriaProperties
+    Bacteria status about age and life: die or alive
 
-        _children_max: int
-            Maximum number of children in one iteration
-       """
+    _children_max: int
+    Maximum number of children in one iteration
+    """
     _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
-    _children_max: int = field(default=5)
+    _children_max: ClassVar[int] = field(init=False, default=5)
 
     def produce_children(self, selector: AbstractSelector, mutator: AbstractMutator) -> list:
         """
