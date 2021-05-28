@@ -74,7 +74,7 @@ class AbstractSpecies:
         -------
             Is the individual alive
         """
-        raise self._is_alive
+        return self._is_alive
 
     def get_genome_dict(self) -> dict:
         return {'max_life_time': self._genome.max_life_time, 'p_for_death': self._genome.p_for_death,

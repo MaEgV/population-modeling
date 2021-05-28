@@ -46,4 +46,4 @@ class Population(models.Model):
     time = models.DateTimeField(default=timezone.now)
 
     def get_data(self):
-        return {"name": self.name, "time": self.time, "info": len(self.individuals)}
+        return {"name": self.name, "time": self.time, "info": len(self.individuals.all())}

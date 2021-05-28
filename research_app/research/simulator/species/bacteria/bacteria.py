@@ -1,9 +1,9 @@
 from typing import ClassVar
 
-from research_app.research.simulator import AbstractSelector
-from research_app.research.simulator import AbstractMutator
-from research_app.research.simulator import AbstractSpecies
-from research_app.research.simulator import Genome
+from research_app.research.simulator import AbstractSelector # type: ignore
+from research_app.research.simulator import AbstractMutator # type: ignore
+from research_app.research.simulator import AbstractSpecies # type: ignore
+from research_app.research.simulator import Genome # type: ignore
 from research_app.research.exceptions import DeadBacteriaException
 from dataclasses import dataclass, field
 from .bacteria_properties import BacteriaProperties
@@ -116,7 +116,7 @@ class Bacteria(AbstractSpecies):
 
         """
 
-        children = list()
+        children = list() # type: ignore
         if self.is_alive():
             while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli
                 # test

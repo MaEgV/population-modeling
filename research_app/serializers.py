@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from .models import Genome, Individual
 
+
+#TODO: include serializers to project
+
 class GenomeSerializer(serializers.ModelSerializer):
     p_for_die = serializers.FloatField()
     p_for_reproduction = serializers.FloatField()
