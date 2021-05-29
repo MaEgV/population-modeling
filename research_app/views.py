@@ -278,7 +278,10 @@ def get_model_table(model: Any) -> pd.DataFrame:
     return table
 
 
-def get_model_from_string(model_key: str)->Any:
+def get_model_from_string(model_key: str) -> Any:
+    """
+    Create a model from string key
+    """
     if model_key == 'populations':
         return md.Population
     elif model_key == 'results':
