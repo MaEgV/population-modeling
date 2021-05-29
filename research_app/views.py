@@ -55,15 +55,13 @@ class Storage:
 def get_individuals(individuals: Any) -> list:
     new_individuals = list()
     for individual_dict in individuals.values():
-        genome = md.Genome.objects.get(pk=individual_dict['genome_id'])
-        print(genome)
-        individual_max_lifetime = genome.max_lifetime
-        individual_p_for_death = genome.p_for_die
-        individual_p_for_reproduction = genome.p_for_reproduction
+        genome_data = md.Genome.objects.get(pk=individual_dict['genome_id'])
+        print(genome_data)
         individual_age = individual_dict['age']
         new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
-                                        _genome=Genome(individual_max_lifetime, individual_p_for_death,
-                                                       individual_p_for_reproduction)))
+                                        _genome=Genome(genome_data.max_lifetime,
+                                                       genome_data.p_for_die,
+                                                       genome_data.p_for_reproduction)))
     return new_individuals
 
 
