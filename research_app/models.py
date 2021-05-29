@@ -42,7 +42,7 @@ class Individual(models.Model):
 
 class Population(models.Model):
     name = models.CharField(max_length=20)
-    individuals = models.ManyToManyField(Individual, null=True)
+    individuals = models.ManyToManyField(Individual)
     time = models.DateTimeField(default=timezone.now)
 
     def get_data(self):
