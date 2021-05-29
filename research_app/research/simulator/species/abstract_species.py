@@ -24,7 +24,8 @@ class AbstractSpecies:
     -------
     """
     _genome: Genome
-    __id: int = field(default=0)
+    _age: int = field(init=False, default=0)
+    _is_alive: bool = field(init=False, default=True)
 
     @abstractmethod
     def produce_children(self, selector: AbstractSelector, mutator: AbstractMutator) -> List:
@@ -73,14 +74,11 @@ class AbstractSpecies:
         -------
             Is the individual alive
         """
-        raise NotImplementedError
-
-    def get_id(self) -> int:
-        return self.__id
-
-    def set_id(self, new_id) -> None:
-        self.__id = new_id
+        raise self._is_alive
 
     def get_genome_dict(self) -> dict:
-        return {'type': str(type(self)), 'max_life_time': self._genome.max_life_time, 'p_for_death': self._genome.p_for_death,
+        return {'max_life_time': self._genome.max_life_time, 'p_for_death': self._genome.p_for_death,
                 'p_for_reproduction': self._genome.p_for_reproduction}
+
+    def get_state_dict(self) ->dict:
+        return {'age': self._age, 'is_alive': self._is_alive}

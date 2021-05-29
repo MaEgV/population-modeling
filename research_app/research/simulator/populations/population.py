@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from src.research.simulator.selectors.abstract_selector import AbstractSelector
-from src.research.simulator.mutations.abstract_mutator import AbstractMutator
+from research_app.research.simulator import AbstractSelector
+from research_app.research.simulator import AbstractMutator
 
 
 @dataclass

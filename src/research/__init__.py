@@ -1,1 +1,0 @@
-from .research import parameters, population_research

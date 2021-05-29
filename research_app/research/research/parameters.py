@@ -1,13 +1,13 @@
 from dataclasses import dataclass, field
 from typing import ClassVar
-from src.research.simulator.selectors.abstract_selector import AbstractSelector, SelectorParameters
-from src.research.simulator.mutations.abstract_mutator import AbstractMutator
-from src.research.simulator import Bacteria
-from src.research.simulator import AbstractSpecies
-from src.research.simulator.selectors.genomic_selector import UniformSelector
-from src.research.simulator.mutations.normal_mutator import NormalMutator
-from src.research.simulator.mutations.mutator_parameters import MutatorParams
-from src.research.simulator.genome import Genome
+from ..simulator import AbstractSelector, SelectorParameters
+from research_app.research.simulator import AbstractMutator
+from research_app.research.simulator import Bacteria
+from research_app.research.simulator import AbstractSpecies
+from research_app.research.simulator import UniformSelector
+from research_app.research.simulator import NormalMutator
+from research_app.research.simulator import MutatorParams
+from research_app.research.simulator import Genome
 
 
 @dataclass(frozen=True)
