@@ -141,6 +141,7 @@ def save_population(population: Population, name: str) -> int:
     #individuals = [individual for individual in population.get_individuals()]
     for individual in population.get_individuals():
         population_data.individuals.add(save_individual(individual))
+
     return population_data.id
 
 
