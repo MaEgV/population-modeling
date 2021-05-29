@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from research_app.research.simulator import AbstractSelector
-from research_app.research.simulator import AbstractMutator
+from research_app.research.simulator import AbstractSelector # type: ignore
+from research_app.research.simulator import AbstractMutator # type: ignore
 
 
 @dataclass
@@ -50,7 +50,6 @@ class Population:
     drop(self)
     """
     _individuals: list = field(default_factory=list)
-    __id: int = field(default=0)
 
     def add_individuals(self, new_individuals: list) -> None:
         """

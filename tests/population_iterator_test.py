@@ -33,7 +33,7 @@ def test_iterator_population_one(population_iterator: Case) -> None:
     population_iterator.population.produce_new_generation(population_iterator.selector,
                                                           population_iterator.mutator)
 
-    all_individuals = len(population_iterator.population.get_individuals())
+    all_individuals = len(get_individuals())
     assert all_individuals == population_iterator.result
 
 
@@ -42,5 +42,5 @@ def test_iterator_population(population_iterator: Case) -> None:
     population_iterator.population.produce_new_generation(population_iterator.selector,
                                                           population_iterator.mutator)
 
-    all_individuals = len(population_iterator.population.get_individuals())
+    all_individuals = len(get_individuals())
     assert all_individuals >= population_iterator.result
