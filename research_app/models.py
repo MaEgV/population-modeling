@@ -1,6 +1,6 @@
-from django.db import models
-import jsonfield
-from django.utils import timezone
+from django.db import models  # type: ignore
+import jsonfield  # type: ignore
+from django.utils import timezone  # type: ignore
 
 from research_app.research import Bacteria
 from research_app.research.simulator import AbstractSpecies

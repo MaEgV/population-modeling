@@ -1,14 +1,14 @@
 import json
 from typing import Any
 
-from rest_framework.request import Request
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.request import Request  # type: ignore
+from rest_framework.response import Response  # type: ignore
+from rest_framework.views import APIView  # type: ignore
 from . import models as md
 from .research import Bacteria, BacteriaProperties, Genome
 from .research.simulator import Population, AbstractSpecies
 from .research.research import AvailableTypes, Research, ResearchParameters, ResearchResult
-import pandas as pd
+import pandas as pd  # type: ignore
 
 
 class Storage:
@@ -33,8 +33,8 @@ class Storage:
     delete(key: Any) -> None:
         delete item by key
     """
-    _storage = dict()
-    _last_id = 0
+    _storage: dict = dict()
+    _last_id: int = 0
 
     @staticmethod
     def put(item: Any) -> Any:
@@ -59,7 +59,7 @@ def get_individuals(individuals: Any) -> list:
         print(genome_data)
         individual_age = individual_dict['age']
         new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
-                                        _genome=Genome(genome_data.max_lifetime,
+                                        _genome=Genome(genome_data.max_lifetime,  # type: ignore
                                                        genome_data.p_for_die,
                                                        genome_data.p_for_reproduction)))
     return new_individuals
