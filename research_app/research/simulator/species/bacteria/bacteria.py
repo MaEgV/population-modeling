@@ -40,6 +40,8 @@ class Bacteria(AbstractSpecies):
         -------
         list
         """
+        if not self.is_alive():
+            raise DeadBacteriaException(str(self))
 
         return self._get_children(selector, mutator)
 

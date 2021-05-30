@@ -1,7 +1,7 @@
 import pytest
 
-from research_app import Population
-from research_app.research.simulator import create_bacteria
+from research_app.research.simulator.populations.population import Population
+from research_app.research.simulator.species.bacteria.bacteria import create_bacteria
 from research_app.research.simulator import UniformSelector, SelectorParameters
 
 from research_app.research.simulator import NormalMutator
@@ -10,7 +10,7 @@ from research_app.research.simulator import NormalMutator
 class Case:
     def __init__(self, name, result, selector, mutator, p_for_reproduction):
         self.name = name
-        self.bacteria = create_bacteria(p_for_reproduction=p_for_reproduction)
+        self.bacteria = create_bacteria(p_for_reproduction=p_for_reproduction, p_for_death=1)
         self.result = result
         self.mutator = mutator
         self.selector = selector
@@ -33,7 +33,7 @@ def test_iterator_population_one(population_iterator: Case) -> None:
     population_iterator.population.produce_new_generation(population_iterator.selector,
                                                           population_iterator.mutator)
 
-    all_individuals = len(get_individuals())
+    all_individuals = len(population_iterator.population.get_individuals())
     assert all_individuals == population_iterator.result
 
 
@@ -42,5 +42,5 @@ def test_iterator_population(population_iterator: Case) -> None:
     population_iterator.population.produce_new_generation(population_iterator.selector,
                                                           population_iterator.mutator)
 
-    all_individuals = len(get_individuals())
+    all_individuals = len(population_iterator.population.get_individuals())
     assert all_individuals >= population_iterator.result
