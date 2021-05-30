@@ -138,7 +138,6 @@ def save_population(population: Population, name: str) -> int:
     population_data = md.Population(name=name)
     population_data.save()
 
-    #individuals = [individual for individual in population.get_individuals()]
     for individual in population.get_individuals():
         population_data.individuals.add(save_individual(individual))
 
