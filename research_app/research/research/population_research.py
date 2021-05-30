@@ -109,7 +109,9 @@ class Stats:
             Results of stats research
 
         """
-        all_n = len(population.get_individuals())
-        dead_n = all_n - 0
+        individuals = population.get_individuals()
+        all_n = len(individuals)
+        alive_n = len(list(filter(lambda x: x.is_alive(), individuals)))
+        dead_n = all_n - alive_n
 
-        return {'all': all_n, 'alive': 0, 'dead': dead_n}
+        return {'all': all_n, 'alive': alive_n, 'dead': dead_n}
