@@ -1,4 +1,6 @@
 from dataclasses import dataclass, field
+from typing import List
+
 from research_app.research.simulator import AbstractSelector # type: ignore
 from research_app.research.simulator import AbstractMutator # type: ignore
 
@@ -11,17 +13,17 @@ class Generation:
     def get_species(self) -> list:
         return self.__generation
 
-    def add_species(self, new_species: list):
+    def add_species(self, new_species: list) -> None:
         self.__generation.extend(new_species)
 
     def get_id(self) -> int:
         return self.__id
 
-    def set_id(self, new_id):
+    def set_id(self, new_id: int) -> None:
         self.__id = new_id
 
-    def get_bacterias_ids(self):
-        ids = list()
+    def get_bacterias_ids(self) -> list:
+        ids: List[int] = list()
         for descendants in self.__generation:
             ids.extend(descendants.get_bacterias_id())
         return ids
@@ -122,7 +124,7 @@ class Population:
     def get_id(self) -> int:
         return self.__id
 
-    def set_id(self, new_id) -> None:
+    def set_id(self, new_id: int) -> None:
         self.__id = new_id
 
     def get_individual_ids(self) -> dict:

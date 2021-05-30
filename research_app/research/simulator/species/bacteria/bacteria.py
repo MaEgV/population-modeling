@@ -127,7 +127,7 @@ class Bacteria(AbstractSpecies):
 
         return children
 
-    def get_parameters_dict(self):
+    def get_parameters_dict(self) -> Genome:
         genome = self.get_genome_dict()
         genome['age'] = self._properties.get_age()
         return genome

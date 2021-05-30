@@ -43,7 +43,7 @@ class Research:
         Show number of species in research
     """
     @staticmethod
-    def run(population,
+    def run(population: Population,
             parameters: ResearchParameters) -> ResearchResult:
         """
             Give data in DataFrame about research size and state on each iteration
