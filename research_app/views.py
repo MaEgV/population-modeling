@@ -94,7 +94,7 @@ class CreateResearch(APIView):
 
         Returns
         -------
-            Response with token from Storage for next accesses
+            Response with token.py from Storage for next accesses
         """
         if population_id is not None:
             population_data = md.Population.objects.get(pk=int(population_id))
@@ -153,7 +153,7 @@ class PopulationManage(APIView):
 
     Methods
     -------
-    post(self, request: Request, token: str) -> Response:
+    post(self, request: Request, token.py: str) -> Response:
     REST method(POST) to save Population
     """
 

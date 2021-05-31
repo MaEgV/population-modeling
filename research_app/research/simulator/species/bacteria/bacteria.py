@@ -23,7 +23,7 @@ class Bacteria(AbstractSpecies):
     Maximum number of children in one iteration
     """
     _properties: BacteriaProperties = field(default_factory=BacteriaProperties)
-    _children_max: ClassVar[int] = field(init=False, default=5)
+    _children_max: ClassVar[int] = field(init=False, default=2)
 
     def produce_children(self, selector: AbstractSelector, mutator: AbstractMutator) -> list:
         """
