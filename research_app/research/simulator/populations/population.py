@@ -97,7 +97,8 @@ class Population:
         new_generation = Generation()
 
         for individual in self._individuals:
-            new_generation.add_species(individual.produce_children(selector, mutator))
+            if individual.is_alive():
+                new_generation.add_species(individual.produce_children(selector, mutator))
 
         return new_generation
 
