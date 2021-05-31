@@ -38,7 +38,6 @@ class Storage:
 
     @staticmethod
     def put(item: Any) -> Any:
-        print(Storage._storage)
         Storage._storage[str(Storage._last_id)] = item
         Storage._last_id += 1
         return Storage._last_id - 1
@@ -56,7 +55,6 @@ def get_individuals(individuals: Any) -> list:
     new_individuals = list()
     for individual_dict in individuals.values():
         genome_data = md.Genome.objects.get(pk=individual_dict['genome_id'])
-        print(genome_data)
         individual_age = individual_dict['age']
         new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
                                         _genome=Genome(genome_data.max_lifetime,  # type: ignore
@@ -83,7 +81,7 @@ class CreateResearch(APIView):
     """
     def get(self, request: Request, population_id: str = None) -> Response:
         """
-        Create Population and save it in Storage
+        Create Population in RAM
 
         Parameters
         ----------
@@ -144,7 +142,7 @@ def save_population(population: Population, name: str) -> int:
     return population_data.id
 
 
-class PopulationManage(APIView):
+class PopulationManager(APIView):
     """
     Manager of Populations to RAM(Storage)
     Possible actions:
@@ -194,7 +192,7 @@ class PopulationManage(APIView):
         return Response('ok')
 
 
-class AddIndividual(APIView):
+class IndividualAdder(APIView):
     """
     Add individual to Population associated with key
     Parameters
@@ -232,7 +230,7 @@ def save_output(population: Population, parameters: dict, output: ResearchResult
                              parameters=parameters)
 
 
-class ResearchRun(APIView):
+class ResearchRunner(APIView):
     """
     Build research with Population
     """
@@ -286,7 +284,7 @@ def get_model_from_string(model_key: str) -> Any:
         return md.Output
 
 
-class DbManage(APIView):
+class DbManager(APIView):
     """
     Class that gives access to DB tables
     """
