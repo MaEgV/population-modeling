@@ -38,7 +38,6 @@ class Storage:
 
     @staticmethod
     def put(item: Any) -> Any:
-        print(Storage._storage)
         Storage._storage[str(Storage._last_id)] = item
         Storage._last_id += 1
         return Storage._last_id - 1
@@ -56,7 +55,6 @@ def get_individuals(individuals: Any) -> list:
     new_individuals = list()
     for individual_dict in individuals.values():
         genome_data = md.Genome.objects.get(pk=individual_dict['genome_id'])
-        print(genome_data)
         individual_age = individual_dict['age']
         new_individuals.append(Bacteria(_properties=BacteriaProperties(_age=individual_age),
                                         _genome=Genome(genome_data.max_lifetime,  # type: ignore
