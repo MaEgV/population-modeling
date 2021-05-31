@@ -83,7 +83,7 @@ class CreateResearch(APIView):
     """
     def get(self, request: Request, population_id: str = None) -> Response:
         """
-        Create Population and save it in Storage
+        Create Population in RAM
 
         Parameters
         ----------
@@ -144,7 +144,7 @@ def save_population(population: Population, name: str) -> int:
     return population_data.id
 
 
-class PopulationManage(APIView):
+class PopulationManager(APIView):
     """
     Manager of Populations to RAM(Storage)
     Possible actions:
@@ -194,7 +194,7 @@ class PopulationManage(APIView):
         return Response('ok')
 
 
-class AddIndividual(APIView):
+class IndividualAdder(APIView):
     """
     Add individual to Population associated with key
     Parameters
@@ -232,7 +232,7 @@ def save_output(population: Population, parameters: dict, output: ResearchResult
                              parameters=parameters)
 
 
-class ResearchRun(APIView):
+class ResearchRunner(APIView):
     """
     Build research with Population
     """
@@ -286,7 +286,7 @@ def get_model_from_string(model_key: str) -> Any:
         return md.Output
 
 
-class DbManage(APIView):
+class DbManager(APIView):
     """
     Class that gives access to DB tables
     """
