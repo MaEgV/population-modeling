@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from research_app.research.simulator import AbstractSelector # type: ignore
-from research_app.research.simulator import AbstractMutator # type: ignore
+from research_app.research.simulator import AbstractSelector  # type: ignore
+from research_app.research.simulator import AbstractMutator  # type: ignore
 
 
 @dataclass
@@ -72,7 +72,8 @@ class Population:
         """
         self._individuals.extend(new_individuals)
 
-    def produce_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator, evolve: bool = True) -> Generation:
+    def produce_new_generation(self, selector: AbstractSelector, mutator: AbstractMutator,
+                               evolve: bool = True) -> Generation:
         """
         The time unit of evolution for a research. Processes a new generation in the research
 
@@ -89,15 +90,17 @@ class Population:
         -------
         None
         """
-        if evolve:
-            for individual in self._individuals:
-                if individual.is_alive():
-                    individual.evolve(selector, mutator)
-
+        counter = 0
         new_generation = Generation()
-
-        for individual in self._individuals:
-            if individual.is_alive():
+        if evolve:
+            for individual in list(filter(lambda x: x.is_alive(), self._individuals)):
+                individual.evolve(selector, mutator)
+                new_generation.add_species(individual.produce_children(selector, mutator))
+                counter += 1
+                if counter > 4000:
+                    return new_generation
+        else:
+            for individual in list(filter(lambda x: x.is_alive(), self._individuals)):
                 new_generation.add_species(individual.produce_children(selector, mutator))
 
         return new_generation
