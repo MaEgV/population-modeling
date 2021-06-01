@@ -97,7 +97,7 @@ class Population:
                 if individual.evolve(selector, mutator):
                     new_generation.add_species(individual.produce_children(selector, mutator))
                 counter += 1
-                if counter > 4000:
+                if counter > 2000:
                     return new_generation
         else:
             for individual in list(filter(lambda x: x.is_alive(), self._individuals)):
