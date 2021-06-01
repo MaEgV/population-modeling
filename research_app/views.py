@@ -79,9 +79,9 @@ class CreateResearch(APIView):
     get(self, request: Request, population_id=None) -> Response:
         REST method (GET) which create Population, or load it from DB to RAM
     """
-    def post(self, request: Request) -> Response:
+    def get(self, request: Request, population_id: str = None) -> Response:
         """
-        Create Population in RAM
+        Load Population in RAM from DB or create new empty Population
 
         Parameters
         ----------
@@ -94,8 +94,7 @@ class CreateResearch(APIView):
         -------
             Response with token.py from Storage for next accesses
         """
-        population_id = request.data['id']
-        if population_id:
+        if population_id is not None:
             population_data = md.Population.objects.get(pk=int(population_id))
             loaded_individuals = get_individuals(population_data.individuals.all())
             loaded_population = Population(loaded_individuals)
