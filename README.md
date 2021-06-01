@@ -3,6 +3,53 @@
 You must install the dependencies reflected in the file requirements.txt and put the source code of the package(the contents of the src directory) in a place available for import by your program.
 The specified dependencies are installed from the console, using the following command:  
 `pip install -r requirements.txt`
+
+### Django server local using 
+To start Django on you local machine you will need python at first.
+Install Django running
+```commandline
+    > pip install Django
+```
+Make sure what DEBUG in 'server/setting.py' is True.  
+After that start server from a console in the project root.
+```commandline
+    > python manage.py runserver
+```
+Access server at '127.0.0.1'.
+### Setting database at local
+ To run server properly, you need to create a database and migrate to her.  
+To achieve this you need to create db you want(SQlite for example 'https://www.tutorialspoint.com/sqlite/sqlite_create_database.htm' ), and set it in DATABASES, located at 'server/settings.py'.
+After this, you need to migrate your db to our models:
+```commandline
+    > python manage.py migrate
+```
+Now your db and server ready to run.
+
+### Deploy Django server on heroku
+Repository already have all needed for running django application on heroku. All you need is to create heroku repo for your project and push this repo there.  
+Before pushing make sure DEBUG in 'server/setting.py' is False.
+Also add your new server address to ALLOWED_HOSTS in 'server/setting.py'  
+In our code we are using Heroku-Postgre('https://www.heroku.com/postgres'), choose a plan you will use. If you want to use another db, check 'Setting databases at local'.  
+After pushing run migrate your db on heroku:
+```commandline
+    > heroku python manage.py migrate
+```
+
+***
+
+### R Shiny app local using
+To launch app.R you need to install R(https://www.r-project.org/). After installation, make sure R is in your Path.  
+If you are going to use your server write you address to r_shiny_ui/config.json.  
+After that you need to install shiny package, write in console
+```commandline
+    > R -e "install.packages("shiny")"
+```
+ When start a console in project root and write.
+```commandline
+   > R -e "shiny::runApp('r_shiny_ui/server.R')"
+```
+After what R print adress, and you can open application in your browser.
+
 ***
 ## Glossary
 
@@ -116,7 +163,10 @@ Abstract class that defines the logic of mutation processes for bacteria. For th
 See more information in [documentation](https://github.com/MaEgV/population-modeling/tree/develop/docs).
 
 ***
+## Using application
+You can easily access our application on 'https://r-shiny-ui.herokuapp.com/'.
 
+***
 ## Example
 Consider a simple example of setting up a population and drawing the result of an evolution simulation:
 
