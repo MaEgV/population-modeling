@@ -68,7 +68,7 @@ class Bacteria(AbstractSpecies):
 
         self._properties.inc_age()
 
-        if selector.is_died(self._genome):
+        if self._properties.get_age() > self._genome.max_life_time or selector.is_died(self._genome):
             self._die()
 
         return self.is_alive()
