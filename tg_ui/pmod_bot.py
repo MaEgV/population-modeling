@@ -76,6 +76,7 @@ def add_individual(message):
         requests.post(host_url + str(population_id) + '/add/', data=individual_parameters)
     except Exception:
         bot.send_message(message.from_user.id, 'Что-то не так с параметрами, попробуй ещё')
+        bot.register_next_step_handler(message, add_individual)
     send_keyboard(message)
 
 
@@ -93,6 +94,7 @@ def run_research(message):
             print(new_data)
     except Exception:
         bot.send_message(message.from_user.id, 'Что-то не так с параметрами, попробуй ещё')
+        bot.register_next_step_handler(message, run_research)
 
 
 bot.polling(none_stop=True, interval=0)
