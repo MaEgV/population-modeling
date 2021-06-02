@@ -9,6 +9,7 @@ from research_app.research.simulator import NormalMutator
 class Case:
     def __init__(self, name, population_max, max_life_time, p_for_death,
                  p_for_reproduction, mutator, selector):
+
         self.name = name
         self.population_max = population_max
         self.bacteria = create_bacteria(max_life_time, p_for_death, p_for_reproduction)
