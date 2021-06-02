@@ -20,7 +20,8 @@ def get_text_messages(message):
     if message.text == "Привет":
         bot.send_message(message.from_user.id, "Привет, займёмся исследованием популяций?")
     elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Напиши привет")
+        bot.send_message(message.from_user.id, "Этот бот поможет тебе в исследовании собственной популяции. Команда"
+                                               "\start начинает твою работу с популяцией. Следуй инструкциям на каждом шаге")
     elif message.text == '/start':
         bot.send_message(message.from_user.id, "Давай создадим тебе собственную популяцию для исследований")
         population_id = create_population()
