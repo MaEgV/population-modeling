@@ -254,7 +254,7 @@ class ResearchRunner(APIView):
                                         request.data['m_t'],
                                         float(request.data['m_m']),
                                         int(request.data['n']))
-            res = Research.run(population, params).data
+            res = Research.run(population, params)
         except KeyError:
             return Response('Required parameter is missed', status=404)
         name = request.data.get('name', None)
