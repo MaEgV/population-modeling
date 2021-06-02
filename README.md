@@ -1,21 +1,23 @@
 ## Installation
 
-You must install the dependencies reflected in the file requirements.txt and put the source code of the package(the contents of the src directory) in a place available for import by your program.
-The specified dependencies are installed from the console, using the following command:  
-`pip install -r requirements.txt`
+To launch the application, clone the repository with the command:  
+```commandline
+    > git clone https://github.com/MaEgV/population-modeling
+```
+If you are interested in the development branch, run the following command:  
+```commandline
+    > git clone https://github.com/MaEgV/population-modeling -b develop
+```
+Next, we recommend setting up a virtual environment for the application. [See documentation](https://virtualenv.pypa.io/en/stable/installation.html)  
+When you create and activate the environment, run:
+```commandline
+    > pip install -r requirements.txt
+```
+If you use the Pycharm IDE, you can connect the created environment to the application in the settings:
+File -> Settings -> Project Interpreter -> Add -> (chose created env)  
+Then your application is automatically configured for Django and you can run the server locally
 
-### Django server local using 
-To start Django on you local machine you will need python at first.
-Install Django running
-```commandline
-    > pip install Django
-```
-Make sure what DEBUG in 'server/setting.py' is True.  
-After that start server from a console in the project root.
-```commandline
-    > python manage.py runserver
-```
-Access server at '127.0.0.1'.
+
 ### Setting database at local
  To run server properly, you need to create a database and migrate to her.  
 To achieve this you need to create db you want(SQlite for example 'https://www.tutorialspoint.com/sqlite/sqlite_create_database.htm' ), and set it in DATABASES, located at 'server/settings.py'.
