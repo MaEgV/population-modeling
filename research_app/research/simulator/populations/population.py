@@ -102,7 +102,7 @@ class Population:
         else:
             for individual in list(filter(lambda x: x.is_alive(), self._individuals)):
                 new_generation.add_species(individual.produce_children(selector, mutator))
-
+        print('evolve3', new_generation)
         return new_generation
 
     def drop(self) -> None:

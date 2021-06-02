@@ -119,12 +119,11 @@ class Bacteria(AbstractSpecies):
         """
 
         children = list() # type: ignore
-        if self.is_alive():
-            while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli
-                # test
-                child_genome = mutation_mode.child_genome(self._genome)
-                children.append(Bacteria(child_genome))
 
+        while selector.have_to_reproduce(self._genome) and len(children) <= self._children_max:  # the Bernoulli
+            # test
+            child_genome = mutation_mode.child_genome(self._genome)
+            children.append(Bacteria(child_genome))
         return children
 
     def get_parameters_dict(self) -> Genome:

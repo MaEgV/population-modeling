@@ -211,9 +211,9 @@ class IndividualAdder(APIView):
         -------
 
         """
-        genome = Genome(request.data['lifetime'],
-                        request.data['p_for_death'],
-                        request.data['p_for_reproduction'])
+        genome = Genome(int(request.data['lifetime']),
+                        float(request.data['p_for_death']),
+                        float(request.data['p_for_reproduction']))
 
         individual_type = request.data['type']
 
@@ -248,6 +248,7 @@ class ResearchRunner(APIView):
 
         """
         population = Storage.get(token)
+
         try:
             params = ResearchParameters(request.data['s_t'],
                                         float(request.data['s_m']),
