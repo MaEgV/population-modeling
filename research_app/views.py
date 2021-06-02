@@ -234,7 +234,7 @@ class ResearchRunner(APIView):
     """
     Build research with Population
     """
-    def post(self, request: Request, token: str)->Response:
+    def post(self, request: Request, token: str) -> Response:
         """
         Build research posted parameters and population associated with key
         Parameters
@@ -248,21 +248,18 @@ class ResearchRunner(APIView):
 
         """
         population = Storage.get(token)
-
         try:
-            res = Research.run(population,
-                               ResearchParameters(request.data['s_t'],
-                                                  float(request.data['s_m']),
-                                                  request.data['m_t'],
-                                                  float(request.data['m_m']),
-                                                  int(request.data['n'])))
+            params = ResearchParameters(request.data['s_t'],
+                                        float(request.data['s_m']),
+                                        request.data['m_t'],
+                                        float(request.data['m_m']),
+                                        int(request.data['n']))
+            res = Research.run(population, params).data
         except KeyError:
             return Response('Required parameter is missed', status=404)
-
         name = request.data.get('name', None)
         if name:
             save_output(population, request.data, res, name)
-
         return Response(res.data, status=200)
 
 
