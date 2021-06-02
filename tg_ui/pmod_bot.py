@@ -21,7 +21,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "Привет, займёмся исследованием популяций?")
     elif message.text == "/help":
         bot.send_message(message.from_user.id, "Этот бот поможет тебе в исследовании собственной популяции. Команда"
-                                               "\start начинает твою работу с популяцией. Следуй инструкциям на каждом шаге")
+                                               " /start начинает твою работу с популяцией. Следуй инструкциям на каждом шаге")
     elif message.text == '/start':
         bot.send_message(message.from_user.id, "Давай создадим тебе собственную популяцию для исследований")
         population_id = create_population()
@@ -91,8 +91,9 @@ def run_research(message):
         # ПОТОМ ПРЯМ JSON ОТПРАВИТЬ В ОТВЕТ
         response = requests.post(host_url + str(population_id) + '/run/', data=research_parameters)
         if response.status_code == 200:
-            new_data = json.loads(response.json())
-            print(new_data)
+            new_data = response.json()
+            bot.send_message(message.from_user.id, "В твоей популяции: {alive} живых особей, {dead} "
+                                                   "мертвых особей".format(**new_data))
     except Exception:
         bot.send_message(message.from_user.id, 'Что-то не так с параметрами, попробуй ещё')
         bot.register_next_step_handler(message, run_research)
